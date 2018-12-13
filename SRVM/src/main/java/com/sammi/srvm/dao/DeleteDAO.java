@@ -1,5 +1,5 @@
 package com.sammi.srvm.dao;
 
-public interface DeleteDAO {
+public class DeleteDAO {
 
 }

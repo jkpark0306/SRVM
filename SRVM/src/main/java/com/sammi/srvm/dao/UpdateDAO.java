@@ -2,7 +2,14 @@ package com.sammi.srvm.dao;
 
 import java.util.Map;
 
-public interface UpdateDAO {
-	public int updatesession(Map<String, String> parammap/*@Param("sessionID") String sessionID,@Param("EmpNumber") String EmpNumber*/);
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 
+public class UpdateDAO{
+	@Autowired
+	SqlSession sqlSession;
+	
+	public int updatesession(Map parammap/* @Param("sessionID") String sessionID, @Param("EmpNumber") String EmpNumber*/) {
+		return sqlSession.update("com.sammi.srvm.dao.EmployeeDAO.updatesession", parammap);	
+	}
 }

@@ -5,18 +5,28 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.gson.Gson;
 import com.sammi.srvm.dao.SelectDAO;
 import com.sammi.srvm.dao.UpdateDAO;
 import com.sammi.srvm.dto.EmpDTO;
 
-public class SessionService {
+public class SessionServiceImpl implements SessionService{
 	@Autowired
 	SelectDAO seldao;
 	UpdateDAO updao;
 	
+	public class LoginParameter{
+		String SessionID;
+		EmpDTO dto;
+		
+	}
 	
-	
-	public Map<String, Object> Login(EmpDTO dto, Map<String,String> parammap) {
+	@Override
+	public String Login(String param) {
+		
+		Gson gson = new Gson();
+		
+		
 		
 		EmpDTO resultDTO;
 		
@@ -33,7 +43,7 @@ public class SessionService {
 		
 		
 		
-		return resultmap;
+		return "";
 		
 	};
 		
