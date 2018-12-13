@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.sammi.srvm.dao.CustomerDAO;
+
 
 @Controller
 public class CustomerController {
@@ -25,7 +25,6 @@ public class CustomerController {
 	@RequestMapping(value="/customer/CustomerMan",method=RequestMethod.GET)
 	public String customer(Locale locale, Model model) {
 		
-		CustomerDAO dao = sqlSession.getMapper(CustomerDAO.class);
 		
 		
 		return "/customer/CustomerMan";

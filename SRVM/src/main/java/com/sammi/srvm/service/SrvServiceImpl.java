@@ -7,18 +7,18 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.sammi.srvm.dao.SrvDAO_sample;
+import com.sammi.srvm.dao.SelectDAO;
 import com.sammi.srvm.dto.SrvDTO;
 
 public class SrvServiceImpl implements SrvService {
 	@Autowired
-	SrvDAO_sample dao;
+	SelectDAO selectdao;
 
 	@Autowired
 	SqlSession sqlSession;
 
 	@Override
-	public List<SrvDTO> GetSrvList() {
+	public List<SrvDTO> GetAllSrv() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("com.sammi.srvm.dao.SrvDAO.SrvSelect");
 	}

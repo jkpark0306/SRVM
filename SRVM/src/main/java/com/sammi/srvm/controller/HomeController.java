@@ -20,19 +20,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.gson.Gson;
-import com.sammi.srvm.dao.EmployeeDAO;
-import com.sammi.srvm.dao.SrvDAO_sample;
-import com.sammi.srvm.dto.EmployeeDTO;
+import com.sammi.srvm.dao.SelectDAO;
+import com.sammi.srvm.dto.EmpDTO;
 import com.sammi.srvm.dto.SrvDTO;
+import com.sammi.srvm.service.SrvService;
 
 /**
  * Handles requests for the application home page.
  */
 
 
-
 @Controller
 public class HomeController {
+	
+	@Autowired
+	SrvService srvservice;
+	
+	@Autowired
+	private SqlSession sqlSession;
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -56,17 +61,18 @@ public class HomeController {
         return Resultstr;
     }
 	
-	@Autowired
-	private SqlSession sqlSession;
 
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
 		System.out.println("this is Homecontroller");
+		
+
+		
 		try {
-			SrvDAO_sample dao = sqlSession.getMapper(SrvDAO_sample.class);
-			List<SrvDTO> dtos = dao.GetSrvList();
+			SelectDAO dao = sqlSession.getMapper(SelectDAO.class);
+			List<SrvDTO> dtos = srvservice.GetAllSrv();
 			ArrayList<Object> paramList = new ArrayList<Object>();
 			
 			for(SrvDTO dto : dtos) {
@@ -74,7 +80,6 @@ public class HomeController {
 				
 				param.put("SrvCode", dto.getSrvCode());
 				param.put("UniEquCode", dto.getUniEquCode());
-				System.out.println("Unicode from HomeController = "+dto.getUniEquCode());
 				param.put("InDate", ParDate(dto.getSrvCode().substring(0, 6)));
 				param.put("EmpName", dto.getEmpName());
 				param.put("CusName", dto.getCusName());

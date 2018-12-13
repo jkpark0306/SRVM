@@ -127,7 +127,7 @@
 				on ST.SrvCode = ORT.SrvCode
 		where ST.SrvCode = #{SrvCode};
 	</select>
-	<select id="GetSrvList" resultMap="SrvListMap">
+	<select id="GetAllSrv" resultMap="SrvListMap">
 		select
 		ST.SrvCode,
 		ST.UniEquCode,

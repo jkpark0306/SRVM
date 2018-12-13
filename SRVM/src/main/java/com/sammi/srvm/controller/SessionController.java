@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.sammi.srvm.SecurityUtil;
 import com.sammi.srvm.dto.EmpDTO;
 import com.sammi.srvm.service.SessionService;
 
@@ -26,7 +25,7 @@ import com.sammi.srvm.service.SessionService;
 public class SessionController {
 
 	@Autowired
-	SessionService service;
+	SessionService sessionservice;
 
 	@Autowired
 	PlatformTransactionManager tx;
@@ -63,10 +62,9 @@ public class SessionController {
 		System.out.println("starting login process..");
 		Gson gson = new Gson();
 		
-		DefaultTransactionDefinition df = new DefaultTransactionDefinition();
-		df.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-		TransactionStatus ts = tx.getTransaction(new DefaultTransactionDefinition(df));
-
+		if(session.getAttribute("login") != null) {
+			session.removeAttribute("login");
+		}
 		LoginReq LQ = gson.fromJson(filterJSON, LoginReq.class);
 		LoginRes LR = new LoginRes();
 		
@@ -74,7 +72,20 @@ public class SessionController {
 		System.out.println(gson.toJson(LQ));
 
 		Map<String, String> parammap = new HashMap<String, String>();
-
+		
+		
+		session.setAttribute("login", sessionservice.Login(LQ.empdto, session.getId()));
+		
+		if(LQ.empdto != null) {
+			return "S";
+		}else
+		{
+			return "F";
+		}
+		
+		
+		
+		/*
 		try {
 
 			LR.Result = 1;
@@ -123,24 +134,8 @@ public class SessionController {
 		}
 		System.out.println(gson.toJson(LR));
 		return gson.toJson(LR);
-
-		/*
-		 * String returnURL = ""; if(session.getAttribute("login") != null) {
-		 * 
-		 * session.removeAttribute("login");
-		 * 
-		 * //기존에 login이란 세션 값이 존재한다면 기존값 제거함 }
-		 * 
-		 * //로그인이 성공하면 EmployeeDTO 객체 반환 EmployeeDTO vo = service.login(dto);
-		 * 
-		 * if(vo != null) { session.setAttribute("login",vo); returnURL = "redirect:/home";
-		 * 
-		 * 
-		 * }else { returnURL = "redirect:/Login/ㅣogin"; }
-		 * 
-		 * return returnURL;
-		 */
-
+		*/
+		
 	}
 
 	@RequestMapping(value = "/Login/Logout")
