@@ -26,6 +26,8 @@ public class SessionServiceImpl implements SessionService{
 		
 		Gson gson = new Gson();
 		
+		LoginParameter LP = gson.fromJson(param, LoginParameter.class);
+		
 		
 		
 		EmpDTO resultDTO;
