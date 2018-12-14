@@ -2,7 +2,7 @@ package com.sammi.srvm.dao;
 
 import com.sammi.srvm.dto.EmpDTO;
 
-public class InsertDAOImpl{
+public class InsertDAO{
 
 	
 	public int ResisterEmployee(EmpDTO dto) {

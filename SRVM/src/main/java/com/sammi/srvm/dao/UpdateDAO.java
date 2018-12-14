@@ -9,7 +9,7 @@ public class UpdateDAO{
 	@Autowired
 	SqlSession sqlSession;
 	
-	public int updatesession(Map parammap/* @Param("sessionID") String sessionID, @Param("EmpNumber") String EmpNumber*/) {
-		return sqlSession.update("com.sammi.srvm.dao.EmployeeDAO.updatesession", parammap);	
+	public int UpdateSessionID(Map param) {
+		return sqlSession.update("com.sammi.srvm.dao.EmployeeDAO.UpdateSessionID", param);	
 	}
 }

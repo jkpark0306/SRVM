@@ -5,7 +5,7 @@ import java.util.List;
 import com.sammi.srvm.dto.SrvDTO;
 
 public interface SrvService {
-	public List<SrvDTO> GetSrvList();
+	public List<SrvDTO> GetAllSrv();
 	public SrvDTO GetDetSrv(String SrvCode);
 	
 
