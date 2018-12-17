@@ -11,7 +11,5 @@ import com.sammi.srvm.dto.SrvDTO;
 
 public interface SrvService {
 	public List<SrvDTO> GetAllSrv();
-	public SrvDTO GetDetSrv(String SrvCode);
-	
-
+	public Object GetDetSrv(String SrvCode);
 }

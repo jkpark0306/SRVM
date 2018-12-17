@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- script type="text/javascript" src="DateFormatFunction.js"></script-->
 <script type="text/javascript">
 
 	function _GET(search){
@@ -16,27 +17,73 @@
 		
 		var param = uri.split('&');
 		
+		
+		
+		
 		for(var i = 0;i<param.length;i++){
 			var devide = param[i].split('=');
-			obj[devide[0]] = devide[1];
+			obj = JSON.parse(devide[1]);
 		}
+		
+		
 		
 		return obj;
 	}
+	
+	function getview(json){
+		try{
+		var object = JSON.parse(json);
+		alert(objet.SrvCode.toString());
+		var indate = new Date(object.SrvCode.toString().substring(0,5));
+		
+		$('#SrvCode').text(object.SrvCode);
+		$('#EmpName').text(object.EmpName);
+		$('#WrtFlag').text(object.WrtFlag);
+		$('#CusName').text(object.CusName);
+		$('#Indate').text(indate.formatDate('yyyy년 mm월 dd일'));
+		
+		}catch(Exception){
+			alert(Exception);
+		}
+		
+		return object;
+	}
 	window.onload = function() {
-		alert('popup test');
 		try{
 		var search = window.location.search;
 		var object = _GET(search);
 		
-		alert(object.toString());
+		//$('#SrvCode').text(object.ServiceCode);
 		
-		alert(object.ServiceCode);
+		$.ajax({
+			url : "/srvm/ajax/GetDetSrv",
+			data : object.ServiceCode,
+			dataType : "text",
+			type : "POST",
+			contentType : "application/json; charset=UTF-8",
+			async : false,
+			success : function(responseData){
+				alert('success');
+				alert(responseData);
+				getview(responseData);
+			},
+		     error:function(request,status,error){
+		         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+		        },
+
+
+			complete : function(){
+				alert('complete');
+			}
+			
+			
+		});
 		
 		
 
 		for ( var key in object) {
-			alert(key + '=>' + object[key]);
+
+			//alert(key + '=>' + object[key]);
 		}}catch(Exception){
 			alert(Exception);
 		}
@@ -83,43 +130,43 @@
 					<tbody>
 						<tr>
 							<th>서비스코드</th>
-							<td>SrvCode</td>
+							<td id='SrvCode'/>
 							<th>담당자</th>
-							<td>EmpName</td>
+							<td id='EmpName'/>
 							<th>Warranty</th>
-							<td>Warranty</td>
+							<td id='WrtFlag'/>
 						</tr>
 						<tr>
 							<th>고객사</th>
-							<td>CusName</td>
+							<td id='CusName'/>
 							<th>입고일자</th>
-							<td>Indate</td>
+							<td id='Indate'/>
 							<th>유지보수</th>
-							<td>Maintenance</td>
+							<td id='Maintenance'/>
 						</tr>
 						<tr>
 							<th>고객사담당자</th>
-							<td>CusEmpName</td>
+							<td id='CusEmpName'/>
 							<th>출고일자</th>
-							<td>OutDate</td>
+							<td id='OutDate'/>
 							<th>외부지원여부</th>
-							<td>PartRepFlag</td>
+							<td id='PartRepFlag'/>
 						</tr>
 						<tr>
 							<th>P/N</th>
-							<td>pn</td>
+							<td id='ProductNumber'/>
 							<th>서비스분류</th>
-							<td>ServiceKind</td>
+							<td id='ServiceKind'/>
 							<th>수주금액</th>
-							<td>obt</td>
+							<td id='ObjAmount'/>
 						</tr>
 						<tr>
 							<th>S/N</th>
-							<td>sn</td>
+							<td id=SerialNumber'/>
 							<th>진행상황</th>
-							<td>Process</td>
+							<td id='Process'/>
 							<th>발주금액</th>
-							<td>Ord</td>
+							<td id='OrdAmount'/>
 						</tr>
 						<tr>
 							<th colspan="3">증상</th>

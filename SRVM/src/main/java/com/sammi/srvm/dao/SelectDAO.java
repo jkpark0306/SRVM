@@ -10,12 +10,14 @@ import org.springframework.stereotype.Component;
 
 import com.sammi.srvm.dto.CusDTO;
 import com.sammi.srvm.dto.EmpDTO;
+import com.sammi.srvm.dto.RepDetDTO;
 import com.sammi.srvm.dto.SrvDTO;
 
 @Component
 public class SelectDAO{
 	@Autowired
 	SqlSession sqlSession;
+	
 	
 	
 	public EmpDTO Login(EmpDTO dto) {
@@ -35,8 +37,16 @@ public class SelectDAO{
 	}
 
 
+	public List<RepDetDTO> GetRepDet(String SrvCode){
+		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetRepDet",SrvCode);
+	}
+	
 	public List<SrvDTO> GetAllSrv() {
 		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetAllSrv");
+	}
+	
+	public SrvDTO GetDetSrv(String SrvCode) {
+		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetDetSrv",SrvCode);
 	}
 
 }

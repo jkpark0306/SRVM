@@ -9,10 +9,17 @@ public class RepDetDTO {
 	private String Symptom;
 	private String Action;
 	private String Cause;
+	private String Date;
 	private String CREATE_ID;
 	private String CREATE_DT;
 	private String MODIFY_ID;
 	private String MODIFY_DT;
+	public String getDate() {
+		return Date;
+	}
+	public void setDate(String date) {
+		Date = date;
+	}
 	public String getRepDetCode() {
 		return RepDetCode;
 	}

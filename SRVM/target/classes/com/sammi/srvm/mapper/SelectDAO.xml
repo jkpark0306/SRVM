@@ -67,7 +67,7 @@
 		<result property="RelFlag" column="RelFlag" />
 		<result property="PartSrvFlag" column="PartSrvFlag" />
 		<result property="RelExtDate" column="RelExtDate" />
-		<association javaType="com.sammi.srvm.dto.RelDTO"
+		<!--  association javaType="com.sammi.srvm.dto.RelDTO"
 			property="reldto">
 			<id column="SrvCode" property="SrvCode" />
 			<result column="RelDate" property="RelDate" />
@@ -75,7 +75,7 @@
 		<association javaType="com.sammi.srvm.dto.CusDTO" property="cusdto">
 			<id column="CusCode" property="CusCode"/>
 			<result column=""/>
-		</association>
+		</association-->
 
 	</resultMap>
 
@@ -86,7 +86,10 @@
 		<result property="RelAddress" column="RelAddress" />
 		<result property="RelInvNumber" column="RelInvNumber" />
 	</resultMap>
-	<select id="GetDetSrv" parameterType="String" resultMap="SrvListMap">
+	<select id="GetRepDet" parameterType="String" resultType="com.sammi.srvm.dto.RepDetDTO">
+		select * from REP_DET_TB where SrvCode=#{SrvCode}
+	</select>
+	<select id="GetDetSrv" parameterType="String" resultType="com.sammi.srvm.dto.SrvDTO">
 		select
 			ST.SrvCode,
 			ST.UniEquCode,
@@ -97,15 +100,15 @@
 			ST.CusEmpCode,
 			CT.Name as CusName,
 			CMTcusemp.CodeDescription as CusEmpName,
-			ET.ProductNumber,
-			UET.SerialNumber,
+			ET.ProductNumber as ProductNumber,
+			UET.SerialNumber as SerialNumber,
 			CMTpro.CodeDescription as Process,
-			RT.RelDate,
-			UET.WrtFlag,
-			CT.MatFlag,
+			RT.RelDate as RelDate,
+			UET.WrtFlag as WrtFlag,
+			CT.MatFlag as MatFlag,
 			ST.PartSrvFlag,
-			OT.Amount,
-			ORT.Amount
+			CONCAT(OT.Amount) as ObtAmount,
+			CONCAT(ORT.Amount) as OrdAmount
 		from SRV_TB as ST
 			inner join CODE_MASTER_TB as CMTemp
 				on ST.EmpCode = CMTemp.CodeID and CMTemp.CodeGroupName = 'EmpCode'
@@ -125,7 +128,7 @@
 		 		on ST.SrvCode = OT.SrvCode
 			left join ORD_TB as ORT
 				on ST.SrvCode = ORT.SrvCode
-		where ST.SrvCode = #{SrvCode};
+		where ST.SrvCode = #{SrvCode}
 	</select>
 	<select id="GetAllSrv" resultMap="SrvListMap">
 		select

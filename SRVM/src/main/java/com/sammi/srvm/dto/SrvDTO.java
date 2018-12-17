@@ -15,15 +15,51 @@ public class SrvDTO {
 	private String ProductNumber;
 	private String ProcessCode;
 	private String Process;
+	private String RelDate;
+	private String ObtAmount;
+	private String OrdAmount;
 	private String ObtFlag;
 	private String OrdFlag;
 	private String RelFlag;
+	private String MatFlag;
+	private String WrtFlag;
 	private String PartSrvFlag;
 	private String RelExtDate;
 	private String CREATE_ID;
 	private String CREATE_DT;
 	private String MODIFY_ID;
 	private String MODIFY_DT;
+	
+	public String getMatFlag() {
+		return MatFlag;
+	}
+	public void setMatFlag(String matFlag) {
+		MatFlag = matFlag;
+	}
+	public String getWrtFlag() {
+		return WrtFlag;
+	}
+	public void setWrtFlag(String wrtFlag) {
+		WrtFlag = wrtFlag;
+	}
+	public String getRelDate() {
+		return RelDate;
+	}
+	public void setRelDate(String relDate) {
+		RelDate = relDate;
+	}
+	public String getObtAmount() {
+		return ObtAmount;
+	}
+	public void setObtAmount(String obtAmount) {
+		ObtAmount = obtAmount;
+	}
+	public String getOrdAmount() {
+		return OrdAmount;
+	}
+	public void setOrdAmount(String ordAmount) {
+		OrdAmount = ordAmount;
+	}
 	public String getCREATE_DT() {
 		return CREATE_DT;
 	}
@@ -36,6 +72,7 @@ public class SrvDTO {
 	public void setMODIFY_DT(String mODIFY_DT) {
 		MODIFY_DT = mODIFY_DT;
 	}
+	/*
 	private RelDTO reldto;
 	private CusDTO cusdto;
 	
@@ -45,18 +82,20 @@ public class SrvDTO {
 	public void setCusdto(CusDTO cusdto) {
 		this.cusdto = cusdto;
 	}
+	*/
 	public String getEmpCode() {
 		return EmpCode;
 	}
 	public void setEmpCode(String empCode) {
 		EmpCode = empCode;
 	}
+	/*
 	public RelDTO getReldto() {
 		return reldto;
 	}
 	public void setReldto(RelDTO reldto) {
 		this.reldto = reldto;
-	}
+	}*/
 	public String getCusName() {
 		return CusName;
 	}
