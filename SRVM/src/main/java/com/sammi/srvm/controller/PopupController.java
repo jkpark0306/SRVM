@@ -29,18 +29,17 @@ public class PopupController {
 	@RequestMapping(value = "/SrvDetailPopup", method = RequestMethod.GET)
 	public String SrvPopUp(Model model, @RequestParam(value = "SrvData", defaultValue = "") String SrvData)
 			throws Exception {
-		System.out.println("Popup");
-		System.out.println(SrvData);
 		model.addAttribute("SrvData", SrvData);
-		/*
+		
 		
 		Gson gson = new Gson();
 		Map<String,String> map = gson.fromJson(SrvData, Map.class);
 		String test = map.get("ServiceCode");
 		
+		System.out.println(SrvData);
 		System.out.println(test);
-		
-		srvservice.GetDetSrv(SrvCode);
+		/*
+		SrvDTO rdto = srvservice.GetDetSrv(test);
 		
 		
 		

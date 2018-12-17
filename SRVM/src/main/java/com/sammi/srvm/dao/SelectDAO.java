@@ -6,19 +6,20 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.sammi.srvm.dto.CusDTO;
 import com.sammi.srvm.dto.EmpDTO;
 import com.sammi.srvm.dto.SrvDTO;
 
+@Component
 public class SelectDAO{
 	@Autowired
 	SqlSession sqlSession;
 	
 	
 	public EmpDTO Login(EmpDTO dto) {
-		System.out.println("this is daoimpl");
-		return sqlSession.selectOne("com.sammi.srvm.dao.EmployeeDAO.login",dto);
+		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.Login",dto);
 	}
 	
 
@@ -34,9 +35,8 @@ public class SelectDAO{
 	}
 
 
-	public List<SrvDTO> GetSrvList() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<SrvDTO> GetAllSrv() {
+		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetAllSrv");
 	}
 
 }

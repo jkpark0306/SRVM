@@ -206,6 +206,7 @@
 				LoginObject.empdto.ID = $("#user_id").val();
 				LoginObject.empdto.PASSWORD = SHA256($("#user_pwd").val());
 				
+				
 				$.ajax({
 					url : "/srvm/ajax/logintry",
 					data : JSON.stringify(LoginObject),
@@ -215,23 +216,23 @@
 					async : false,
 					success : function(responseData) {
 						var data = JSON.parse(responseData);
+						
 						if (!data || data.Result != 1) {
 							alert("ID/PW를 확인하세요");
 							result = '/srvm/login';
-							
 						}
 						else{
 							result = '/srvm';
 						}
 						
-
 					}
+
+
 
 				});
 			} catch (Exception) {
 				alert(Exception);
 			}
-			
 			return result;
 		}
 	}

@@ -75,7 +75,7 @@
 			<thead id="thead">
 				<tr>
 					<th style="display: none">ServiceCode</th>
-					<th >UniEquCode</th>
+					<th style="display: none">UniEquCode</th>
 					<th>입고일자</th>
 					<th>담당자</th>
 					<th>고객사</th>
@@ -90,7 +90,7 @@
 				<c:forEach var="map" items="${SRVLIST}" varStatus="status">
 					<tr>
 						<td style="display: none">${map.SrvCode}</td>
-						<td >${map.UniEquCode}</td>
+						<td style="display: none">${map.UniEquCode}</td>
 						<td>${map.InDate}</td>
 						<td>${map.EmpName}</td>
 						<td>${map.CusName}</td>

@@ -3,7 +3,7 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-<mapper namespace="com.sammi.srvm.dao.EmployeeDAO">
+<mapper namespace="com.sammi.srvm.dao.SelectDAO">
 	<resultMap id="EmployeeDataMap" type="com.sammi.srvm.dto.EmpDTO">
 		<id property="EmpCode" column="EmpCode"/>
 		<result property="DepartCode" column="DepartCode"/>
@@ -43,7 +43,7 @@
 		order by EmpNumber
 	</select>
 
-	<select id="login" resultType = "com.sammi.srvm.dto.EmployeeDTO" parameterType = "com.sammi.srvm.dto.EmployeeDTO">
+	<select id="Login" resultType = "com.sammi.srvm.dto.EmpDTO" parameterType = "com.sammi.srvm.dto.EmpDTO">
 		SELECT
 			*
 		FROM EMP_TB
@@ -201,21 +201,6 @@
 		on ST.ProcessCode =
 		CMTPro.CodeID and CMTPro.CodeGroupName='ProcessCode'
 	</select>
-		<resultMap id="TestDM" type="com.sammi.srvm.dto.TestDTO">
-		<id property="IDX" column="IDX"/>
-		<result property="TC1" column="TC1"/>
-		<result property="TC2" column="TC2"/>
-		<result property="TC3" column="TC3"/>
-	</resultMap>
-	<select id = "TestSelect" resultMap = "TestDM">
-		select
-			IDX,
-			TC1,
-			TC2,
-			TC3
-		from TEST_TB
-		order by IDX
-	</select>
 
 	
 	<!--  insert id="insertInputDAO" parameterType="com.spacecode.ssrm.dto.InputDTO">
@@ -235,7 +220,7 @@
 	</insert-->
 
 	
-	<insert id="ResisterEmployee" parameterType="com.sammi.srvm.dto.EmployeeDTO">
+	<insert id="ResisterEmployee" parameterType="com.sammi.srvm.dto.EmpDTO">
 		INSERT INTO EMP_TB(
 			EmpNumber,
 			DepartCode,

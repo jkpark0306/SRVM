@@ -5,9 +5,30 @@
 	
 <mapper namespace="com.sammi.srvm.dao.InsertDAO">
 	
+
 	
-	
-	    <insert id="InsertCustomer" parameterType="com.sammi.srvm.dto.CustomerDTO">
+	<insert id="ResisterEmployee" parameterType="com.sammi.srvm.dto.EmpDTO">
+		INSERT INTO EMP_TB(
+			EmpNumber,
+			DepartCode,
+			Name,
+			Rank,
+			Gender,
+			ID,
+			PASSWORD,
+			CREATE_ID
+		)VALUES(
+			#{EmpNumber},
+			#{DepartCode},
+			#{Name},
+			#{Rank},
+			#{Gender},
+			#{ID},
+			#{PASSWORD},
+			#{CREATE_ID}
+		)
+	</insert>
+	    <insert id="InsertCustomer" parameterType="com.sammi.srvm.dto.CusDTO">
         insert into CUS_TB 
             values(
 	            concat(date_format(current_timestamp,"%y%d"),(select LPAD(right(max(CusCode),2)+'01',2,'0') from CUS_TB ctb)),

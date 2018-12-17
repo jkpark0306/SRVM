@@ -24,6 +24,7 @@ import com.sammi.srvm.dao.SelectDAO;
 import com.sammi.srvm.dto.EmpDTO;
 import com.sammi.srvm.dto.SrvDTO;
 import com.sammi.srvm.service.SrvService;
+import com.sammi.srvm.service.SrvServiceImpl;
 
 /**
  * Handles requests for the application home page.
@@ -34,7 +35,7 @@ import com.sammi.srvm.service.SrvService;
 public class HomeController {
 	
 	@Autowired
-	SrvService srvservice;
+	SrvServiceImpl srvservice;
 	
 	@Autowired
 	private SqlSession sqlSession;
@@ -66,14 +67,13 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
-		System.out.println("this is Homecontroller");
-		
-		
+
 		
 		try {
-		
 			List<SrvDTO> dtos = srvservice.GetAllSrv();
+			
 			ArrayList<Object> paramList = new ArrayList<Object>();
+			
 			
 			for(SrvDTO dto : dtos) {
 				Map<String,Object> param = new HashMap<String,Object>();

@@ -42,7 +42,6 @@ public class SessionController {
 	private class LoginRes {
 		public String Message;
 		public int Result;
-		public String SessionID;
 	}
 	/*
 	 * @ResponseBody
@@ -71,16 +70,16 @@ public class SessionController {
 		System.out.println(filterJSON);
 		System.out.println(gson.toJson(LQ));
 
-		Map<String, String> parammap = new HashMap<String, String>();
-		
 		
 		session.setAttribute("login", sessionservice.Login(LQ.empdto, session.getId()));
 		
 		if(LQ.empdto != null) {
-			return "S";
+			LR.Result = 1;
+			return gson.toJson(LR);
 		}else
 		{
-			return "F";
+			LR.Result = 0;
+			return gson.toJson(LR);
 		}
 		
 		

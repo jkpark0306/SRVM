@@ -9,15 +9,17 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 	window.onload = function() {
-
+		alert('popup test');
+		try{
 		var object = $
 		{
 			SrvData
-		}
-		;
+		};
 
 		for ( var key in object) {
 			alert(key + '=>' + object[key]);
+		}}catch(Exception){
+			alert(Exception);
 		}
 
 	}

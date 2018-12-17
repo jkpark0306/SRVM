@@ -1,4 +1,5 @@
 package com.sammi.srvm.service;
 
-public interface EmpService {
+public interface EmployeeService {
+
 }
