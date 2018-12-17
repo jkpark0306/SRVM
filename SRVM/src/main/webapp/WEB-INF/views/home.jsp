@@ -17,7 +17,6 @@
 		$("#SrvTable tr").on("click", function() {
 			
 			var Param = {};
-			alert('test');
 			var tr = $(this);
 			var td = tr.children();
 			$("#SrvTable th").each(function(i){
@@ -25,6 +24,7 @@
 				
 			});
 			var JsonParam = JSON.stringify(Param);
+			alert(JsonParam);
 			var Uri = "/srvm/Popup/SrvDetailPopup?SrvData="+JsonParam;
 			
 			window.open(encodeURI(Uri), "newWindow","resizable=no,width=1530px, height=800px, scrollbar=no");

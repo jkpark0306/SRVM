@@ -8,13 +8,32 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
+
+	function _GET(search){
+		var obj = {};
+		var uri = decodeURI(search);
+		uri = uri.slice(1,uri.length);
+		
+		var param = uri.split('&');
+		
+		for(var i = 0;i<param.length;i++){
+			var devide = param[i].split('=');
+			obj[devide[0]] = devide[1];
+		}
+		
+		return obj;
+	}
 	window.onload = function() {
 		alert('popup test');
 		try{
-		var object = $
-		{
-			SrvData
-		};
+		var search = window.location.search;
+		var object = _GET(search);
+		
+		alert(object.toString());
+		
+		alert(object.ServiceCode);
+		
+		
 
 		for ( var key in object) {
 			alert(key + '=>' + object[key]);
