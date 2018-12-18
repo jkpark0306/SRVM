@@ -7,9 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- script type="text/javascript" src="DateFormatFunction.js"></script-->
+<script type="text/javascript" src="/srvm/resources/js/DateFormatFunction.js"></script>
+<!-- script type="text/javascript" src = 'DateFormatFunction.js'></script-->
 <script type="text/javascript">
-
 	function _GET(search){
 		var obj = {};
 		var uri = decodeURI(search);
@@ -33,15 +33,17 @@
 	function getview(json){
 		try{
 		var object = JSON.parse(json);
-		alert(objet.SrvCode.toString());
-		var indate = new Date(object.SrvCode.toString().substring(0,5));
+		var indate = new Date(object.srvdto.SrvCode.toString().substring(0,5));
 		
-		$('#SrvCode').text(object.SrvCode);
+		alert(new Date().format('yyyy년 MM월 dd일'));
+
+		$('#SrvCode').text('object.SrvCode');
+		
 		$('#EmpName').text(object.EmpName);
 		$('#WrtFlag').text(object.WrtFlag);
 		$('#CusName').text(object.CusName);
-		$('#Indate').text(indate.formatDate('yyyy년 mm월 dd일'));
-		
+		$('#Indate').text(indate.format('yyyy년 mm월 dd일'));
+
 		}catch(Exception){
 			alert(Exception);
 		}
@@ -79,15 +81,10 @@
 			
 		});
 		
-		
 
-		for ( var key in object) {
-
-			//alert(key + '=>' + object[key]);
-		}}catch(Exception){
+		}catch(Exception){
 			alert(Exception);
 		}
-
 	}
 </script>
 <script src="/srvm/resources/jquery-3.1.1.min.js"></script>
