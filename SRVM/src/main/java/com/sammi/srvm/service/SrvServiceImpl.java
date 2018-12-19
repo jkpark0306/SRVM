@@ -40,13 +40,21 @@ public class SrvServiceImpl implements SrvService {
 	
 	@Override
 	public Object GetDetSrv(String SrvCode) {
-		
 		DetSrvObj DSO = new DetSrvObj();
+		
+		try {
+		
+		
+		
 		
 		DSO.srvdto = selectdao.GetDetSrv(SrvCode);
 		DSO.repdetdtos = selectdao.GetRepDet(SrvCode);
 		
 		return DSO;
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			return DSO;
+		}
 		
 		
 	}

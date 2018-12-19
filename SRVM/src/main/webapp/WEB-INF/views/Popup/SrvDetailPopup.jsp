@@ -7,82 +7,132 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="/srvm/resources/js/DateFormatFunction.js"></script>
-<!-- script type="text/javascript" src = 'DateFormatFunction.js'></script-->
+<script type="text/javascript" src="/srvm/resources/js/DateFormat.js"></script>
+<!-- script type="text/javascript" src = 'Date.js'></script-->
 <script type="text/javascript">
-	function _GET(search){
+	function _GET(search) {
 		var obj = {};
 		var uri = decodeURI(search);
-		uri = uri.slice(1,uri.length);
-		
+		uri = uri.slice(1, uri.length);
+
 		var param = uri.split('&');
-		
-		
-		
-		
-		for(var i = 0;i<param.length;i++){
+
+		for (var i = 0; i < param.length; i++) {
 			var devide = param[i].split('=');
 			obj = JSON.parse(devide[1]);
 		}
-		
-		
-		
+
 		return obj;
-	}
-	
-	function getview(json){
-		try{
-		var object = JSON.parse(json);
-		var indate = new Date(object.srvdto.SrvCode.toString().substring(0,5));
-		
-		alert(new Date().format('yyyy년 MM월 dd일'));
+	}/*
+		function getServiceClass(SrvCode){
+			if(SrvCode.substring(7,1) == '1'){
+				return 'Rep';
+			}else{
+				return 'Set';
+			}
+		}*/
+	function getview(json) {
+		try {
+			var srvdto = (JSON.parse(json)).srvdto;
+			var repdetdtos = []; 
+			repdetdtos = (JSON.parse(json)).repdetdtos;
+			
+			var indatestr = srvdto.SrvCode.toString().substring(0, 6);
+			var indate = new Date('20' + indatestr.substring(0, 2), indatestr
+					.substring(2, 2), indatestr.substring(4, 2));
+			var outdate = new Date(srvdto.RelDate);
+			var ServiceClass;
 
-		$('#SrvCode').text('object.SrvCode');
-		
-		$('#EmpName').text(object.EmpName);
-		$('#WrtFlag').text(object.WrtFlag);
-		$('#CusName').text(object.CusName);
-		$('#Indate').text(indate.format('yyyy년 mm월 dd일'));
+			if (srvdto.SrvCode.toString().substring(7, 1) == '1') {
+				ServiceClass = '수리';
+			} else {
+				ServiceClass = '세팅';
+			}
 
-		}catch(Exception){
-			alert(Exception);
-		}
-		
-		return object;
-	}
-	window.onload = function() {
-		try{
-		var search = window.location.search;
-		var object = _GET(search);
-		
-		//$('#SrvCode').text(object.ServiceCode);
-		
-		$.ajax({
-			url : "/srvm/ajax/GetDetSrv",
-			data : object.ServiceCode,
-			dataType : "text",
-			type : "POST",
-			contentType : "application/json; charset=UTF-8",
-			async : false,
-			success : function(responseData){
-				alert('success');
-				alert(responseData);
-				getview(responseData);
-			},
-		     error:function(request,status,error){
-		         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-		        },
+			$('#SrvCode').text(srvdto.SrvCode);
 
-
-			complete : function(){
-				alert('complete');
+			$('#EmpName').text(srvdto.EmpName);
+			$('#WrtFlag').text(srvdto.WrtFlag);
+			$('#CusName').text(srvdto.CusName);
+			$('#Indate').text(indate.format('yyyy년 MM월 dd일'));
+			$('#Maintenance').text(srvdto.MatFlag);
+			$('#CusEmpName').text(srvdto.CusEmpName);
+			if ('RelDate' in srvdto) {
+				$('#OutDate').text(outdate.format('yyyy년 MM월 dd일'));
+			}
+			$('#PartSrvFlag').text(srvdto.PartSrvFlag);
+			$('#ProductNumber').text(srvdto.ProductNumber);
+			$('#SerialNumber').text(srvdto.SerialNumber);
+			$('#Process').text(srvdto.Process);
+			$('#ObtAmount').text(srvdto.ObtAmount);
+			$('#ServiceClass').text(ServiceClass);
+			$('#OrdAmount').text(srvdto.OrdAmount);
+			/*
+			$('#Symptom1').text(repdetdtos[0].Symptom);
+			$('#Symptom2').text(repdetdtos[1].Symptom);
+			$('#Symptom3').text(repdetdtos[2].Symptom);
+			$('#Action1').text(repdetdtos[0].Action);
+			$('#Action2').text(repdetdtos[1].Action);
+			$('#Action3').text(repdetdtos[2].Action);
+			*/
+			for(i=0;i<repdetdtos.length;i++){
+				$('#TB2 > tbody:last').append('<tr><td>'+(i+1).toString()+'</td><td>'+repdetdtos[i].Symptom+'</td><td>'+repdetdtos[i].Action+'</td><td>'+repdetdtos[i].Cause+'</td></tr>');
 			}
 			
-			
-		});
-		
 
-		}catch(Exception){
+			/*							<td id='PartRepFlag'/>
+							</tr>
+							<tr>
+								<th>P/N</th>
+								<td id='ProductNumber'/>
+								<th>서비스분류</th>
+								<td id='ServiceKind'/>
+								<th>수주금액</th>
+								<td id='ObjAmount'/>
+							</tr>
+							<tr>
+								<th>S/N</th>
+								<td id=SerialNumber'/>
+								<th>진행상황</th>
+								<td id='Process'/>
+								<th>발주금액</th>
+								<td id='OrdAmount'/>*/
+
+		} catch (Exception) {
+			alert(Exception);
+		}
+	}
+	window.onload = function() {
+		try {
+			var search = window.location.search;
+			var object = _GET(search);
+
+			//$('#SrvCode').text(object.ServiceCode);
+
+			$.ajax({
+				url : "/srvm/ajax/GetDetSrv",
+				data : object.ServiceCode,
+				dataType : "text",
+				type : "POST",
+				contentType : "application/json; charset=UTF-8",
+				async : false,
+				success : function(responseData) {
+					alert('success');
+					alert(responseData);
+					getview(responseData);
+				},
+				error : function(request, status, error) {
+					alert("code = " + request.status + " message = "
+							+ request.responseText + " error = " + error); // 실패 시 처리
+				},
+
+				complete : function() {
+					alert('complete');
+				}
+
+			});
+
+		} catch (Exception) {
 			alert(Exception);
 		}
 	}
@@ -127,67 +177,77 @@
 					<tbody>
 						<tr>
 							<th>서비스코드</th>
-							<td id='SrvCode'/>
+							<td id='SrvCode' />
 							<th>담당자</th>
-							<td id='EmpName'/>
+							<td id='EmpName' />
 							<th>Warranty</th>
-							<td id='WrtFlag'/>
+							<td id='WrtFlag' />
 						</tr>
 						<tr>
 							<th>고객사</th>
-							<td id='CusName'/>
+							<td id='CusName' />
 							<th>입고일자</th>
-							<td id='Indate'/>
+							<td id='Indate' />
 							<th>유지보수</th>
-							<td id='Maintenance'/>
+							<td id='Maintenance' />
 						</tr>
 						<tr>
 							<th>고객사담당자</th>
-							<td id='CusEmpName'/>
+							<td id='CusEmpName' />
 							<th>출고일자</th>
-							<td id='OutDate'/>
+							<td id='OutDate' />
 							<th>외부지원여부</th>
-							<td id='PartRepFlag'/>
+							<td id='PartSrvFlag' />
 						</tr>
 						<tr>
 							<th>P/N</th>
-							<td id='ProductNumber'/>
+							<td id='ProductNumber' />
 							<th>서비스분류</th>
-							<td id='ServiceKind'/>
+							<td id='ServiceClass' />
 							<th>수주금액</th>
-							<td id='ObjAmount'/>
+							<td id='ObtAmount' />
 						</tr>
 						<tr>
 							<th>S/N</th>
-							<td id=SerialNumber'/>
+							<td id='SerialNumber'/>
 							<th>진행상황</th>
-							<td id='Process'/>
+							<td id='Process' />
 							<th>발주금액</th>
-							<td id='OrdAmount'/>
+							<td id='OrdAmount' />
+						</tr>
+						<!--tr>
+							<th colspan="3">증상</th>
+							<th colspan="3">조치</th>
+						</tr>
+						<tr height="100">
+							<td colspan="3" id='Symptom1' />
+							<td colspan="3" id='Action1'/>
 						</tr>
 						<tr>
 							<th colspan="3">증상</th>
 							<th colspan="3">조치</th>
 						</tr>
-						<tr height = "100">
-							<td colspan="3" />
-							<td colspan="3" />
+						<tr height="100">
+							<td colspan="3"  id='Symptom2'/>
+							<td colspan="3" id='Action2'/>
 						</tr>
 						<tr>
 							<th colspan="3">증상</th>
 							<th colspan="3">조치</th>
 						</tr>
-						<tr height = "100">
-							<td colspan="3" />
-							<td colspan="3" />
-						</tr>
-						<tr>
-							<th colspan="3">증상</th>
-							<th colspan="3">조치</th>
-						</tr>
-						<tr height = "100">
-							<td colspan="3" />
-							<td colspan="3" />
+						<tr height="100">
+							<td colspan="3"  id='Symptom3'/>
+							<td colspan="3" id='Action3'/>
+						</tr-->
+					</tbody>
+				</table>
+				<table id="TB2" class="SrvTable table table-striped table-bordered table-hover">
+					<tbody>
+					<tr>
+						<th>순번</th>
+						<th>증상</th>
+						<th>조치</th>
+						<th>원인</th>
 						</tr>
 					</tbody>
 				</table>
@@ -195,7 +255,6 @@
 
 
 		</div>
-		<div class="panel-footer">Panel Footer</div>
 	</div>
 
 </body>
