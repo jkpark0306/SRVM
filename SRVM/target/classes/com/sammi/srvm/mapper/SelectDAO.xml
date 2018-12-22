@@ -17,6 +17,29 @@
 		<result property="MODIFY_ID" column="MODIFY_ID"/>
 		<result property="MODIFY_DT" column="MODIFY_DT"/>
 	</resultMap>
+	<select id="GetEmpName" resultType = "com.sammi.srvm.dto.EmpDTO">
+		select
+			Name,
+			EmpCode
+		from EMP_TB
+	</select>
+	<select id="GetCusName" resultType = "com.sammi.srvm.dto.CusDTO">
+		select
+			Name,
+			CusCode
+		from CUS_TB
+	</select>
+	<select id="GetCusEmpName" resultType = "com.sammi.srvm.dto.CusEmpDTO">
+		select
+			Name,
+			CusEmpCode
+		from CUS_EMP_TB
+	</select>
+	<select id="GetPN" resultType = "com.sammi.srvm.dto.EquDTO">
+		select
+			ProductNumber
+		from EQU_TB
+	</select>
     <select id="GetAllCustomer" resultType = "com.sammi.srvm.dto.CusDTO">
         select
             CusCode,

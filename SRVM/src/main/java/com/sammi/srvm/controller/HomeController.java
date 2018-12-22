@@ -70,11 +70,8 @@ public class HomeController {
 
 		
 		try {
-			System.out.println("1");
 			List<SrvDTO> dtos = srvservice.GetAllSrv();
-			System.out.println("2");
 			ArrayList<Object> paramList = new ArrayList<Object>();
-			System.out.println("3");
 			
 			for(SrvDTO dto : dtos) {
 				Map<String,Object> param = new HashMap<String,Object>();
@@ -93,9 +90,9 @@ public class HomeController {
 				
 				paramList.add(param);
 			}
-			System.out.println("4");
 			model.addAttribute("SRVLIST", paramList);
-		} catch (Exception e) {
+			model.addAttribute("test","test");
+			} catch (Exception e) {
 			System.out.println(e.getMessage()+" from home controller");
 		}
 		return "home";

@@ -1,5 +1,7 @@
 package com.sammi.srvm.controller;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -23,6 +25,41 @@ public class SrvController {
 	
 	@Autowired
 	SrvService srvservice;
+	
+	public class tc{
+		public String td1;
+		public String td2;
+		public String td3;
+	}
+	
+	@RequestMapping(value="/InSrv",method=RequestMethod.GET)
+	public String InSrv(Locale locale, Model model) {
+		
+		Gson gson = new Gson();
+		
+		Object o = srvservice.GetSrvParam();
+		
+		String result = gson.toJson(o);
+		
+		
+		tc tc_ = new tc();
+		tc_.td1 = "td1";
+		tc_.td2 = "td2";
+		tc_.td3 = "td3";
+		
+		String test = gson.toJson(tc_);
+		
+		
+		
+		model.addAttribute("param",test);
+		
+		System.out.println(test);
+		
+		return "/Service/InSrv";
+	}
+	
+	
+	
 	
 	@ResponseBody
 	@RequestMapping(value="/ajax/GetDetSrv",method = RequestMethod.POST, produces="application/json;charset=UTF-8")
