@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import com.sammi.srvm.dao.InsertDAO;
 import com.sammi.srvm.dao.SelectDAO;
 import com.sammi.srvm.dto.CusDTO;
 import com.sammi.srvm.dto.CusEmpDTO;
@@ -23,11 +24,20 @@ import com.sammi.srvm.dto.SrvDTO;
 public class SrvServiceImpl implements SrvService {
 	@Autowired
 	SelectDAO selectdao;
+	InsertDAO insertdao;
 
 	@Autowired
 	SqlSession sqlSession;
 	
-	
+	@Override
+	public int InsertSrv(SrvDTO srvdto) {
+		
+		String SrvCode = (selectdao.GetCurSrv(srvdto.getSrvCode())).getSrvCode();
+		
+		int result = insertdao.InsertSrv(srvdto);
+		
+		return result;
+	}
 
 	@Override
 	public List<SrvDTO> GetAllSrv() {
@@ -37,20 +47,25 @@ public class SrvServiceImpl implements SrvService {
 	}
 	
 	private class SrvParamObj{
-		private List<EmpDTO> empdtos;
-		private List<CusDTO> cusdtos;
-		private List<CusEmpDTO> cusempdtos;
-		private List<EquDTO> equdtos;
+		private List<EmpDTO> empnames;
+		private List<CusDTO> cusnames;
+		private List<CusEmpDTO> cusempnames;
+		private List<EquDTO> equnames;
 	}
 	
 	@Override
 	public Object GetSrvParam() {
 		SrvParamObj SPO = new SrvParamObj();
 		
-		SPO.empdtos = selectdao.GetEmpName();
-		SPO.cusdtos = selectdao.GetCusName();
-		SPO.cusempdtos = selectdao.GetCusEmpName();
-		SPO.equdtos = selectdao.GetPN();
+		SPO.empnames = selectdao.GetEmpName();
+		SPO.cusnames = selectdao.GetCusName();
+		SPO.cusempnames = selectdao.GetCusEmpName();
+		SPO.equnames = selectdao.GetPN();
+		
+		EquDTO equdto = SPO.equnames.get(0);
+		
+		
+		System.out.println(equdto.getName());
 		
 		return SPO;
 	}

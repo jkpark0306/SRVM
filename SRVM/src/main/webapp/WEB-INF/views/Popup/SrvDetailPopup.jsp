@@ -8,7 +8,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="/srvm/resources/js/DateFormat.js"></script>
-<!-- script type="text/javascript" src = 'Date.js'></script-->
 <script type="text/javascript">
 	function _GET(search) {
 		var obj = {};

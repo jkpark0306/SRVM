@@ -248,6 +248,7 @@
 					<li><a href="#"><i class="fa fa-align-left fa-fw"></i> 서비스관리<span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
 							<li><a href="../service/ServiceIO.jsp">서비스내역</a></li>
+							<li><a href="/srvm/InSrv">입고등록</a></li>
 						</ul></li>
 					<li><a href="../employee/employeeMan"><i class="fa fa-user fa-fw"></i> 사원관리</a></li>
 					<li><a href="../equipment/equipmentMan"><i class="fa fa-wrench fa-fw"></i> 장비관리</a></li>

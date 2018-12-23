@@ -61,13 +61,11 @@ public class HomeController {
          
         return Resultstr;
     }
-	
-
-
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
 
+		Gson gson = new Gson();
 		
 		try {
 			List<SrvDTO> dtos = srvservice.GetAllSrv();
@@ -78,7 +76,7 @@ public class HomeController {
 				
 				param.put("SrvCode", dto.getSrvCode());
 				param.put("UniEquCode", dto.getUniEquCode());
-				param.put("InDate", ParDate(dto.getSrvCode().substring(0, 6)));
+				param.put("InDate", "123");
 				param.put("EmpName", dto.getEmpName());
 				param.put("CusName", dto.getCusName());
 				param.put("CusEmpName", dto.getCusEmpName());
@@ -91,11 +89,18 @@ public class HomeController {
 				paramList.add(param);
 			}
 			model.addAttribute("SRVLIST", paramList);
-			model.addAttribute("test","test");
+			System.out.println(gson.toJson(paramList));
+			String teststr = gson.toJson(paramList);
+					model.addAttribute("test",teststr);
+			
 			} catch (Exception e) {
 			System.out.println(e.getMessage()+" from home controller");
 		}
 		return "home";
 	}
+	
+
+
+
 	
 }

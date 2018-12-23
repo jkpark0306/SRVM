@@ -13,4 +13,5 @@ public interface SrvService {
 	public List<SrvDTO> GetAllSrv();
 	public Object GetDetSrv(String SrvCode);
 	public Object GetSrvParam();
+	public int InsertSrv(SrvDTO srvdto);
 }

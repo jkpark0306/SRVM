@@ -14,6 +14,7 @@
 	$(document).ready(function() {
 	
 	alert('${test}');
+	
 	var testjson = '{"empdtos":[{"EmpCode":"1111111"},{"EmpCode":"1112222","Name":"오범석"},{"EmpCode":"1509011","Name":"박지규"}],"cusdtos":[{"CusCode":"181001","Name":"아이아 1공장"},{"CusCode":"181002","Name":"나이키코리아"},{"CusCode":"181003","Name":"아이아 2공장"},{"CusCode":"181004","Name":"삼기오토모티브"},{"CusCode":"181005","Name":"SK실트론"}],"cusempdtos":[{"CusEmpCode":"18100101","Name":"류지황"},{"CusEmpCode":"18100201","Name":"송정호"},{"CusEmpCode":"18100401","Name":"박우리"},{"CusEmpCode":"18100501","Name":"김동현"}],"equdtos":[{"ProductNumber":"SS15"},{"ProductNumber":"DOTH300"}]}';
 		
 		var testobj = JSON.parse(testjson);
@@ -27,7 +28,6 @@
 			var td = tr.children();
 			$("#SrvTable th").each(function(i){
 				Param[$("#SrvTable th").eq(i).text()] = td.eq(i).text();
-				
 			});
 			var JsonParam = JSON.stringify(Param);
 			alert(JsonParam);
@@ -120,10 +120,6 @@
 			value="3"
 		/> <input name="param4" value="4" /> <input name="param5" value="5" />
 	</form>
-	<!--  input type="button" value="사원등록" id="RegBtn" /-->
-	<button onclick="location='RegEmpID.jsp'">사원등록</button>
-	<button onclick="location='Test'">테스트</button>
-	<input type="button" id="testbtn"/>
 
 </body>
 </html>

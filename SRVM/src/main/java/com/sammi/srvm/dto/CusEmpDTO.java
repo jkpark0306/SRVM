@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 public class CusEmpDTO{
 	private String CusEmpCode;
 	private String Cuscode;
+	private String CusName;
 	private String Number1;
 	private String Number2;
 	private String EmailAddress;

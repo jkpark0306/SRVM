@@ -3,9 +3,17 @@ package com.sammi.srvm.dto;
 public class EquDTO {
 	private String EquCode;
 	private String ProductNumber;
+	private String Name;
 	private String ManComp;
 	private String CREATE_ID;
 	private String MODIFY_ID;
+	
+	public String getName() {
+		return Name;
+	}
+	public void setName(String name) {
+		Name = name;
+	}
 	public String getEquCode() {
 		return EquCode;
 	}

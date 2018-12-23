@@ -1,6 +1,13 @@
 package com.sammi.srvm.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,31 +37,28 @@ public class SrvController {
 		public String td1;
 		public String td2;
 		public String td3;
-	}
+	}	
+
 	
 	@RequestMapping(value="/InSrv",method=RequestMethod.GET)
 	public String InSrv(Locale locale, Model model) {
-		
+		try {
 		Gson gson = new Gson();
 		
 		Object o = srvservice.GetSrvParam();
 		
 		String result = gson.toJson(o);
 		
+	
 		
-		tc tc_ = new tc();
-		tc_.td1 = "td1";
-		tc_.td2 = "td2";
-		tc_.td3 = "td3";
+		System.out.println(result);
 		
-		String test = gson.toJson(tc_);
+		model.addAttribute("test",result);
 		
 		
-		
-		model.addAttribute("param",test);
-		
-		System.out.println(test);
-		
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return "/Service/InSrv";
 	}
 	

@@ -36,6 +36,11 @@ public class SelectDAO{
 		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetPN");
 	}
 	
+	public SrvDTO GetCurSrv(String SrvCode) {
+		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetCurSrv");
+	}
+
+	
 	public EmpDTO Login(EmpDTO dto) {
 		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.Login",dto);
 	}

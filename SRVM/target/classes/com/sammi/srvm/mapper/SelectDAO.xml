@@ -2,75 +2,95 @@
 <!DOCTYPE mapper 
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	
+
 <mapper namespace="com.sammi.srvm.dao.SelectDAO">
-	<resultMap id="EmployeeDataMap" type="com.sammi.srvm.dto.EmpDTO">
-		<id property="EmpCode" column="EmpCode"/>
-		<result property="DepartCode" column="DepartCode"/>
-		<result property="Name" column="Name"/>
-		<result property="Rank" column="Rank"/>
-		<result property="Gender" column="Gender"/>
-		<result property="ID" column="ID"/>
-		<result property="PASSWORD" column="PW"/>
-		<result property="CREATE_ID" column="CREATE_ID"/>
-		<result property="CREATE_DT" column="CREATE_DT"/>
-		<result property="MODIFY_ID" column="MODIFY_ID"/>
-		<result property="MODIFY_DT" column="MODIFY_DT"/>
+	<resultMap id="EmployeeDataMap"
+		type="com.sammi.srvm.dto.EmpDTO">
+		<id property="EmpCode" column="EmpCode" />
+		<result property="DepartCode" column="DepartCode" />
+		<result property="Name" column="Name" />
+		<result property="Rank" column="Rank" />
+		<result property="Gender" column="Gender" />
+		<result property="ID" column="ID" />
+		<result property="PASSWORD" column="PW" />
+		<result property="CREATE_ID" column="CREATE_ID" />
+		<result property="CREATE_DT" column="CREATE_DT" />
+		<result property="MODIFY_ID" column="MODIFY_ID" />
+		<result property="MODIFY_DT" column="MODIFY_DT" />
 	</resultMap>
-	<select id="GetEmpName" resultType = "com.sammi.srvm.dto.EmpDTO">
+	<select id="GetCurSrv" resultType="com.sammi.srvm.dto.SrvDTO"
+		parameterType="String">
 		select
-			Name,
-			EmpCode
+		concat(left(#{SrvCode},6),LPAD(cast((cast(right(MAX(SrvCode),2) as unsigned) +1) as char(2)),3,0)) as SrvCode
+		from
+		SRV_TB
+		where left(SrvCode,6) = left(#{SrvCode},6)
+	</select>
+	<select id="GetEmpName" resultType="com.sammi.srvm.dto.EmpDTO">
+		select
+		Name,
+		EmpCode
 		from EMP_TB
 	</select>
-	<select id="GetCusName" resultType = "com.sammi.srvm.dto.CusDTO">
+	<select id="GetCusName" resultType="com.sammi.srvm.dto.CusDTO">
 		select
-			Name,
-			CusCode
+		Name,
+		CusCode
 		from CUS_TB
 	</select>
-	<select id="GetCusEmpName" resultType = "com.sammi.srvm.dto.CusEmpDTO">
+	<select id="GetCusEmpName"
+		resultType="com.sammi.srvm.dto.CusEmpDTO">
 		select
-			Name,
-			CusEmpCode
-		from CUS_EMP_TB
+		Name,
+		CusEmpCode,
+		CMT.CodeDescription as CusName
+		from
+		CUS_EMP_TB as CET
+		left join CODE_MASTER_TB as CMT
+		on
+		CET.CusCode =
+		CMT.CodeID and CMT.CodeGroupName = 'CusCode'
 	</select>
-	<select id="GetPN" resultType = "com.sammi.srvm.dto.EquDTO">
+	<select id="GetPN" resultType="com.sammi.srvm.dto.EquDTO">
 		select
-			ProductNumber
-		from EQU_TB
+		ProductNumber as Name
+		from
+		EQU_TB
 	</select>
-    <select id="GetAllCustomer" resultType = "com.sammi.srvm.dto.CusDTO">
-        select
-            CusCode,
-            Name,
-            PreName,
-            CorpNumber,
-            MatFlag,
-            Address1,
-            Address2,
-            Address3,
-            PreNumber
-        where CUS_TB
-        order by CusCode
+	<select id="GetAllCustomer"
+		resultType="com.sammi.srvm.dto.CusDTO">
+		select
+		CusCode,
+		Name,
+		PreName,
+		CorpNumber,
+		MatFlag,
+		Address1,
+		Address2,
+		Address3,
+		PreNumber
+		where CUS_TB
+		order by CusCode
 
-    </select>
+	</select>
 	<select id="GetAllEmployee" resultMap="EmployeeDataMap">
-		SELECT 
-			EmpCode,
-			Departcode,
-			Name,
-			Rank,
-			Gender
+		SELECT
+		EmpCode,
+		Departcode,
+		Name,
+		Rank,
+		Gender
 		from EMP_TB
 		order by EmpNumber
 	</select>
 
-	<select id="Login" resultType = "com.sammi.srvm.dto.EmpDTO" parameterType = "com.sammi.srvm.dto.EmpDTO">
+	<select id="Login" resultType="com.sammi.srvm.dto.EmpDTO"
+		parameterType="com.sammi.srvm.dto.EmpDTO">
 		SELECT
-			*
+		*
 		FROM EMP_TB
-		WHERE ID = #{ID} and PASSWORD = #{PASSWORD}
+		WHERE ID = #{ID} and PASSWORD =
+		#{PASSWORD}
 	</select>
 
 
@@ -90,15 +110,10 @@
 		<result property="RelFlag" column="RelFlag" />
 		<result property="PartSrvFlag" column="PartSrvFlag" />
 		<result property="RelExtDate" column="RelExtDate" />
-		<!--  association javaType="com.sammi.srvm.dto.RelDTO"
-			property="reldto">
-			<id column="SrvCode" property="SrvCode" />
-			<result column="RelDate" property="RelDate" />
-		</association>
-		<association javaType="com.sammi.srvm.dto.CusDTO" property="cusdto">
-			<id column="CusCode" property="CusCode"/>
-			<result column=""/>
-		</association-->
+		<!-- association javaType="com.sammi.srvm.dto.RelDTO" property="reldto"> 
+			<id column="SrvCode" property="SrvCode" /> <result column="RelDate" property="RelDate" 
+			/> </association> <association javaType="com.sammi.srvm.dto.CusDTO" property="cusdto"> 
+			<id column="CusCode" property="CusCode"/> <result column=""/> </association -->
 
 	</resultMap>
 
@@ -109,48 +124,64 @@
 		<result property="RelAddress" column="RelAddress" />
 		<result property="RelInvNumber" column="RelInvNumber" />
 	</resultMap>
-	<select id="GetRepDet" parameterType="String" resultType="com.sammi.srvm.dto.RepDetDTO">
+	<select id="GetRepDet" parameterType="String"
+		resultType="com.sammi.srvm.dto.RepDetDTO">
 		select * from REP_DET_TB where SrvCode=#{SrvCode}
 	</select>
-	<select id="GetDetSrv" parameterType="String" resultType="com.sammi.srvm.dto.SrvDTO">
+	<select id="GetDetSrv" parameterType="String"
+		resultType="com.sammi.srvm.dto.SrvDTO">
 		select
-			ST.SrvCode,
-			ST.UniEquCode,
-			ST.EmpCode,
-			CMTemp.CodeDescription as
-			EmpName,
-			ST.CusCode,
-			ST.CusEmpCode,
-			CT.Name as CusName,
-			CMTcusemp.CodeDescription as CusEmpName,
-			ET.ProductNumber as ProductNumber,
-			UET.SerialNumber as SerialNumber,
-			CMTpro.CodeDescription as Process,
-			RT.RelDate as RelDate,
-			UET.WrtFlag as WrtFlag,
-			CT.MatFlag as MatFlag,
-			ST.PartSrvFlag,
-			CONCAT(OT.Amount) as ObtAmount,
-			CONCAT(ORT.Amount) as OrdAmount
+		ST.SrvCode,
+		ST.UniEquCode,
+		ST.EmpCode,
+		CMTemp.CodeDescription as
+		EmpName,
+		ST.CusCode,
+		ST.CusEmpCode,
+		CT.Name as
+		CusName,
+		CMTcusemp.CodeDescription as CusEmpName,
+		ET.ProductNumber as
+		ProductNumber,
+		UET.SerialNumber as SerialNumber,
+		CMTpro.CodeDescription
+		as Process,
+		RT.RelDate as RelDate,
+		UET.WrtFlag as WrtFlag,
+		CT.MatFlag as
+		MatFlag,
+		ST.PartSrvFlag,
+		CONCAT(OT.Amount) as ObtAmount,
+		CONCAT(ORT.Amount) as OrdAmount
 		from SRV_TB as ST
-			inner join CODE_MASTER_TB as CMTemp
-				on ST.EmpCode = CMTemp.CodeID and CMTemp.CodeGroupName = 'EmpCode'
-			inner join CODE_MASTER_TB as CMTcusemp
-				on ST.CusEmpCode = CMTcusemp.CodeID and CMTcusemp.CodeGroupName = 'CusEmpCode'
-			inner join UNI_EQU_TB as UET
-				on ST.UniEquCode = UET.UniEquCode
-			inner join EQU_TB as ET
-				on UET.EquCode = ET.EquCode
-			inner join CODE_MASTER_TB as CMTpro
-				on ST.ProcessCode = CMTpro.CodeID and CMTpro.CodeGroupName = 'ProcessCode'
-			left join REL_TB as RT
-				on ST.SrvCode = RT.SrvCode
-			inner join CUS_TB as CT
-				on ST.CusCode = CT.CusCode
-			left join OBT_TB as OT
-		 		on ST.SrvCode = OT.SrvCode
-			left join ORD_TB as ORT
-				on ST.SrvCode = ORT.SrvCode
+		inner join
+		CODE_MASTER_TB as CMTemp
+		on ST.EmpCode = CMTemp.CodeID and
+		CMTemp.CodeGroupName = 'EmpCode'
+		inner join CODE_MASTER_TB as CMTcusemp
+		on ST.CusEmpCode = CMTcusemp.CodeID and CMTcusemp.CodeGroupName =
+		'CusEmpCode'
+		inner join UNI_EQU_TB as UET
+		on ST.UniEquCode =
+		UET.UniEquCode
+		inner join EQU_TB as ET
+		on UET.EquCode = ET.EquCode
+		inner
+		join CODE_MASTER_TB as CMTpro
+		on ST.ProcessCode = CMTpro.CodeID and
+		CMTpro.CodeGroupName =
+		'ProcessCode'
+		left join REL_TB as RT
+		on ST.SrvCode
+		= RT.SrvCode
+		inner join CUS_TB as CT
+		on ST.CusCode = CT.CusCode
+		left join
+		OBT_TB as OT
+		on ST.SrvCode = OT.SrvCode
+		left join ORD_TB as ORT
+		on
+		ST.SrvCode = ORT.SrvCode
 		where ST.SrvCode = #{SrvCode}
 	</select>
 	<select id="GetAllSrv" resultMap="SrvListMap">
@@ -228,43 +259,37 @@
 		CMTPro.CodeID and CMTPro.CodeGroupName='ProcessCode'
 	</select>
 
-	
-	<!--  insert id="insertInputDAO" parameterType="com.spacecode.ssrm.dto.InputDTO">
-		INSERT INTO INPUT
-		    (I_QUANTITY, I_KEEP_QUANTITY, 
-		     I_STATE, IO_CODE, C_CODE, P_CODE)
-		VALUES 
-		    ((SELECT #{I_QUANTITY} FROM DUAL WHERE #{I_QUANTITY} > 0), 
-		     0,
-		     '진행', 
-		     (SELECT IO_CODE FROM INPUT_ORDER WHERE INPUT_ORDER.IO_CODE = #{InputOrder.IO_CODE}), 
-		     (SELECT C_CODE FROM CELL WHERE CELL.C_CODE = #{Cell.C_CODE}), 
-		     (SELECT P_CODE FROM PRODUCT WHERE PRODUCT.P_CODE = #{Product.P_CODE}))
-	<selectKey keyProperty="I_CODE" resultType="long" order="AFTER">
-    	SELECT INPUT_PK_SEQ.CURRVAL FROM DUAL
-  	</selectKey>
-	</insert-->
 
-	
-	<insert id="ResisterEmployee" parameterType="com.sammi.srvm.dto.EmpDTO">
+	<!-- insert id="insertInputDAO" parameterType="com.spacecode.ssrm.dto.InputDTO"> 
+		INSERT INTO INPUT (I_QUANTITY, I_KEEP_QUANTITY, I_STATE, IO_CODE, C_CODE, 
+		P_CODE) VALUES ((SELECT #{I_QUANTITY} FROM DUAL WHERE #{I_QUANTITY} > 0), 
+		0, '진행', (SELECT IO_CODE FROM INPUT_ORDER WHERE INPUT_ORDER.IO_CODE = #{InputOrder.IO_CODE}), 
+		(SELECT C_CODE FROM CELL WHERE CELL.C_CODE = #{Cell.C_CODE}), (SELECT P_CODE 
+		FROM PRODUCT WHERE PRODUCT.P_CODE = #{Product.P_CODE})) <selectKey keyProperty="I_CODE" 
+		resultType="long" order="AFTER"> SELECT INPUT_PK_SEQ.CURRVAL FROM DUAL </selectKey> 
+		</insert -->
+
+
+	<insert id="ResisterEmployee"
+		parameterType="com.sammi.srvm.dto.EmpDTO">
 		INSERT INTO EMP_TB(
-			EmpNumber,
-			DepartCode,
-			Name,
-			Rank,
-			Gender,
-			ID,
-			PASSWORD,
-			CREATE_ID
+		EmpNumber,
+		DepartCode,
+		Name,
+		Rank,
+		Gender,
+		ID,
+		PASSWORD,
+		CREATE_ID
 		)VALUES(
-			#{EmpNumber},
-			#{DepartCode},
-			#{Name},
-			#{Rank},
-			#{Gender},
-			#{ID},
-			#{PASSWORD},
-			#{CREATE_ID}
+		#{EmpNumber},
+		#{DepartCode},
+		#{Name},
+		#{Rank},
+		#{Gender},
+		#{ID},
+		#{PASSWORD},
+		#{CREATE_ID}
 		)
 	</insert>
 
