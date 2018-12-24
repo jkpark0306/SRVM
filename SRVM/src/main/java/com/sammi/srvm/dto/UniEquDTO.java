@@ -3,6 +3,7 @@ package com.sammi.srvm.dto;
 public class UniEquDTO {
 	private String UniEquCode;
 	private String EquCode;
+	private String ProductNumber;
 	private String SerialNumber;
 	private String WrtFlag;
 	private String MakeDate;

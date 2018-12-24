@@ -18,6 +18,7 @@ import com.sammi.srvm.dto.EmpDTO;
 import com.sammi.srvm.dto.EquDTO;
 import com.sammi.srvm.dto.RepDetDTO;
 import com.sammi.srvm.dto.SrvDTO;
+import com.sammi.srvm.dto.UniEquDTO;
 
 
 @Service
@@ -30,13 +31,35 @@ public class SrvServiceImpl implements SrvService {
 	SqlSession sqlSession;
 	
 	@Override
-	public int InsertSrv(SrvDTO srvdto) {
+	public int InsertSrv(SrvDTO srvdto, UniEquDTO uniequdto) {
 		
-		String SrvCode = (selectdao.GetCurSrv(srvdto.getSrvCode())).getSrvCode();
 		
+		try {
+		String UniEquCode = selectdao.GetUniEquCode(uniequdto);
+		
+		
+		
+		if(UniEquCode != null) {
+			srvdto.setUniEquCode(UniEquCode);
+		}else {
+		    srvdto.setUniEquCode(selectdao.GetNewUniEquCode(srvdto.getProductNumber()));
+		}
+
+		try {
+			SrvDTO dto = selectdao.GetNewSrvCode(srvdto.getSrvCode());
+			System.out.println(dto.getSrvCode());
+		String SrvCode = (selectdao.GetNewSrvCode(srvdto.getSrvCode())).getSrvCode();
+		}catch(Exception e) {
+			System.out.println("ttt");-
+		}
 		int result = insertdao.InsertSrv(srvdto);
-		
 		return result;
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		return 0;
+		
 	}
 
 	@Override

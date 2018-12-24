@@ -14,11 +14,20 @@ import com.sammi.srvm.dto.EmpDTO;
 import com.sammi.srvm.dto.EquDTO;
 import com.sammi.srvm.dto.RepDetDTO;
 import com.sammi.srvm.dto.SrvDTO;
+import com.sammi.srvm.dto.UniEquDTO;
 
 @Component
 public class SelectDAO{
 	@Autowired
 	SqlSession sqlSession;
+	
+	public String GetNewUniEquCode(String ProductNumber) {
+		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetNewUniEquCode",ProductNumber);
+	}
+	
+	public String GetUniEquCode(UniEquDTO dto) {
+		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetUniEquCode",dto);
+	}
 	
 	public List<EmpDTO> GetEmpName(){
 		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetEmpName");
@@ -36,8 +45,8 @@ public class SelectDAO{
 		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetPN");
 	}
 	
-	public SrvDTO GetCurSrv(String SrvCode) {
-		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetCurSrv");
+	public SrvDTO GetNewSrvCode(String SrvCode) {
+		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetNewSrvCode");
 	}
 
 	

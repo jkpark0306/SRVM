@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.sammi.srvm.dto.SrvDTO;
+import com.sammi.srvm.dto.UniEquDTO;
 import com.sammi.srvm.service.SrvService;
 import com.sammi.srvm.service.SrvServiceImpl;
 
@@ -38,7 +39,33 @@ public class SrvController {
 		public String td2;
 		public String td3;
 	}	
-
+	
+	public class InSrvParam{
+		public SrvDTO srvdto;
+		public UniEquDTO uniequdto;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/ajax/InSrv",method=RequestMethod.POST,produces="application/json; charset=UTF-8")
+	public String InSrv(HttpSession session, @RequestBody String param,HttpServletResponse response) {
+		System.out.println(param);
+		
+		Gson gson = new Gson();
+		
+		InSrvParam insrvparam = gson.fromJson(param, InSrvParam.class);
+		
+		System.out.println(gson.toJson(insrvparam));
+		
+		int result = srvservice.InsertSrv(insrvparam.srvdto, insrvparam.uniequdto);
+		
+		System.out.println(result);
+		/*
+		srvservice.InsertSrv(srvdto, uniequdto)
+		*/
+		
+		return "";
+	}
+	
 	
 	@RequestMapping(value="/InSrv",method=RequestMethod.GET)
 	public String InSrv(Locale locale, Model model) {
