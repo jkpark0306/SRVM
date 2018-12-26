@@ -50,7 +50,7 @@ public class SrvServiceImpl implements SrvService {
 			System.out.println(dto.getSrvCode());
 		String SrvCode = (selectdao.GetNewSrvCode(srvdto.getSrvCode())).getSrvCode();
 		}catch(Exception e) {
-			System.out.println("ttt");-
+			System.out.println("ttt");
 		}
 		int result = insertdao.InsertSrv(srvdto);
 		return result;
