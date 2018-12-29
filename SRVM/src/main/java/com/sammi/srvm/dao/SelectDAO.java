@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -46,7 +47,7 @@ public class SelectDAO{
 	}
 	
 	public SrvDTO GetNewSrvCode(String SrvCode) {
-		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetNewSrvCode");
+		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetNewSrvCode",SrvCode);
 	}
 
 	

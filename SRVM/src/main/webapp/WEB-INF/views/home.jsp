@@ -11,9 +11,31 @@
 </style>
 <script src="/srvm/resources/jquery-3.1.1.min.js"></script>
 <script>
+
 	$(document).ready(function() {
 	
+	
 	alert('${test}');
+	
+	function ImportExcel(filepath){
+		$.ajax({
+			url : "/srvm/ajax/ImportExcel",
+			data : filepath,
+			dataType : "text",
+			type : "POST",
+			contentType : "application/json; charset=UTF-8",
+			success : function(responseData){
+				var data = JSON.parse(responseData);
+				if(!data || data.Result == 0){
+					alert("경로를 확인하세요");
+					return;
+				}else{
+					alert("success!");
+				}
+			}
+		});
+		
+	}
 	
 	var testjson = '{"empdtos":[{"EmpCode":"1111111"},{"EmpCode":"1112222","Name":"오범석"},{"EmpCode":"1509011","Name":"박지규"}],"cusdtos":[{"CusCode":"181001","Name":"아이아 1공장"},{"CusCode":"181002","Name":"나이키코리아"},{"CusCode":"181003","Name":"아이아 2공장"},{"CusCode":"181004","Name":"삼기오토모티브"},{"CusCode":"181005","Name":"SK실트론"}],"cusempdtos":[{"CusEmpCode":"18100101","Name":"류지황"},{"CusEmpCode":"18100201","Name":"송정호"},{"CusEmpCode":"18100401","Name":"박우리"},{"CusEmpCode":"18100501","Name":"김동현"}],"equdtos":[{"ProductNumber":"SS15"},{"ProductNumber":"DOTH300"}]}';
 		
@@ -37,6 +59,17 @@
 	
 
 
+		});
+		
+		$("#ImportExcel").on("click",function(){
+			var filepath = $("#filepath").val();
+			alert(filepath);
+			if(filepath == null || filepath == ""){
+				alert("파일경로를 입력하세요");
+			}else{
+
+				ImportExcel(filepath);
+			}
 		});
 				
 		
@@ -115,11 +148,14 @@
 
 		</table>
 	</div>
+	<input type="button" value="엑셀테스트" id="ImportExcel"/>
+	<input type="text" id="filepath"/>
 	<form id="PopupForm" name="Form" method="post" action="popup url" target="popup_window">
 		<input name="param1" value="1" /> <input name="param2" value="2" /> <input name="param3"
 			value="3"
 		/> <input name="param4" value="4" /> <input name="param5" value="5" />
 	</form>
+
 
 </body>
 </html>

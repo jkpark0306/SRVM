@@ -3,13 +3,16 @@ package com.sammi.srvm.service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
 import com.sammi.srvm.dao.InsertDAO;
 import com.sammi.srvm.dao.SelectDAO;
 import com.sammi.srvm.dto.CusDTO;
@@ -33,6 +36,7 @@ public class SrvServiceImpl implements SrvService {
 	@Override
 	public int InsertSrv(SrvDTO srvdto, UniEquDTO uniequdto) {
 		
+		Gson gson = new Gson();
 		
 		try {
 		String UniEquCode = selectdao.GetUniEquCode(uniequdto);
@@ -47,8 +51,12 @@ public class SrvServiceImpl implements SrvService {
 
 		try {
 			SrvDTO dto = selectdao.GetNewSrvCode(srvdto.getSrvCode());
-			System.out.println(dto.getSrvCode());
-		String SrvCode = (selectdao.GetNewSrvCode(srvdto.getSrvCode())).getSrvCode();
+			if(dto == null) {
+				insertdao.InsertSrv(srvdto);
+			}else {
+				srvdto.setSrvCode(dto.getSrvCode());
+			}
+			
 		}catch(Exception e) {
 			System.out.println("ttt");
 		}
