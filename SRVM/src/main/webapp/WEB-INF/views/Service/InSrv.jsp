@@ -64,9 +64,9 @@
 						$("#confirm").click(function(){
 							try{
 								
-								alert('test');
-							
 							var param = {};
+							var SrvDTO = {};
+							var UniEquDTO = {};
 							
 							var indate = new Date($("#indate").val()).format('yyMMdd');
 							
@@ -81,7 +81,7 @@
 							
 							var SrvCode = indate+sccode+'000';
 							
-							var CusName = ${"#cusnames"}.val();
+							var CusName = $("#cusnames").val();
 							
 							var CusCode;
 							
@@ -91,17 +91,57 @@
 								}
 							}
 							
-							var EmpName = ${"#empnames"}.val();
+							var EmpName = $("#empnames").val();
 							
-							var 
+							var EmpCode;
+							
+							for(var i = 0;i<obj.empnames.length;i++){
+								if(obj.empnames[i].Name == EmpName){
+									EmpCode = obj.empnames[i].EmpCode;
+								}
+							}
+							
+							var CusEmpName = $("#cusempnames").val();
+							
+							var CusEmpCode;
+							
+							for(var i = 0;i<obj.cusempnames.length;i++){
+								if(obj.cusempnames[i].Name == CusEmpName){
+									CusEmpCode = obj.cusempnames[i].CusEmpCode;
+								}
+							}
+							
+							//var UniEquCode 
 							
 							
+							alert('cuscode = '+CusCode);
 							
 							
-							param.SrvCode = SrvCode;
-							param.CusCode = 
+							SrvDTO.SrvCode = SrvCode;
+							SrvDTO.CusCode = CusCode;
+							SrvDTO.CusEmpCode = CusEmpCode;
+							SrvDTO.ProcessCode = '100';
+							SrvDTO.RelExtDate = new Date($("#relextdate").val()).format('yyyy-MM-dd');
 							
-							alert(SrvCode);
+							UniEquDTO.SerialNumber = $("#SerialNumber").val();
+							UniEquDTO.ProductNumber = $("#equnames").val();
+							
+							param.srvdto = SrvDTO;
+							param.uniequdto = UniEquDTO;
+							//param.
+							
+							alert(JSON.stringify(param));
+							
+							$.ajax({
+								url : "/srvm/ajax/InSrv",
+								data : JSON.stringify(param),
+								dataType : "text",
+								type : "POST",
+								contentType : "application/json; charset=UTF-8",
+								sucess : function(responseData){
+									alert(responseData);
+								}
+							});
 							
 							}catch(Exception){
 								alert(Exception);
@@ -164,6 +204,10 @@
 							<td id='Indate'>
 								<input type="date" id = "indate">
 							</td>
+														<th>출고예상일자</th>
+							<td id='RelExtdate'>
+								<input type="date" id = "relextdate">
+							</td>
 							<th>유지보수</th>
 
 							<td id='Maintenance'><select id="MntFlag">
@@ -175,11 +219,6 @@
 							<th>고객사담당자</th>
 							<td><select id="cusempnames" /></td>
 							</td>
-							<th>외부지원여부</th>
-							<td id='PartSrvFlag'><select id="PsFlag">
-									<option>Y</option>
-									<option>N</option>
-							</select></td>
 						</tr>
 						<tr>
 							<th>P/N</th>
@@ -193,8 +232,8 @@
 						</tr>
 						<tr>
 							<th>S/N</th>
-							<td id='SerialNumber'>
-								<input type="text">
+							<td>
+								<input type="text" id="SerialNumber">
 							</td>
 						</tr>
 						<!--tr>
