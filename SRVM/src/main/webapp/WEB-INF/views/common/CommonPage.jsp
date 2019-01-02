@@ -251,7 +251,12 @@
 							<li><a href="/srvm/InSrv">입고등록</a></li>
 						</ul></li>
 					<li><a href="../employee/employeeMan"><i class="fa fa-user fa-fw"></i> 사원관리</a></li>
-					<li><a href="../equipment/equipmentMan"><i class="fa fa-wrench fa-fw"></i> 장비관리</a></li>
+					<li><a href="../equipment/equipmentMan"><i class="fa fa-wrench fa-fw"></i> 장비관리</a>
+						<ul class="nav nav-second-level">
+							<li><a href="/srvm/UniEqu">고유장비관리</a></li>
+						</ul>
+					</li>
+					
 					<li><a href="/srvm/customer/CustomerMan"><i class="fa fa-users fa=fw"></i>고객관리</a></li>
 					<!--  
                         <li>

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 import com.sammi.srvm.dao.InsertDAO;
 import com.sammi.srvm.dao.SelectDAO;
+import com.sammi.srvm.dao.TestDAO;
 import com.sammi.srvm.dto.CusDTO;
 import com.sammi.srvm.dto.CusEmpDTO;
 import com.sammi.srvm.dto.EmpDTO;
@@ -29,7 +30,13 @@ import com.sammi.srvm.dto.UniEquDTO;
 public class SrvServiceImpl implements SrvService {
 	@Autowired
 	SelectDAO selectdao;
+	
+	@Autowired
 	InsertDAO insertdao;
+	
+	@Autowired
+	TestDAO testdao;
+	
 
 	@Autowired
 	SqlSession sqlSession;
@@ -38,13 +45,6 @@ public class SrvServiceImpl implements SrvService {
 	public int InsertSrv(SrvDTO srvdto, UniEquDTO uniequdto) {
 		
 		Gson gson = new Gson();
-		
-		System.out.println("Seeerrrrrrviiiiiceeeeee");
-		System.out.println(gson.toJson(srvdto));
-		
-		System.out.println(gson.toJson(uniequdto));
-		
-		System.out.println("Seeerrrrrrviiiiiceeeeee");
 		
 		try {
 		String UniEquCode = selectdao.GetUniEquCode(uniequdto);
@@ -64,40 +64,30 @@ public class SrvServiceImpl implements SrvService {
 				
 			}else {
 				srvdto.setSrvCode(dto.getSrvCode());
+				System.out.println("this is new SRVCODE "+dto.getSrvCode());
 			}
 			
 		}catch(Exception e) {
-			System.out.println("ttt");
 		}
-		System.out.println(gson.toJson(srvdto));
-		if(srvdto == null) {
-			System.out.println("null");
-			
-		}else {
-			System.out.println("not null");
-		}
+		
 		srvdto.setEmpCode("1509011");
 		
 		srvdto.setCREATE_ID("jkpark");
 		
+		srvdto.setUniEquCode(uniequdto.getUniEquCode());
 		
+		srvdto.setObtFlag("Y");
+		
+		srvdto.setOrdFlag("Y");
+		
+		srvdto.setRelFlag("N");
+		
+		srvdto.setPartSrvFlag("N");
 		
 		System.out.println(gson.toJson(srvdto));
-
-		if(insertdao == null) {
-			System.out.println("insertdao is null");
-		}else {
-			System.out.println("insertdao is not null");
-		}
-		
-		if(selectdao == null) {
-			System.out.println("selectdao is null");
-		}else {
-			System.out.println("selectdao is not null");
-		}
 		
 		
-		int result = insertdao.InsertSrv(new SrvDTO());
+		int result = insertdao.InsertSrv(srvdto);
 		return result;
 		}catch(Exception e) {
 			System.out.println(e.getMessage());

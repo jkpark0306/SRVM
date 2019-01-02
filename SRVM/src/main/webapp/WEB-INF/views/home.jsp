@@ -123,7 +123,6 @@
 					<th>S/N</th>
 					<th>진행상황</th>
 				</tr>
-
 			</thead>
 			<tbody id="tbody">
 				<c:forEach var="map" items="${SRVLIST}" varStatus="status">

@@ -18,6 +18,17 @@
 		<result property="MODIFY_ID" column="MODIFY_ID" />
 		<result property="MODIFY_DT" column="MODIFY_DT" />
 	</resultMap>
+	<select id="GetAllUniEqu" resultType="com.sammi.srvm.dto.UniEquDTO">
+		select
+			UniEquCode,
+			EquCode,
+			SerialNumber,
+			WrtFlag,
+			MakeDate,
+			CREATE_ID
+		from
+			UNI_EQU_TB
+	</select>
 	<select id="GetNewUniEquCode" resultType="String"
 		parameterType="String">
 		select
@@ -49,7 +60,7 @@
 	<select id="GetNewSrvCode"
 		resultType="com.sammi.srvm.dto.SrvDTO" parameterType="String">
 		select
-		concat(left(#{SrvCode},6),LPAD(cast((cast(right(MAX(SrvCode),2) as
+		concat(left(#{SrvCode},8),LPAD(cast((cast(right(MAX(SrvCode),2) as
 		unsigned) +1) as char(2)),3,0)) as SrvCode
 		from
 		SRV_TB
