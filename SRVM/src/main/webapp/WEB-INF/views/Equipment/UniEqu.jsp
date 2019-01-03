@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
 
-<script src="/srvm/resources/jquery-3.1.1.min.js"></script>
+
 
 <link href="/srvm/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -32,12 +32,38 @@
 <link href="/srvm/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css"
 >
+<script src="/srvm/resources/jquery-3.1.1.min.js"></script>
+<script>
+var obj = {
+	
+};
+$(document)
+.ready(
+		function() {
+			alert('${uniequlist}');
+			obj = JSON.parse('${uniequlist}');
+			
+			alert(obj[1].UniEquCode);
+			
+			
+			for(var i=0;i<Object.keys(obj).length;i++){
+				alert(JSON.stringify(obj[i]));
+				
+				$('#TB1 > tbody:last').append('<tr><td>'+obj[i].UniEquCode+'</td><td>'
+												+obj[i].EquCode+'</td><td>'+
+												 obj[i].SerialNumber+'</td><td>'+
+												 obj[i].CREATE_ID+'</td></tr>');
+			}
+			
+		});
 
+</script>
 </head>
 <body>
+
 	<div id="wrapper">
 		<p>
-			<jsp:include page="common/CommonPage.jsp" flush="false" />
+			<jsp:include page="../common/CommonPage.jsp" flush="false" />
 		</p>
 	</div>
 	<div>
@@ -46,25 +72,9 @@
 				<th>UniEquCode</th>
 				<th>P/N</th>
 				<th>S/N</th>
-				<th>워런티여부</th>
 				<th>제조일자</th>
 			</thead>
-			<tbody id="Tbody">
-				<c:forEach var="param" items="${SRVLIST}" varStatus="status">
-					<tr>
-						<td style="display: none">${map.SrvCode}</td>
-						<td style="display: none">${map.UniEquCode}</td>
-						<td>${map.InDate}</td>
-						<td>${map.EmpName}</td>
-						<td>${map.CusName}</td>
-						<td>${map.CusEmpName}</td>
-						<td>${map.ProductNumber}</td>
-						<td>${map.SerialNumber}</td>
-						<td>${map.Process}</td>
-
-					</tr>
-
-				</c:forEach>
+			<tbody id="tbody">
 			</tbody>
 		
 		</table>

@@ -23,7 +23,6 @@
 			UniEquCode,
 			EquCode,
 			SerialNumber,
-			WrtFlag,
 			MakeDate,
 			CREATE_ID
 		from

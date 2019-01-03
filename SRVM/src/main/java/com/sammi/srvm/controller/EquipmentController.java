@@ -30,7 +30,12 @@ public class EquipmentController {
 		
 		String param = gson.toJson(uniequlist);
 		
+		
+		
+		
 		model.addAttribute("uniequlist",param);
+		
+		
 		
 		
 		
