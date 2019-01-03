@@ -8,6 +8,13 @@ public class UniEquDTO {
 	private String WrtFlag;
 	private String MakeDate;
 	private String CREATE_ID;
+	
+	public String getProductNumber() {
+		return ProductNumber;
+	}
+	public void setProductNumber(String productNumber) {
+		ProductNumber = productNumber;
+	}
 	public String getUniEquCode() {
 		return UniEquCode;
 	}

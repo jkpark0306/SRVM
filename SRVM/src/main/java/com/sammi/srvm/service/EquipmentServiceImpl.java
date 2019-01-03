@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.sammi.srvm.dao.SelectDAO;
+import com.sammi.srvm.dto.EquDTO;
 import com.sammi.srvm.dto.UniEquDTO;
 
 @Service
@@ -17,6 +18,17 @@ public class EquipmentServiceImpl implements EquipmentService{
 	SelectDAO selectdao;
 	
 	
+	@Override
+	public List<EquDTO> GetAllEqu(){
+		Gson gson = new Gson();
+		
+		List<EquDTO> dtos = selectdao.GetAllEqu();
+		
+		System.out.println(gson.toJson(dtos));
+		
+		return dtos;
+		//List<EquDTO> dtos = selectdao.get
+	}
 	
 	@Override
 	public List<UniEquDTO> GetAllUniEqu() {

@@ -37,12 +37,13 @@
 <!-- Custom Theme JavaScript -->
 <script src="/srvm/resources/bootstrap/dist/js/sb-admin-2.js"></script>
 
-<script>/*
+<script>
+	/*
 	$(document).ready(function() {
 
-		$("#logouti").on("click", function() {
-			
-		});
+	$("#logouti").on("click", function() {
+		
+	});
 
 	});*/
 </script>
@@ -251,12 +252,19 @@
 							<li><a href="/srvm/InSrv">입고등록</a></li>
 						</ul></li>
 					<li><a href="../employee/employeeMan"><i class="fa fa-user fa-fw"></i> 사원관리</a></li>
-					<li><a href="../equipment/equipmentMan"><i class="fa fa-wrench fa-fw"></i> 장비관리</a>
+					<li><a href="../equipment/equipmentMan"><i class="fa fa-wrench fa-fw"></i> 장비관리<span
+							class="fa arrow"
+						></span></a>
 						<ul class="nav nav-second-level">
-							<li><a href="/srvm/UniEqu">고유장비관리</a></li>
+							<li><a href="/srvm/UniEqu">고유장비목록</a></li>
 						</ul>
-					</li>
-					
+						<ul class="nav nav-second-level">
+							<li><a href="/srvm/Equ">장비목록</a></li>
+						</ul>
+						<ul class="nav nav-second-level">
+							<li><a href="/srvm/InEqu">장비등록</a></li>
+						</ul></li>
+
 					<li><a href="/srvm/customer/CustomerMan"><i class="fa fa-users fa=fw"></i>고객관리</a></li>
 					<!--  
                         <li>

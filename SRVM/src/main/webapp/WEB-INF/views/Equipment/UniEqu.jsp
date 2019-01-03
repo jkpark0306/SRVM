@@ -40,19 +40,18 @@ var obj = {
 $(document)
 .ready(
 		function() {
-			alert('${uniequlist}');
 			obj = JSON.parse('${uniequlist}');
 			
-			alert(obj[1].UniEquCode);
 			
 			
 			for(var i=0;i<Object.keys(obj).length;i++){
 				alert(JSON.stringify(obj[i]));
 				
-				$('#TB1 > tbody:last').append('<tr><td>'+obj[i].UniEquCode+'</td><td>'
-												+obj[i].EquCode+'</td><td>'+
+				$('#TB1 > tbody:last').append('<tr><td>'+obj[i].UniEquCode+'</td><td>'+
+												 obj[i].EquCode+'</td><td>'+
+												 obj[i].ProductNumber+'</td><td>'+
 												 obj[i].SerialNumber+'</td><td>'+
-												 obj[i].CREATE_ID+'</td></tr>');
+												 obj[i].MakeDate+'</td></tr>');
 			}
 			
 		});
@@ -66,10 +65,11 @@ $(document)
 			<jsp:include page="../common/CommonPage.jsp" flush="false" />
 		</p>
 	</div>
-	<div>
+	<div id="page-wrapper">
 		<table class="table table-striped table-bordered table-hover" id="TB1">
 			<thead>
 				<th>UniEquCode</th>
+				<th>EquCode</th>
 				<th>P/N</th>
 				<th>S/N</th>
 				<th>제조일자</th>

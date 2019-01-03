@@ -18,15 +18,26 @@
 		<result property="MODIFY_ID" column="MODIFY_ID" />
 		<result property="MODIFY_DT" column="MODIFY_DT" />
 	</resultMap>
+	<select id="GetAllEqu" resultType="com.sammi.srvm.dto.EquDTO">
+		select
+			EquCode,
+			ProductNumber,
+			ManComp
+		from
+			EQU_TB
+	</select>
 	<select id="GetAllUniEqu" resultType="com.sammi.srvm.dto.UniEquDTO">
 		select
-			UniEquCode,
-			EquCode,
-			SerialNumber,
-			MakeDate,
-			CREATE_ID
+			UET.UniEquCode,
+			UET.EquCode,
+			ET.ProductNumber,
+			UET.SerialNumber,
+			UET.MakeDate,
+			UET.CREATE_ID
 		from
-			UNI_EQU_TB
+			UNI_EQU_TB as UET
+		inner join EQU_TB as ET
+			on ET.EquCode = UET.EquCode
 	</select>
 	<select id="GetNewUniEquCode" resultType="String"
 		parameterType="String">

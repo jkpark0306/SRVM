@@ -22,6 +22,10 @@ public class SelectDAO{
 	@Autowired
 	SqlSession sqlSession;
 	
+	public List<EquDTO> GetAllEqu(){
+		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetAllEqu");
+	}
+	
 	public List<UniEquDTO> GetAllUniEqu() {
 		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetAllUniEqu");
 	}

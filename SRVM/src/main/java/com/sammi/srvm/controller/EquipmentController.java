@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.gson.Gson;
+import com.sammi.srvm.dto.EquDTO;
 import com.sammi.srvm.dto.UniEquDTO;
 import com.sammi.srvm.service.EquipmentService;
 
@@ -18,6 +19,20 @@ public class EquipmentController {
 	
 	@Autowired
 	EquipmentService equipmentservice;
+	
+	@RequestMapping(value="/Equ", method=RequestMethod.GET)
+	public String Equ(Locale locale, Model model){
+		
+		Gson gson = new Gson();
+		
+		List<EquDTO> dto = equipmentservice.GetAllEqu();
+		
+		model.addAttribute("equlist",dto);
+		
+		
+		
+		return "Equipment/Equ";
+	}
 	
 	@RequestMapping(value="/UniEqu", method=RequestMethod.GET)
 	public String UniEqu(Locale locale, Model model) {
