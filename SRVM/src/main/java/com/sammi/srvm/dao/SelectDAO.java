@@ -35,23 +35,23 @@ public class SelectDAO{
 	}
 	
 	public String GetUniEquCode(UniEquDTO dto) {
-		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetUniEquCode",dto);
+		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetAllUniEquCode",dto);
 	}
 	
-	public List<EmpDTO> GetEmpName(){
-		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetEmpName");
+	public List<EmpDTO> GetAllEmpName(){
+		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetAllEmpName");
 	}
 	
-	public List<CusDTO> GetCusName(){
-		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetCusName");
+	public List<CusDTO> GetAllCusName(){
+		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetAllCusName");
 	}
 	
-	public List<CusEmpDTO> GetCusEmpName(){
-		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetCusEmpName");
+	public List<CusEmpDTO> GetAllCusEmpName(){
+		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetAllCusEmpName");
 	}
 	
-	public List<EquDTO> GetPN(){
-		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetPN");
+	public List<EquDTO> GetAllPN(){
+		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetAllPN");
 	}
 	
 	public SrvDTO GetNewSrvCode(String SrvCode) {

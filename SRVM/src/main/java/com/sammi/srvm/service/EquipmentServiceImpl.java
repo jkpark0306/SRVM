@@ -1,6 +1,8 @@
 package com.sammi.srvm.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.sammi.srvm.dao.SelectDAO;
+import com.sammi.srvm.dto.CusDTO;
 import com.sammi.srvm.dto.EquDTO;
 import com.sammi.srvm.dto.UniEquDTO;
 
@@ -16,6 +19,40 @@ public class EquipmentServiceImpl implements EquipmentService{
 	
 	@Autowired
 	SelectDAO selectdao;
+	
+	@Override
+	public int InsertUniEqu(UniEquDTO uniequdto) {
+		
+		String UniEquCode = selectdao.GetUniEquCode(uniequdto);		
+		
+		if(UniEquCode == null || UniEquCode.equals("")) {
+			
+			UniEquCode = selectdao.GetNewUniEquCode(UniEquCode);
+			
+		}
+		
+		return 0;
+	}
+	
+	@Override
+	public Map<String, Object> GetInUniEquParam(){
+		Gson gson = new Gson();
+		
+		List<CusDTO> cusdtos = selectdao.GetAllCusName();
+		
+		List<EquDTO> equdtos = selectdao.GetAllPN();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("cusdtos", cusdtos);
+		
+		map.put("equdtos", equdtos);
+		
+		System.out.println(gson.toJson(map));
+		
+		return map;
+		
+	}
 	
 	
 	@Override

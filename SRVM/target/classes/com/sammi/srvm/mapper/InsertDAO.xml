@@ -5,6 +5,26 @@
 
 <mapper namespace="com.sammi.srvm.dao.InsertDAO">
 
+	
+	<insert id="InsertUniEqu" parameterType="com.sammi.srvm.dto.UniEquDTO">
+		insert into UNI_EQU_TB(
+			UniEquCode, 
+			EquCode, 
+			CusCode, 
+			SerialNumber, 
+			MakeDate, 
+			CREATE_ID)
+		values(
+			#{UniEquCode},
+			#{EquCode},
+			#{CusCode},
+			#{SerialNumber},
+			#{MakeDate},
+			#{CREATE_ID}
+		)
+	
+	</insert>
+	
 	<insert id="InsertSrv" parameterType="com.sammi.srvm.dto.SrvDTO">
 		insert into SRV_TB(
 		SrvCode,

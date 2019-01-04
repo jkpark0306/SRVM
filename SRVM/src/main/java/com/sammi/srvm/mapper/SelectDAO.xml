@@ -43,12 +43,13 @@
 		parameterType="String">
 		select
 		max(concat(left(UniEquCode,7),date_format(curdate(),'%y%m'),LPAD(cast(right(UniEquCode,2)
-		as unsigned)+1,2,0))) as test
+		as unsigned)+1,2,0))) as UniEquCode
 		from UNI_EQU_TB
-		where EquCode = (select EquCode from EQU_TB where ProductNumber =
-		#{ProductNumber})
+		where EquCode = (select EquCode from EQU_TB where UniEquCode =
+		#{UniEquCode})
 		and substring(UniEquCode,10,4) = date_format(curdate(),'%y%m')
 	</select>
+	
 	<select id="GetEquCode" resultType="String"
 		parameterType="String">
 		select EquCode
@@ -77,19 +78,19 @@
 		where
 		left(SrvCode,6) = left(#{SrvCode},6)
 	</select>
-	<select id="GetEmpName" resultType="com.sammi.srvm.dto.EmpDTO">
+	<select id="GetAllEmpName" resultType="com.sammi.srvm.dto.EmpDTO">
 		select
 		Name,
 		EmpCode
 		from EMP_TB
 	</select>
-	<select id="GetCusName" resultType="com.sammi.srvm.dto.CusDTO">
+	<select id="GetAllCusName" resultType="com.sammi.srvm.dto.CusDTO">
 		select
 		Name,
 		CusCode
 		from CUS_TB
 	</select>
-	<select id="GetCusEmpName"
+	<select id="GetAllCusEmpName"
 		resultType="com.sammi.srvm.dto.CusEmpDTO">
 		select
 		Name,
@@ -102,8 +103,9 @@
 		CET.CusCode =
 		CMT.CodeID and CMT.CodeGroupName = 'CusCode'
 	</select>
-	<select id="GetPN" resultType="com.sammi.srvm.dto.EquDTO">
+	<select id="GetAllPN" resultType="com.sammi.srvm.dto.EquDTO">
 		select
+		EquCode,
 		ProductNumber as Name
 		from
 		EQU_TB

@@ -48,8 +48,7 @@ public class SrvServiceImpl implements SrvService {
 		
 		try {
 		String UniEquCode = selectdao.GetUniEquCode(uniequdto);
-		
-		
+
 		
 		if(UniEquCode != null) {
 			srvdto.setUniEquCode(UniEquCode);
@@ -74,7 +73,7 @@ public class SrvServiceImpl implements SrvService {
 		
 		srvdto.setCREATE_ID("jkpark");
 		
-		srvdto.setUniEquCode(uniequdto.getUniEquCode());
+		srvdto.setUniEquCode(UniEquCode);
 		
 		srvdto.setObtFlag("Y");
 		
@@ -115,10 +114,10 @@ public class SrvServiceImpl implements SrvService {
 	public Object GetSrvParam() {
 		SrvParamObj SPO = new SrvParamObj();
 		
-		SPO.empnames = selectdao.GetEmpName();
-		SPO.cusnames = selectdao.GetCusName();
-		SPO.cusempnames = selectdao.GetCusEmpName();
-		SPO.equnames = selectdao.GetPN();
+		SPO.empnames = selectdao.GetAllEmpName();
+		SPO.cusnames = selectdao.GetAllCusName();
+		SPO.cusempnames = selectdao.GetAllCusEmpName();
+		SPO.equnames = selectdao.GetAllPN();
 		
 		EquDTO equdto = SPO.equnames.get(0);
 		

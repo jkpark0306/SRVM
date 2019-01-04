@@ -2,6 +2,7 @@ package com.sammi.srvm.controller;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,22 @@ public class EquipmentController {
 	
 	@Autowired
 	EquipmentService equipmentservice;
+	
+	@RequestMapping(value="/InEqu", method=RequestMethod.GET)
+	public String InEqu(Locale locale, Model model) {
+		
+		Gson gson = new Gson();
+		
+		Map<String, Object> map = equipmentservice.GetInUniEquParam();
+		
+		model.addAttribute("InEquParam",gson.toJson(map));
+		
+		//List<CusDTO> cusdtos = 
+		
+		
+		
+		return "Equipment/InEqu";
+	}
 	
 	@RequestMapping(value="/Equ", method=RequestMethod.GET)
 	public String Equ(Locale locale, Model model){
