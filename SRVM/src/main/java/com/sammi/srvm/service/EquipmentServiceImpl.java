@@ -35,7 +35,7 @@ public class EquipmentServiceImpl implements EquipmentService{
 	}
 	
 	@Override
-	public Map<String, Object> GetInUniEquParam(){
+	public Map<String, Object> GetInEquParam(){
 		Gson gson = new Gson();
 		
 		List<CusDTO> cusdtos = selectdao.GetAllCusName();

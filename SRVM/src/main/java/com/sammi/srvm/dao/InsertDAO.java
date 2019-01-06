@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 import com.sammi.srvm.dto.EmpDTO;
+import com.sammi.srvm.dto.EquDTO;
 import com.sammi.srvm.dto.SrvDTO;
 import com.sammi.srvm.dto.TestDTO;
 
@@ -15,6 +16,17 @@ public class InsertDAO{
 	@Autowired
 	SqlSession sqlSession;
 	
+	public int InsertSessionID(String String) {
+		
+		return sqlSession.insert("com.sammi.srvm.dao.InsertDAO.InsertSession");
+	}
+	
+	
+	public int InsertEqu(EquDTO dto) {
+		
+		return sqlSession.insert("com.sammi.srvm.dao.InsertDAO.InsertSrv",dto);
+		
+	}
 	
 	public int InsertSrv(SrvDTO dto) {
 		Gson gson = new Gson();

@@ -10,7 +10,7 @@ public interface EquipmentService {
 	
 	public int InsertUniEqu(UniEquDTO uniequdto);
 	
-	public Map<String, Object> GetInUniEquParam();
+	public Map<String, Object> GetInEquParam();
 	
 	public List<UniEquDTO> GetAllUniEqu();
 	

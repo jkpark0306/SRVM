@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.sammi.srvm.dao.SelectDAO;
 import com.sammi.srvm.dto.EmpDTO;
 import com.sammi.srvm.service.SessionService;
 
@@ -29,6 +30,9 @@ public class SessionController {
 
 	@Autowired
 	PlatformTransactionManager tx;
+	
+	@Autowired
+	SelectDAO selectdao;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginForm() {
@@ -53,6 +57,19 @@ public class SessionController {
 	 * return ""; }
 	 */
 
+	@ResponseBody
+	@RequestMapping(value="/ajax/GetID", method=RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	public String GetID(HttpSession session, HttpServletResponse response) {
+		
+		
+		String SessionID = selectdao.GetID(session.getId());
+		
+		System.out.println(SessionID);
+		
+		return SessionID;
+		
+	}
+	
 	// 로그인 처리부분
 	@ResponseBody
 	@RequestMapping(value = "/ajax/logintry", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

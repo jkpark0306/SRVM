@@ -42,14 +42,42 @@
 							
 							var UniEquDTO = {};
 							
-							
-							
-							
-							
-							
+							alert('test');
 							
 							UniEquDTO.UniEquCode = '';
+							alert($("#serialnumber").val());
+							try{
+							UniEquDTO.SerialNumber = $("#serialnumber").val();
+							UniEquDTO.ProductNumber = $("#PNLIST").val();
+							}catch(Exception){
+								alert(Exception);
+							}
 							
+							
+							/*
+							
+							alert(JSON.parse(UniEquDTO));
+							
+							
+							$.ajax({
+								url : "/srvm/ajax/InEqu",
+								data : JSON.stringify(UniEquDTO),
+								dataType : "text",
+								type : "POST",
+								
+								contentType : "application/json; charset=UTF-8",
+								sucess : function(responseData){
+									alert(responseData);
+								}
+							});
+							
+							*/
+							
+							
+							
+							
+							
+							alert(JSON.stringify(UniEquDTO));
 							
 							
 							
@@ -109,6 +137,7 @@
 							<th>제조일자</th>
 							<td id='MakeDate'>
 								<input type="date" id = "makedate"/>
+								<input type="checkbox" id="mdcheck" value="제조일자 모름"/>
 							</td>
 						</tr>
 						<tr>
