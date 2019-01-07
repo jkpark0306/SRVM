@@ -18,6 +18,12 @@
 		<result property="MODIFY_ID" column="MODIFY_ID" />
 		<result property="MODIFY_DT" column="MODIFY_DT" />
 	</resultMap>
+	<select id="GetID" parameterType="String" resultType="String">
+		select ID
+		from EMP_TB
+		where SessionID = #{SessionID}
+	</select>
+	
 	<select id="GetAllEqu" resultType="com.sammi.srvm.dto.EquDTO">
 		select
 			EquCode,
@@ -58,7 +64,7 @@
 
 	</select>
 	<select id="GetUniEquCode"
-		resultType="com.sammi.srvm.dto.UniEquDTO"
+		resultType="String"
 		parameterType="com.sammi.srvm.dto.UniEquDTO">
 		select UniEquCode
 		from UNI_EQU_TB where EquCode =

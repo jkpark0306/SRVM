@@ -5,7 +5,7 @@
 	
 <mapper namespace="com.sammi.srvm.dao.UpdateDAO">
 	<update id="UpdateSessionID" parameterType = "map">
-		update EMP_TB set SessionID = #{sessionID}
+		update EMP_TB set SessionID = #{SessionID}
 			where EmpCode = #{EmpCode}
 	</update>
 	

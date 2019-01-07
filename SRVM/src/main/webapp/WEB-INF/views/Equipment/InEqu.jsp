@@ -40,16 +40,44 @@
 
 						$("#confirm").click(function(){
 							
-							var UniEquDTO = {};
+							var EquDTO = {};
+							
+							alert('test');
+							
+							EquDTO.EquCode = '';
+							alert($("#serialnumber").val());
+							try{
+							EquDTO.ProductNumber = $("#PNLIST").val();
+							EquDTO.ManComp = $("#mancomp").val();
+							}catch(Exception){
+								alert(Exception);
+							}
+							
+							
+							/*
+							
+							alert(JSON.parse(UniEquDTO));
+							
+							
+							$.ajax({
+								url : "/srvm/ajax/InEqu",
+								data : JSON.stringify(UniEquDTO),
+								dataType : "text",
+								type : "POST",
+								
+								contentType : "application/json; charset=UTF-8",
+								sucess : function(responseData){
+									alert(responseData);
+								}
+							});
+							
+							*/
 							
 							
 							
 							
 							
-							
-							
-							UniEquDTO.UniEquCode = '';
-							
+							alert(JSON.stringify(UniEquDTO));
 							
 							
 							
@@ -96,19 +124,20 @@
 				<table id="TB1" class="SrvTable table table-striped table-bordered table-hover">
 					<tbody>
 						<tr>
+							<th>제조사</th>
+							<td id='ManComp'>
+								<input type="text" id='mancomp'/>
+							</td>
+						</tr>
+						<tr>
 							<th>ProductNumber</th>
 							<td id='ProductNumber'><select id="PNLIST" /></td>
-							<th>SerialNumber</th>
-							<td id='SerialNumber'>
-								<input type="text" id="serialnumber"/>	
-							</td>
-							<th>고객사</th>
-							<td id='Customer'><select id="CusList"/></td>
 						</tr>
 						<tr>
 							<th>제조일자</th>
 							<td id='MakeDate'>
 								<input type="date" id = "makedate"/>
+								<input type="checkbox" id="mdcheck" value="제조일자 모름"/>
 							</td>
 						</tr>
 						<tr>

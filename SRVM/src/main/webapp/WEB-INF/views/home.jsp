@@ -61,6 +61,19 @@
 
 		});
 		
+		$("#GetID").on("click",function(){
+			$.ajax({
+				url : "/srvm/ajax/GetID",
+				type : "POST",
+				contentType : "application/json; charset=UTF-8",
+				success : function(responseData){
+					
+					alert(responseData);
+				}
+			});
+			
+		});
+		
 		$("#ImportExcel").on("click",function(){
 			var filepath = $("#filepath").val();
 			alert(filepath);
@@ -148,6 +161,7 @@
 		</table>
 	</div>
 	<input type="button" value="엑셀테스트" id="ImportExcel"/>
+	<input type="button" value="세션 ID 테스트" id="GetID"/>
 	<input type="text" id="filepath"/>
 	<form id="PopupForm" name="Form" method="post" action="popup url" target="popup_window">
 		<input name="param1" value="1" /> <input name="param2" value="2" /> <input name="param3"

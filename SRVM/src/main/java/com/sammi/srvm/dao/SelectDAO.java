@@ -22,6 +22,13 @@ public class SelectDAO{
 	@Autowired
 	SqlSession sqlSession;
 	
+	public String GetID(String SessionID) {
+		
+		String sessionid = sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetID",SessionID);
+		
+		return sessionid;
+	}
+	
 	public List<EquDTO> GetAllEqu(){
 		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetAllEqu");
 	}
@@ -35,7 +42,7 @@ public class SelectDAO{
 	}
 	
 	public String GetUniEquCode(UniEquDTO dto) {
-		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetAllUniEquCode",dto);
+		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetUniEquCode",dto);
 	}
 	
 	public List<EmpDTO> GetAllEmpName(){

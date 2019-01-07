@@ -5,6 +5,25 @@
 
 <mapper namespace="com.sammi.srvm.dao.InsertDAO">
 
+	<!--insert id="InsertSessionID" parameterType = "String" resultType="String">
+		insert into EMP_TB.SessionID
+	</insert-->
+	
+	
+	<insert id="InsertEqu" parameterType="com.sammi.srvm.dto.EquDTO">
+		insert into EQU_TB(
+			EquCode,
+			ProductNumber,
+			ManComp,
+			CREATE_ID)
+		values(
+			#{EquCode},
+			#{ProductNumber},
+			#{ManComp},
+			#{CREATE_ID}
+		)
+		
+	</insert>
 	
 	<insert id="InsertUniEqu" parameterType="com.sammi.srvm.dto.UniEquDTO">
 		insert into UNI_EQU_TB(

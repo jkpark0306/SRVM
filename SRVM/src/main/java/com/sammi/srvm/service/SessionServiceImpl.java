@@ -21,6 +21,8 @@ public class SessionServiceImpl implements SessionService{
 	
 	@Autowired
 	SelectDAO seldao;
+	
+	@Autowired
 	UpdateDAO updao;
 	
 	@Autowired
@@ -31,6 +33,8 @@ public class SessionServiceImpl implements SessionService{
 		EmpDTO dto;
 		
 	}
+	
+	
 	
 	@Override
 	public EmpDTO Login(EmpDTO dto, String sessionID) {
@@ -49,6 +53,15 @@ public class SessionServiceImpl implements SessionService{
 		System.out.println(resultDTO.getEmpCode());
 		
 		Map <String, String> SessionIDparam = new HashMap<String, String>();
+		
+		SessionIDparam.put("SessionID", sessionID);
+		SessionIDparam.put("EmpCode", resultDTO.getEmpCode());
+		
+		int i = updao.UpdateSessionID(SessionIDparam);
+		
+		System.out.println("affected rows "+i);
+		
+		
 		/*
 		try {
 		if(resultDTO != null) {

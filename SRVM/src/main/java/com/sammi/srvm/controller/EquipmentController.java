@@ -26,7 +26,7 @@ public class EquipmentController {
 		
 		Gson gson = new Gson();
 		
-		Map<String, Object> map = equipmentservice.GetInUniEquParam();
+		Map<String, Object> map = equipmentservice.GetInEquParam();
 		
 		model.addAttribute("InEquParam",gson.toJson(map));
 		
