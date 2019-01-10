@@ -16,4 +16,10 @@ public interface EquipmentService {
 	
 	
 	public List<EquDTO> GetAllEqu();
+
+	int InsertEqu(EquDTO equdto, String SessionID);
+	
+	public String GetEquCatCode(String EquCat);
+	
+	public EquDTO GetEquDTObyPN(String ProductNumber);
 }

@@ -18,32 +18,34 @@
 		<result property="MODIFY_ID" column="MODIFY_ID" />
 		<result property="MODIFY_DT" column="MODIFY_DT" />
 	</resultMap>
+
 	<select id="GetID" parameterType="String" resultType="String">
 		select ID
 		from EMP_TB
 		where SessionID = #{SessionID}
 	</select>
-	
+
 	<select id="GetAllEqu" resultType="com.sammi.srvm.dto.EquDTO">
 		select
-			EquCode,
-			ProductNumber,
-			ManComp
+		EquCode,
+		ProductNumber,
+		ManComp
 		from
-			EQU_TB
+		EQU_TB
 	</select>
-	<select id="GetAllUniEqu" resultType="com.sammi.srvm.dto.UniEquDTO">
+	<select id="GetAllUniEqu"
+		resultType="com.sammi.srvm.dto.UniEquDTO">
 		select
-			UET.UniEquCode,
-			UET.EquCode,
-			ET.ProductNumber,
-			UET.SerialNumber,
-			UET.MakeDate,
-			UET.CREATE_ID
+		UET.UniEquCode,
+		UET.EquCode,
+		ET.ProductNumber,
+		UET.SerialNumber,
+		UET.MakeDate,
+		UET.CREATE_ID
 		from
-			UNI_EQU_TB as UET
+		UNI_EQU_TB as UET
 		inner join EQU_TB as ET
-			on ET.EquCode = UET.EquCode
+		on ET.EquCode = UET.EquCode
 	</select>
 	<select id="GetNewUniEquCode" resultType="String"
 		parameterType="String">
@@ -51,11 +53,32 @@
 		max(concat(left(UniEquCode,7),date_format(curdate(),'%y%m'),LPAD(cast(right(UniEquCode,2)
 		as unsigned)+1,2,0))) as UniEquCode
 		from UNI_EQU_TB
-		where EquCode = (select EquCode from EQU_TB where UniEquCode =
+		where EquCode =
+		(select EquCode from EQU_TB where UniEquCode =
 		#{UniEquCode})
-		and substring(UniEquCode,10,4) = date_format(curdate(),'%y%m')
+		and
+		substring(UniEquCode,10,4) = date_format(curdate(),'%y%m')
 	</select>
-	
+
+	<select id="GetEquCatCode" resultType="String"
+		parameterType="String">
+		select CodeID
+		from CODE_MASTER_TB
+		where CodeDescription =
+		#{EquCat} and CodeGroupName = 'EquCatCode'
+
+	</select>
+
+	<select id="GetEquDTObyPN"
+		resultType="com.sammi.srvm.dto.EquDTO" parameterType="String">
+		select
+		EquCode,
+		ProductNumber,
+		ManComp
+		from EQU_TB
+		where ProductNumber = #{ProductNumber}
+	</select>
+
 	<select id="GetEquCode" resultType="String"
 		parameterType="String">
 		select EquCode
@@ -63,16 +86,23 @@
 		where ProductNumber
 
 	</select>
-	<select id="GetUniEquCode"
-		resultType="String"
+	<select id="GetUniEquCode" resultType="String"
 		parameterType="com.sammi.srvm.dto.UniEquDTO">
 		select UniEquCode
 		from UNI_EQU_TB where EquCode =
 		(select
-		 EquCode from EQU_TB where ProductNumber = #{ProductNumber}) and
+		EquCode from EQU_TB where ProductNumber = #{ProductNumber}) and
 		SerialNumber =
 		#{SerialNumber}
 
+	</select>
+	<select id="GetNewEquCode" resultType="String"
+		parameterType="String">
+		select concat(left(#{EquCode},7),
+		LPAD(cast((cast(right(MAX(EquCode),2) as unsigned) +1) as
+		char(2)),2,0)) as EquCode
+		from EQU_TB
+		where left(EquCode,7) = left(#{EquCode},7)
 	</select>
 	<select id="GetNewSrvCode"
 		resultType="com.sammi.srvm.dto.SrvDTO" parameterType="String">
@@ -84,13 +114,15 @@
 		where
 		left(SrvCode,6) = left(#{SrvCode},6)
 	</select>
-	<select id="GetAllEmpName" resultType="com.sammi.srvm.dto.EmpDTO">
+	<select id="GetAllEmpName"
+		resultType="com.sammi.srvm.dto.EmpDTO">
 		select
 		Name,
 		EmpCode
 		from EMP_TB
 	</select>
-	<select id="GetAllCusName" resultType="com.sammi.srvm.dto.CusDTO">
+	<select id="GetAllCusName"
+		resultType="com.sammi.srvm.dto.CusDTO">
 		select
 		Name,
 		CusCode
@@ -112,7 +144,8 @@
 	<select id="GetAllPN" resultType="com.sammi.srvm.dto.EquDTO">
 		select
 		EquCode,
-		ProductNumber as Name
+		ProductNumber as
+		Name
 		from
 		EQU_TB
 	</select>

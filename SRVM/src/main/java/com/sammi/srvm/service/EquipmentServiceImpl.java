@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.sammi.srvm.dao.InsertDAO;
 import com.sammi.srvm.dao.SelectDAO;
 import com.sammi.srvm.dto.CusDTO;
 import com.sammi.srvm.dto.EquDTO;
@@ -19,6 +20,44 @@ public class EquipmentServiceImpl implements EquipmentService{
 	
 	@Autowired
 	SelectDAO selectdao;
+	
+	@Autowired
+	InsertDAO insertdao;
+	
+	@Override
+	public EquDTO GetEquDTObyPN(String ProductNumber) {
+		
+		return selectdao.GetEquDTObyPN(ProductNumber);
+		
+	}
+	
+	@Override
+	public String GetEquCatCode(String EquCat) {
+		return selectdao.GetEquCatCode(EquCat);
+	}
+	
+	@Override
+	public int InsertEqu(EquDTO equdto, String SessionID) {
+		
+		
+		String id = selectdao.GetID(SessionID);
+		
+		equdto.setCREATE_ID(id);
+		
+		String EquCat = equdto.getEquCat();
+		
+		
+		String EquCatCode = selectdao.GetEquCatCode(EquCat);
+		
+		
+		
+		
+		int result = insertdao.InsertEqu(equdto);
+		
+		
+		return result;
+		
+	}
 	
 	@Override
 	public int InsertUniEqu(UniEquDTO uniequdto) {

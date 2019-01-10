@@ -31,20 +31,17 @@ public class SessionServiceImpl implements SessionService{
 	public class LoginParameter{
 		String SessionID;
 		EmpDTO dto;
-		
 	}
-	
-	
 	
 	@Override
 	public EmpDTO Login(EmpDTO dto, String sessionID) {
 		
 		System.out.println("Login Service Start");
-		
-		try {
+
 		DefaultTransactionDefinition df = new DefaultTransactionDefinition();
 		df.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		TransactionStatus ts = tx.getTransaction(new DefaultTransactionDefinition(df));
+		try {
 		
 		EmpDTO resultDTO;
 		
@@ -56,6 +53,10 @@ public class SessionServiceImpl implements SessionService{
 		
 		SessionIDparam.put("SessionID", sessionID);
 		SessionIDparam.put("EmpCode", resultDTO.getEmpCode());
+		
+		Gson gson = new Gson();
+		
+		System.out.println(gson.toJson(SessionIDparam));
 		
 		int i = updao.UpdateSessionID(SessionIDparam);
 		
@@ -76,8 +77,10 @@ public class SessionServiceImpl implements SessionService{
 		}catch(Exception ex) {
 			System.out.println("Exception from update");
 		}*/
+		tx.commit(ts);
 		return resultDTO;
 		}catch(Exception e) {
+			tx.rollback(ts);
 			System.out.println(e.getMessage());
 			System.out.println(e.getStackTrace());
 			return null;

@@ -62,14 +62,18 @@
 		});
 		
 		$("#GetID").on("click",function(){
+			
 			$.ajax({
 				url : "/srvm/ajax/GetID",
 				type : "POST",
-				contentType : "application/json; charset=UTF-8",
-				success : function(responseData){
-					
-					alert(responseData);
-				}
+				success : function(data){
+					alert('test');
+					alert(data);
+				},
+			     error:function(request,status,error){
+			         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+			        }
+				
 			});
 			
 		});

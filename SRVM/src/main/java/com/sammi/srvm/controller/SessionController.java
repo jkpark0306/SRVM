@@ -58,15 +58,17 @@ public class SessionController {
 	 */
 
 	@ResponseBody
-	@RequestMapping(value="/ajax/GetID", method=RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value="/ajax/GetID", method=RequestMethod.POST)
 	public String GetID(HttpSession session, HttpServletResponse response) {
 		
 		
-		String SessionID = selectdao.GetID(session.getId());
+		String ID = selectdao.GetID(session.getId());
 		
-		System.out.println(SessionID);
+		System.out.println("sessionID = "+session.getId());
 		
-		return SessionID;
+		System.out.println(ID);
+		
+		return ID;
 		
 	}
 	

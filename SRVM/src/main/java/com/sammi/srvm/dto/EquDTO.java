@@ -5,9 +5,18 @@ public class EquDTO {
 	private String ProductNumber;
 	private String Name;
 	private String ManComp;
+	private String EquCat;
 	private String CREATE_ID;
 	private String MODIFY_ID;
 	
+	
+	
+	public String getEquCat() {
+		return EquCat;
+	}
+	public void setEquCat(String equCat) {
+		EquCat = equCat;
+	}
 	public String getName() {
 		return Name;
 	}

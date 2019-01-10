@@ -22,6 +22,20 @@ public class SelectDAO{
 	@Autowired
 	SqlSession sqlSession;
 	
+	public EquDTO GetEquDTObyPN(String ProductNumber) {
+		ProductNumber = ProductNumber.substring(0, ProductNumber.length()-1);
+		System.out.println(ProductNumber);
+		
+		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetEquDTObyPN",ProductNumber);
+	}
+	
+	public String GetEquCatCode(String EquCat) {
+		String EquCatCode = sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetEquCatCode",EquCat);
+		
+		
+		return EquCatCode;
+	}
+	
 	public String GetID(String SessionID) {
 		
 		String sessionid = sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetID",SessionID);
