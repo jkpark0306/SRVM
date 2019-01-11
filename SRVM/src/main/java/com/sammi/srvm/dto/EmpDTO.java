@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 public class EmpDTO {
 	private String EmpCode;
 	
+	private String Department;
+	
 	private String DepartCode;
 	
 	private String Name;
@@ -24,6 +26,20 @@ public class EmpDTO {
 	private String MODIFY_ID;
 	
 	private String MODIFY_DT;
+	
+	
+	
+	public String getDepartment() {
+		return Department;
+	}
+
+	public void setDepartment(String department) {
+		Department = department;
+	}
+
+	public void setEmpCode(String empCode) {
+		EmpCode = empCode;
+	}
 
 	public String getID() {
 		return ID;

@@ -18,7 +18,19 @@
 		<result property="MODIFY_ID" column="MODIFY_ID" />
 		<result property="MODIFY_DT" column="MODIFY_DT" />
 	</resultMap>
+	<select id="GetAllEmp" resultType="com.sammi.srvm.dto.EmpDTO">
+		select
+		EmpCode,
+		CMT.CodeDescription as Department,
+		Name,
+		Rank,
+		Gender,
+		ID
+		from EMP_TB as ET
+		inner join CODE_MASTER_TB as CMT
+		on CMT.CodeID = DepartCode and CMT.CodeGroupName = 'DepartCode'
 
+	</select>
 	<select id="GetID" parameterType="String" resultType="String">
 		select ID
 		from EMP_TB
@@ -44,7 +56,8 @@
 		UET.CREATE_ID
 		from
 		UNI_EQU_TB as UET
-		inner join EQU_TB as ET
+		inner
+		join EQU_TB as ET
 		on ET.EquCode = UET.EquCode
 	</select>
 	<select id="GetNewUniEquCode" resultType="String"
@@ -102,7 +115,8 @@
 		LPAD(cast((cast(right(MAX(EquCode),2) as unsigned) +1) as
 		char(2)),2,0)) as EquCode
 		from EQU_TB
-		where left(EquCode,7) = left(#{EquCode},7)
+		where left(EquCode,7) =
+		left(#{EquCode},7)
 	</select>
 	<select id="GetNewSrvCode"
 		resultType="com.sammi.srvm.dto.SrvDTO" parameterType="String">
