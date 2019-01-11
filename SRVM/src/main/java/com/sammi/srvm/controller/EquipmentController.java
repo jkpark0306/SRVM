@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.sammi.srvm.dao.SelectDAO;
 import com.sammi.srvm.dto.EquDTO;
 import com.sammi.srvm.dto.UniEquDTO;
 import com.sammi.srvm.service.EquipmentService;
@@ -26,8 +27,24 @@ public class EquipmentController {
 	@Autowired
 	EquipmentService equipmentservice;
 	
+	@Autowired
+	SelectDAO selectdao;
+	
 	
 	Gson gson = new Gson();
+	
+	@ResponseBody
+	@RequestMapping(value="/ajax/GetNewEquCode", method=RequestMethod.POST)
+	public String GetNewEquCode(HttpSession session, @RequestBody String EquCode, HttpServletResponse response) {
+		
+		
+		String newEquCode = selectdao.GetNewEquCode(EquCode);
+		
+		System.out.println("new EquCode = "+newEquCode);
+		
+		return newEquCode;
+		
+	}
 	
 	@ResponseBody
 	@RequestMapping(value="/ajax/GetEquDTObyPN", method=RequestMethod.POST)

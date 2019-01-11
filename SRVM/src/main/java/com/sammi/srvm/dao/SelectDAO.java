@@ -22,6 +22,10 @@ public class SelectDAO{
 	@Autowired
 	SqlSession sqlSession;
 	
+	public String GetNewEquCode(String EquCode) {
+		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetNewEquCode",EquCode);
+	}
+	
 	public EquDTO GetEquDTObyPN(String ProductNumber) {
 		ProductNumber = ProductNumber.substring(0, ProductNumber.length()-1);
 		System.out.println(ProductNumber);
