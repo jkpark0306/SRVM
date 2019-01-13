@@ -9,12 +9,17 @@ import com.sammi.srvm.dto.EmpDTO;
 import com.sammi.srvm.dto.EquDTO;
 import com.sammi.srvm.dto.SrvDTO;
 import com.sammi.srvm.dto.TestDTO;
+import com.sammi.srvm.dto.UniEquDTO;
 
 @Component
 public class InsertDAO{
 	
 	@Autowired
 	SqlSession sqlSession;
+	
+	public int InsertUniEqu(UniEquDTO dto, String SessionID) {
+		return sqlSession.insert("com.sammi.srvm.InsertDAO.InsertUniEqu");
+	}
 	
 	public int InsertSessionID(String String) {
 		
@@ -23,8 +28,9 @@ public class InsertDAO{
 	
 	
 	public int InsertEqu(EquDTO dto) {
-		
-		return sqlSession.insert("com.sammi.srvm.dao.InsertDAO.InsertSrv",dto);
+		Gson gson = new Gson();
+		System.out.println(gson.toJson(dto));
+		return sqlSession.insert("com.sammi.srvm.dao.InsertDAO.InsertEqu",dto);
 		
 	}
 	

@@ -251,8 +251,20 @@
 							<li><a href="../service/ServiceIO.jsp">서비스내역</a></li>
 							<li><a href="/srvm/InSrv">입고등록</a></li>
 						</ul></li>
-					<li><a href="/srvm/Employee"><i class="fa fa-user fa-fw"></i> 사원관리</a></li>
-					<li><a href="../equipment/equipmentMan"><i class="fa fa-wrench fa-fw"></i> 장비관리<span
+					<li><a href="/srvm/Employee"><i class="fa fa-user fa-fw"></i> 사원관리
+					<span class="fa arrow"></span></a>
+						<ul class = "nav nav-second-level">
+							<li><a href="/srvm/Employee">사원목록</a></li>
+							
+						</ul>
+						<ul class = "nav nav-second-level">
+							<li><a href="/srvm/InEmployee">사원등록</a></li>
+						</ul>
+					
+					
+					
+					</li>
+					<li><a href="/srvm/Equ"><i class="fa fa-wrench fa-fw"></i> 장비관리<span
 							class="fa arrow"
 						></span></a>
 						<ul class="nav nav-second-level">
@@ -263,7 +275,11 @@
 						</ul>
 						<ul class="nav nav-second-level">
 							<li><a href="/srvm/InEqu">장비등록</a></li>
-						</ul></li>
+						</ul>
+						<ul class="nav nav-second-level">
+							<li><a href="/srvm/InUniEqu">고유장비등록</a></li>
+						</ul>
+					</li>
 
 					<li><a href="/srvm/customer/CustomerMan"><i class="fa fa-users fa=fw"></i>고객관리</a></li>
 					<!--  

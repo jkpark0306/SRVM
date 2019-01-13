@@ -22,8 +22,13 @@ public class SelectDAO{
 	@Autowired
 	SqlSession sqlSession;
 	
+	
+	
 	public List<EmpDTO> GetAllEmp(){
 		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetAllEmp");
+	}
+	public String GetNewEquCode(String EquCode) {
+		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetNewEquCode",EquCode);
 	}
 	
 	public EquDTO GetEquDTObyPN(String ProductNumber) {
@@ -55,8 +60,8 @@ public class SelectDAO{
 		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetAllUniEqu");
 	}
 	
-	public String GetNewUniEquCode(String ProductNumber) {
-		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetNewUniEquCode",ProductNumber);
+	public String GetNewUniEquCode(String UniEquCode) {
+		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetNewUniEquCode",UniEquCode);
 	}
 	
 	public String GetUniEquCode(UniEquDTO dto) {

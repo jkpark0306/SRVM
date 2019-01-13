@@ -13,6 +13,7 @@
 <script src="/srvm/resources/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/srvm/resources/js/DateFormat.js"></script>
 <script>
+
 	window.onload = function() {
 
 	}
@@ -21,28 +22,108 @@
 			.ready(
 					function() {
 						
-						alert('test');
 						
-						alert('${InEquParam}');
 						
-						obj = JSON.parse('${InEquParam}');
+						obj = JSON.parse('${InUniEquParam}');
 						
-						alert(obj.equdtos[0].Name);
 						
+						var mancarr = new Array();
 						for(var i=0;i<obj.equdtos.length;i++){
-							$("#PNLIST").append($('<option>'+obj.equdtos[i].Name+'</option>'));
+							$("#PNLIST").append($('<option>'+obj.equdtos[i].ProductNumber+'</option>'));
+							var mancstr = obj.equdtos[i].ManComp;
+							
+							if($.inArray(mancstr,mancarr) == -1){
+								mancarr.push(obj.equdtos[i].ManComp);
+								
+								
+								$("#mancomplist").append($('<option>'+obj.equdtos[i].ManComp+'</option>'));
+							}
+							
+							
 						}
 						
 						for(var i=0;i<obj.cusdtos.length;i++){
-							$("#CusList").append($('<option>'+obj.cusdtos[i].Name+'</option>'));
+							$("#cuslist").append($('<option>'+obj.cusdtos[i].Name+'</option>'));
 						}
 						
-
+						
+						$("#PNLIST").change(function(){
+							
+							var index = $("#PNLIST option").index($("#PNLIST option:selected"));
+							
+							$("#EquCode").val(obj.equdtos[index].EquCode);
+							
+						});
+						
+						$("#mdcheck").change(function(){
+							$("#makedate").attr("disbled",true);
+						});
+						
 						$("#confirm").click(function(){
 							
-							var EquDTO = {};
+							var UniEquCode = "";
 							
-							alert('test');
+							var today = new Date();
+							try{
+							}catch(Exception){
+								alert(Exception);
+							}
+							
+							UniEquCode = $("#EquCode").val() + today.format('yyMM')+'001';
+							
+							alert("before/"+UniEquCode);
+							
+							$.ajax({
+								url : "/srvm/ajax/GetNewUniEquCode",
+								data : UniEquCode,
+								dataType : "text",
+								type: "POST",
+								success : function(responseData){
+									try{
+									UniEquCode = responseData.substr(0,responseData.length-2);
+									}catch(Exception){
+										alert(Exception);
+									}
+									
+								}
+								
+							});
+							
+							
+
+							alert("after/"+UniEquCode);
+							
+
+							var index = $("#cuslist option").index($("#cuslist option:selected"));
+							
+							
+							
+							var EquCode = $("#EquCode").val();
+							var SerialNumber = $("#SerialNumber").val();
+							var CusCode = obj.cusdtos[index].CusCode;
+							
+							
+							var UniEquDTO = {};
+							
+							UniEquDTO.UniEquCode = UniEquCode;
+							UniEquDTO.EquCode = $("#EquCode").val();
+							UniEquDTO.SerialNumber = $("#SerialNumber").val();
+							UniEquDTO.CusCode = CusCode;
+							UniEquDTO.MakeDate = $("#makedate").val().format('yyyy-MM-dd');
+							
+							$.ajax({
+								url : "/srvm/ajax/InUniEQu",
+								data : JSON.stringify(UniEquDTO),
+								dataType : "text".
+								type : "POST",
+								contentType : "application/json; charset=UTF-8",
+								success : function(responseData){
+									alert(responseData);
+								}
+							});
+							
+							
+							/*
 							
 							EquDTO.EquCode = '';
 							alert($("#serialnumber").val());
@@ -53,7 +134,7 @@
 							}catch(Exception){
 								alert(Exception);
 							}
-							
+							*/
 							
 							/*
 							
@@ -80,6 +161,11 @@
 							
 							alert(JSON.stringify(UniEquDTO));
 							
+							/*
+							$.ajax({
+								url : "/srvm/ajax/InUniEqu"
+							});
+							*/
 							
 							
 							
@@ -117,8 +203,14 @@
 >
 </head>
 <body>
+	<div id="wrapper">
+		<p>
+			<jsp:include page="../common/CommonPage.jsp" flush="false"/>
+		</p>
+	</div>
 	<div class="col-lg-4">
 		<div class="panel panel-primary" style="width: 1500px;">
+		
 			<div class="panel-heading">장비등록</div>
 			<div class="panel-body">
 
@@ -126,17 +218,23 @@
 					<tbody>
 						<tr>
 							<th>제조사</th>
-							<td id='ManComp'>
-								<input type="text" id='mancomp'/>
+							<td>
+								<select id="mancomplist">
+								
+								</select>
+							</td>
+							<th>고객사</th>
+							<td>
+								<select id="cuslist">
+								
+								</select>
 							</td>
 						</tr>
 						<tr>
 							<th>ProductNumber</th>
-							<td id='ProductNumber'><select id="PNLIST" /></td>
-							<th>EquCode(4)</th>
-							<td>
-							<input type="text" id='EquCode4' />
-							</td>
+							<td id='ProductNumber'><select id="PNLIST"></select></td>
+							<td>SerialNumber</td>
+							<td><input type="text" id="SerialNumber"></input></td>
 						</tr>
 						
 						
@@ -145,6 +243,10 @@
 							<td id='MakeDate'>
 								<input type="date" id = "makedate"/>
 								<input type="checkbox" id="mdcheck" value="제조일자 모름"/>
+							</td>
+														<th>EquCode</th>
+							<td>
+							<input type="text" id='EquCode' />
 							</td>
 						</tr>
 						<tr>
@@ -178,12 +280,12 @@
 							<td colspan="3" id='Action3'/>
 						</tr-->
 					</tbody>
-				<input type="button" id="confirm" value="확인">
+				</table>
 			</div>
+			<input type="button" id="confirm" value="확인">
 
-
-		</div>
-	</div>
+</div>
+</div>
 
 </body>
 </html>

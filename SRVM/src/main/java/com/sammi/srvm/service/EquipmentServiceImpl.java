@@ -24,6 +24,8 @@ public class EquipmentServiceImpl implements EquipmentService{
 	@Autowired
 	InsertDAO insertdao;
 	
+	
+	
 	@Override
 	public EquDTO GetEquDTObyPN(String ProductNumber) {
 		
@@ -44,10 +46,10 @@ public class EquipmentServiceImpl implements EquipmentService{
 		
 		equdto.setCREATE_ID(id);
 		
-		String EquCat = equdto.getEquCat();
+		//String EquCat = equdto.getEquCat();
 		
 		
-		String EquCatCode = selectdao.GetEquCatCode(EquCat);
+		//String EquCatCode = selectdao.GetEquCatCode(EquCat);
 		
 		
 		
@@ -59,18 +61,41 @@ public class EquipmentServiceImpl implements EquipmentService{
 		
 	}
 	
+	
+	
 	@Override
-	public int InsertUniEqu(UniEquDTO uniequdto) {
+	public int InsertUniEqu(UniEquDTO uniequdto, String SessionID) {
 		
-		String UniEquCode = selectdao.GetUniEquCode(uniequdto);		
+		Gson gson = new Gson();
 		
-		if(UniEquCode == null || UniEquCode.equals("")) {
-			
-			UniEquCode = selectdao.GetNewUniEquCode(UniEquCode);
-			
-		}
+		 
+		uniequdto.setCREATE_ID(selectdao.GetID(SessionID));
+		
+		
+		
+		System.out.println(gson.toJson(uniequdto));
+		
 		
 		return 0;
+	}
+	
+	@Override
+	public Map<String, Object> GetInUniEquParam(){
+		
+		List<CusDTO> cusdtos = selectdao.GetAllCusName();
+		
+		List<EquDTO> equdtos = selectdao.GetAllEqu();
+		
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("cusdtos", cusdtos);
+		
+		map.put("equdtos", equdtos);
+		
+		return map;
+	
 	}
 	
 	@Override

@@ -5,10 +5,17 @@ public class UniEquDTO {
 	private String EquCode;
 	private String ProductNumber;
 	private String SerialNumber;
+	private String Customer;
 	private String WrtFlag;
 	private String MakeDate;
 	private String CREATE_ID;
 	
+	public String getCustomer() {
+		return Customer;
+	}
+	public void setCustomer(String customer) {
+		Customer = customer;
+	}
 	public String getProductNumber() {
 		return ProductNumber;
 	}

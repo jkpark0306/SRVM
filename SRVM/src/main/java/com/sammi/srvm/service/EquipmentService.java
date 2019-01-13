@@ -8,7 +8,7 @@ import com.sammi.srvm.dto.UniEquDTO;
 
 public interface EquipmentService {
 	
-	public int InsertUniEqu(UniEquDTO uniequdto);
+	public int InsertUniEqu(UniEquDTO uniequdto, String SessionID);
 	
 	public Map<String, Object> GetInEquParam();
 	
@@ -22,4 +22,8 @@ public interface EquipmentService {
 	public String GetEquCatCode(String EquCat);
 	
 	public EquDTO GetEquDTObyPN(String ProductNumber);
+
+	Map<String, Object> GetInUniEquParam();
+	
+	
 }

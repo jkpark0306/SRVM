@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.sammi.srvm.dao.SelectDAO;
 import com.sammi.srvm.dto.EquDTO;
 import com.sammi.srvm.dto.UniEquDTO;
 import com.sammi.srvm.service.EquipmentService;
@@ -26,14 +27,44 @@ public class EquipmentController {
 	@Autowired
 	EquipmentService equipmentservice;
 	
+	@Autowired
+	SelectDAO selectdao;
+	
 	
 	Gson gson = new Gson();
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/ajax/GetNewUniEquCode", method=RequestMethod.POST)
+	public String GetNewUniEquCode(HttpSession session, @RequestBody String UniEquCode, HttpServletResponse response) {
+		
+		String newUniEquCode = selectdao.GetNewUniEquCode(UniEquCode);
+		
+		if(newUniEquCode == null || newUniEquCode == "") {
+			return UniEquCode;
+		}else {
+			return newUniEquCode;
+		}
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/ajax/GetNewEquCode", method=RequestMethod.POST)
+	public String GetNewEquCode(HttpSession session, @RequestBody String EquCode, HttpServletResponse response) {
+		
+		
+		String newEquCode = selectdao.GetNewEquCode(EquCode);
+		
+		System.out.println("new EquCode = "+newEquCode);
+		
+		return newEquCode;
+		
+	}
 	
 	@ResponseBody
 	@RequestMapping(value="/ajax/GetEquDTObyPN", method=RequestMethod.POST)
 	public String GetEquDTObyPN(HttpSession session,@RequestBody String ProductNumber, HttpServletResponse response) {
 		
-		System.out.println("ajax RequestMapping Success");
 		
 		EquDTO dto = equipmentservice.GetEquDTObyPN(ProductNumber);
 		
@@ -52,17 +83,28 @@ public class EquipmentController {
 		
 		
 		EquCat = EquCat.substring(0, EquCat.length()-1);
-		System.out.println(EquCat);
-		
 		String EquCatCode = equipmentservice.GetEquCatCode(EquCat);
-		
-		System.out.println(EquCatCode);
 		
 		return EquCatCode;
 		
 	}
 	
-	@RequestMapping(value="/srvm/ajax/InEqu")
+	@ResponseBody
+	@RequestMapping(value = "/ajax/InUniEqu", method=RequestMethod.POST)
+	public String InsertUniEqu(HttpSession session, @RequestBody String filterJSON, HttpServletResponse response)
+	{
+		Gson gson = new Gson();
+		
+		UniEquDTO uniequdto = gson.fromJson(filterJSON, UniEquDTO.class);
+		
+		int result = equipmentservice.InsertUniEqu(uniequdto,session.getId());
+		
+		
+		
+		return "";
+	}
+	
+	@RequestMapping(value="/ajax/InEqu")
 	@ResponseBody
 	public String InsertEqu(HttpSession session, @RequestBody String filterJSON, HttpServletResponse response)
 	{
@@ -70,14 +112,20 @@ public class EquipmentController {
 		
 	
 		
-		System.out.println("inequ RequestMapping Sucess");
 		
 		EquDTO dto = gson.fromJson(filterJSON, EquDTO.class);
 		
+		System.out.println(filterJSON);
+		
 		int result = equipmentservice.InsertEqu(dto, session.getId());
 		
+		if(result == 1) {
+			return "s";
+		}else {
+			return "f";
+		}
 		
-		return "";
+		
 	}
 	
 	@RequestMapping(value="/InEqu", method=RequestMethod.GET)
@@ -108,6 +156,22 @@ public class EquipmentController {
 		
 		
 		return "Equipment/Equ";
+	}
+	
+
+	
+	@RequestMapping(value="/InUniEqu", method=RequestMethod.GET)
+	public String InEUniEqu(Locale locale, Model model) {
+		
+		Gson gson = new Gson();
+		
+		Map<String, Object> map = equipmentservice.GetInUniEquParam();
+		
+		System.out.println(gson.toJson(map));
+		
+		model.addAttribute("InUniEquParam",gson.toJson(map));
+		
+		return "Equipment/InUniEqu";
 	}
 	
 	@RequestMapping(value="/UniEqu", method=RequestMethod.GET)

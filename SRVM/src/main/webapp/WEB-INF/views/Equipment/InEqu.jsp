@@ -13,74 +13,110 @@
 </style>
 <script src="/srvm/resources/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/srvm/resources/js/DateFormat.js"></script>
-<script>
-	window.onload = function() {
 
-	}
-	var obj = {};
-	$(document).ready(
-			function() {
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+
+
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
+<script>
+
+	$(document).ready(function() {
+				var obj = {};
 
 				obj = JSON.parse('${InEquParam}');
 
-				$("#EquCode").val('000000000');
-
-
-				for (var i = 0; i < obj.cusdtos.length; i++) {
-					$("#CusList").append(
-							$('<option>' + obj.cusdtos[i].Name + '</option>'));
-				}
-
-				function GetEquCode() {
-
-					var mancomp;
-					var equcat;
-					var pncode;
-					var idx;
-					var EquCode;
-
-					if ($("#mancomp").val() == "삼미정보시스템") {
-
-					}
-				}
+				$("#EquCode").val('001000001');
 				
-				function getNewEquCode(){
-					
+
+				
+				function GetNewEquCode(EquCode){
 					
 					$.ajax({
+						url : "/srvm/ajax/GetNewEquCode",
+						data : EquCode,
+						dataType : "text",
+						type : "POST",
+						success : function(responseData){
+							
+							
+							return responseData;
+						}
 						
 					});
+					
+					
+					
 				}
-
+				
+				
+				$("#EquCode").change(function(){
+					
+					if($("#EquCode").val().length < 9){
+						while($("#EquCode").val().length<9){
+							$("#EquCode").val($("#EquCode").val()+'0');
+						}
+					}else if($("#EquCode").val().length > 9){
+						while($("#EquCode").val().length>9){
+							$("#EquCode").val($("#EquCode").val().substr(0,$("#EquCode").val().length-2));
+						}
+					}
+					
+				});
 				$("#ProductNumber").change(
 						function() {
 
 							var ProductNumber = $("#ProductNumber").val();
-
+							
+							var EquCode;
+							
 							$.ajax({
 								url : "/srvm/ajax/GetEquDTObyPN",
 								data : ProductNumber,
 								dataType : "text",
 								type : "POST",
 								success : function(responseData) {
-									alert(responseData);
+									try{
 									if (responseData == null || responseData == '' || responseData == 'null') {
-										alert('else');
-										alert(ProductNumber.length);
+										
+										$("#confirm").attr("disabled",false);
 										if(ProductNumber.length >= 4){
 											
 										
-										$("#EquCode").val($("#EquCode").val().substr(0,3)+ProductNumber.substr(0,4) +$("#EquCode").val().substr(7,2));
+										EquCode = $("#EquCode").val().substr(0,3)+ProductNumber.substr(0,4) +$("#EquCode").val().substr(7,2);
 										}else{
-											var 
-											$("#EquCode").val($("#EquCode").val().substr(0,3)+ProductNumber.substr(0,ProductNumber.length)+$("#EquCode").val().substr(7,2));
+											var appstr = "";
+											for(i = 0;i<4-ProductNumber.length;i++){
+												appstr = appstr + "0";
+											}
+											EquCode = $("#EquCode").val().substr(0,3)+ProductNumber.substr(0,ProductNumber.length)+appstr+$("#EquCode").val().substr(7,2);
 											
 										}
 									} else {
 										var EquDTO = JSON.parse(responseData);
+										EquCode = EquDTO.EquCode;
 										alert('이미 등록된 장비입니다. (장비코드 : '
 												+ EquDTO.EquCode + ')');
+										$("#EquCode").val(EquDTO.EquCode);
+										$("#confirm").attr("disabled", true);
+										return;
+										}
+									
+									
 
+									if(EquCode.substr(0,7) != '0000000'){
+										
+										var newEquCode = GetNewEquCode(EquCode);
+										
+										if(newEquCode != null && newEquCode != ''){
+											$("#EquCode").val( GetNewEquCode(EquCode));
+											
+										}else{
+											$("#EquCode").val(EquCode);
+										}
+										
+									}
+									}catch(Exception){
+										alert(Exception);
 									}
 								},
 								error : function(request, status, error) {
@@ -90,40 +126,58 @@
 											+ " error = " + error); // 실패 시 처리
 								}
 							});
+
+
+								
 						});
 
 				$("#mancomp").change(
 						function() {
+							var EquCode = "";
 							if ($("#mancomp").val() == "삼미정보시스템") {
 								if ($("#EquCode").val() == null
 										|| $("#EquCode").val() == "") {
 
-									$("#EquCode").val("100SSSS000");
+									EquCode = "100000000";
 								} else {
-									$("#EquCode").val(
-											"1"
-													+ $("#EquCode").val()
-															.substr(1, 8));
+									EquCode = "1"+$("#EquCode").val().substr(1,8);
 								}
 							} else {
 								if ($("#EquCode").val() == null
 										|| $("#EquCode").val() == "") {
 
-									$("#EquCode").val("200SSSS000");
+									EquCode = "200SSSS000";
 								} else {
-									$("#EquCode").val(
-											"2"
-													+ $("#EquCode").val()
-															.substr(1, 8));
+									
+									EquCode = "2"
+										+ $("#EquCode").val()
+										.substr(1, 8);
 								}
 
 							}
+							
+							
+							if(EquCode.substr(0,7) != '0000000'){
+								
+								var newEquCode = GetNewEquCode(EquCode);
+								
+								if(newEquCode != null && newEquCode != ''){
+									$("#EquCode").val( GetNewEquCode(EquCode));
+									
+								}else{
+									$("#EquCode").val(EquCode);
+								}
+								
+							}
+							
+							
 						});
 
-				$("#EquCat").change(
-						function() {
+					
+				$("#EquCat").change(function() {
 
 							var EquCat = $("#EquCat").val();
+							
 
 							$.ajax({
 								url : "/srvm/ajax/GetEquCatCode",
@@ -131,27 +185,72 @@
 								dataType : "text",
 								type : "POST",
 								success : function(responseData) {
-									var newEquCode = $("#EquCode").val()
+									var EquCode = $("#EquCode").val()
 											.substr(0, 1)
 											+ responseData
 											+ $("#EquCode").val().substr(3, 6);
 
-									$("#EquCode").val(newEquCode);
-
-									alert(responseData);
+									
+									if(EquCode.substr(0,7) != '0000000'){
+										
+										var newEquCode = GetNewEquCode(EquCode);
+										
+										if(newEquCode != null && newEquCode != ''){
+											$("#EquCode").val( GetNewEquCode(EquCode));
+											
+										}else{
+											$("#EquCode").val(EquCode);
+										}
+										
+									}
 								}
 
 							});
+							
+ 
 						});
-				$("#confirm").click(function() {
 
+				$("#mdcheck").change(function(){
+					if($('input:checkbox[id="mdcheck"]').is(':checked')==true){
+						$("#makedate").attr("disabled", true);
+					}
+				});
+				
+				$("#confirm").click(function() {
+					try{
 					var EquDTO = {};
 
-					alert('test');
 
 					EquDTO.EquCode = '';
-					alert($("#serialnumber").val());
+					
+					var productnumber = $("#ProductNumber").val();
+					var mancomp = $("#mancomp").val();
+					
+					if(productnumber == null || productnumber == ""){
+						alert('제품번호를 입력하세요');
+					}
+					if(mancomp == null || mancomp == ""){
+						alert("제조사를 입력하세요");
+					}}catch(Exception){
+						alert(Exception);
+					}
+					
+					
+					
+					
+					
 					try {
+						
+						$.ajax({
+							url : "/srvm/ajax/GetID",
+							type : "POST",
+							success : function(responseData){
+								EquDTO.CREATE_ID = responseData;
+							},
+						     error:function(request,status,error){
+						         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+						        }
+						});
 						EquDTO.ProductNumber = $("#ProductNumber").val();
 						EquDTO.ManComp = $("#mancomp").val();
 						EquDTO.EquCode = $("#EquCode").val();
@@ -168,38 +267,29 @@
 
 						contentType : "application/json; charset=UTF-8",
 						sucess : function(responseData) {
+							if(responseData == "s"){
+								alert("등록완료");
+							}else{
+								alert("등록실패");
+							}
 							alert(responseData);
-						}
+						},
+					     error:function(request,status,error){
+					         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+					        }
 
 					});
 
-					/*
-					
-					alert(JSON.parse(UniEquDTO));
 					
 					
-					$.ajax({
-						url : "/srvm/ajax/InEqu",
-						data : JSON.stringify(UniEquDTO),
-						dataType : "text",
-						type : "POST",
-						
-						contentType : "application/json; charset=UTF-8",
-						sucess : function(responseData){
-							alert(responseData);
-						}
-					});
 					
-					 */
+					
+					 
 
-					alert(JSON.stringify(UniEquDTO));
 
-					alert('test');
 				});
 
-			}
-
-	);
+			});
 </script>
 
 <!-- Bootstrap Core CSS -->
@@ -247,15 +337,16 @@
 						<tr>
 							<th>ProductNumber</th>
 							<td id='PN'><input type="text" id="ProductNumber" /></td>
-							<th>EquCode(4)</th>
+							<th>EquCode</th>
 							<td><input type="text" id='EquCode' /></td>
 						</tr>
 
 
 						<tr>
 							<th>제조일자</th>
-							<td id='MakeDate'><input type="date" id="makedate" /> <input
-								type="checkbox" id="mdcheck" value="제조일자 모름" /></td>
+							<td id='MakeDate'><input type="date" id="makedate" /> 
+							 제조일자모름<input
+								type="checkbox" id="mdcheck"/></td>
 							<th>장비종류</th>
 							<td id="tdCat"><select id="EquCat">
 									<option>PPC</option>
@@ -264,12 +355,7 @@
 									<option>PDA</option>
 							</select></td>
 						</tr>
-						<tr>
-						</tr>
-						<tr>
-						</tr>
-						<tr>
-						</tr>
+
 						<!--tr>
 							<th colspan="3">증상</th>
 							<th colspan="3">조치</th>
@@ -295,11 +381,20 @@
 							<td colspan="3" id='Action3'/>
 						</tr-->
 					</tbody>
-					<input type="button" id="confirm" value="확인">
+					</table>
+					<input type="button" id="confirm" value = "확인"/>
+					<input type="text" id="testdatepicker"/>
+					
 					</div>
 
 
 					</div>
 					</div>
+					<script>
+					$(function() {
+						$("#testdatepicker").datepicker();
+						 });
+
+					</script>
 </body>
 </html>

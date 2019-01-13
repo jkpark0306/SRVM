@@ -37,8 +37,7 @@
 var obj = {
 	
 };
-$(document)
-.ready(
+$(document).ready(
 		function() {
 			obj = JSON.parse('${uniequlist}');
 			
@@ -51,7 +50,8 @@ $(document)
 												 obj[i].EquCode+'</td><td>'+
 												 obj[i].ProductNumber+'</td><td>'+
 												 obj[i].SerialNumber+'</td><td>'+
-												 obj[i].MakeDate+'</td></tr>');
+												 obj[i].MakeDate+'</td><td>'+
+												 obj[i].Customer+'</td></tr>');
 			}
 			
 		});
@@ -73,6 +73,7 @@ $(document)
 				<th>P/N</th>
 				<th>S/N</th>
 				<th>제조일자</th>
+				<th>고객사</th>
 			</thead>
 			<tbody id="tbody">
 			</tbody>
