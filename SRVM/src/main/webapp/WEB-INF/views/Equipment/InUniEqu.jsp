@@ -56,7 +56,18 @@
 						});
 						
 						$("#mdcheck").change(function(){
-							$("#makedate").attr("disbled",true);
+							try{
+							alert( $("#makedate").val().toString().format('yyyyMMdd'));
+							}catch(Excpetion){
+								alert(Exception);
+							}
+							if($("input:checkbox[id='mdcheck']").is(":checked") == true){
+
+								$("#makedate").attr("disabled",true);
+							}else{
+								$("#makedate").attr("disabled",false);
+							}
+							
 						});
 						
 						$("#confirm").click(function(){
@@ -105,6 +116,11 @@
 							
 							var UniEquDTO = {};
 							
+							if($("input:checkbox[id='mdcheck']").is(":checked") == false){
+								
+								UniEquDTO.MakeDate = $("makedate").val().format('yyyy-MM-dd');
+							}
+							
 							UniEquDTO.UniEquCode = UniEquCode;
 							UniEquDTO.EquCode = $("#EquCode").val();
 							UniEquDTO.SerialNumber = $("#SerialNumber").val();
@@ -114,7 +130,7 @@
 							$.ajax({
 								url : "/srvm/ajax/InUniEQu",
 								data : JSON.stringify(UniEquDTO),
-								dataType : "text".
+								dataType : "text",
 								type : "POST",
 								contentType : "application/json; charset=UTF-8",
 								success : function(responseData){
@@ -123,49 +139,12 @@
 							});
 							
 							
-							/*
-							
-							EquDTO.EquCode = '';
-							alert($("#serialnumber").val());
-							try{
-							EquDTO.ProductNumber = $("#PNLIST").val();
-							EquDTO.ManComp = $("#mancomp").val();
-							EquDTO.EquCode = $("#EquCod4").val();
-							}catch(Exception){
-								alert(Exception);
-							}
-							*/
-							
-							/*
-							
-							alert(JSON.parse(UniEquDTO));
-							
-							
-							$.ajax({
-								url : "/srvm/ajax/InEqu",
-								data : JSON.stringify(UniEquDTO),
-								dataType : "text",
-								type : "POST",
-								
-								contentType : "application/json; charset=UTF-8",
-								sucess : function(responseData){
-									alert(responseData);
-								}
-							});
-							
-							*/
-							
 							
 							
 							
 							
 							alert(JSON.stringify(UniEquDTO));
 							
-							/*
-							$.ajax({
-								url : "/srvm/ajax/InUniEqu"
-							});
-							*/
 							
 							
 							
@@ -208,7 +187,8 @@
 			<jsp:include page="../common/CommonPage.jsp" flush="false"/>
 		</p>
 	</div>
-	<div class="col-lg-4">
+	<div id="page-wrapper" class="col-lg-4">
+	
 		<div class="panel panel-primary" style="width: 1500px;">
 		
 			<div class="panel-heading">장비등록</div>

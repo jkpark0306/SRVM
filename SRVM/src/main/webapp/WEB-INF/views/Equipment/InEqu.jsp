@@ -383,18 +383,11 @@
 					</tbody>
 					</table>
 					<input type="button" id="confirm" value = "확인"/>
-					<input type="text" id="testdatepicker"/>
 					
 					</div>
 
 
 					</div>
 					</div>
-					<script>
-					$(function() {
-						$("#testdatepicker").datepicker();
-						 });
-
-					</script>
 </body>
 </html>
