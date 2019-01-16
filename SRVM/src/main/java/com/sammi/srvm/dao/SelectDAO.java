@@ -45,11 +45,11 @@ public class SelectDAO{
 		return EquCatCode;
 	}
 	
-	public String GetID(String SessionID) {
+	public EmpDTO GetID(String SessionID) {
 		
-		String sessionid = sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetID",SessionID);
+		EmpDTO empdto = sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.GetID",SessionID);
 		
-		return sessionid;
+		return empdto;
 	}
 	
 	public List<EquDTO> GetAllEqu(){

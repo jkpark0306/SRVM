@@ -13,6 +13,8 @@
 <script>
 
 	$(document).ready(function() {
+		
+		alert(get)
 	
 	
 	alert('${test}');

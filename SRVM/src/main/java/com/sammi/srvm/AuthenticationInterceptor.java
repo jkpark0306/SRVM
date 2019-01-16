@@ -4,10 +4,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.sammi.srvm.dao.SelectDAO;
+import com.sammi.srvm.dto.EmpDTO;
+
 public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
+	@Autowired
+	SelectDAO selectdao;
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 					throws Exception{
@@ -22,6 +29,10 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 			System.out.println("obj is null!");
 			response.sendRedirect("login");
 			return false;
+		}else {
+			
+			
+			
 		}
 		
 		

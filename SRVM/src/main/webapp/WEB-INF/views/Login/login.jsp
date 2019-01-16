@@ -217,16 +217,22 @@
 					success : function(responseData) {
 						var data = JSON.parse(responseData);
 						
-						if (!data || data.Result != 1) {
+						if (!data || data == null) {
 							alert("ID/PW를 확인하세요");
 							result = '/srvm/login';
 						}
 						else{
+							
 							result = '/srvm';
+							
+							
+							
+							
+							document.cookie = responseData;
 						}
+						alert(responseData);
 						
 					}
-
 
 
 				});
