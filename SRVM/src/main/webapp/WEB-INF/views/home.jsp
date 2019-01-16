@@ -10,13 +10,27 @@
 <style>
 </style>
 <script src="/srvm/resources/jquery-3.1.1.min.js"></script>
+<!--script src="/srvm/resources/js/cookie.js"></sciprt-->
 <script>
 
 	$(document).ready(function() {
 	
-	
+		var id = getCookie('ID');
+	alert(id);
 	alert('${test}');
-	
+	function setCookie(cName, cValue, cHour){
+		var expire = new Date();
+		expire.setHours(expire.getHours() + cHour);
+		cookies = cName + '=' +escape(cValue) + '; path=/';
+		if(typeof cHour != 'undefined') cookies += ';expires=' + expire.toGMTString()+';';
+		document.cookie = cookies;
+	}
+
+	function getCookie(cName){
+		var value = document.cookie.match('(^|;) ?' + cName + '=([^;]*)(;|$)');
+		console.log('getCookie function:'+document.cookie);
+		return value? value[2] : null;
+	}
 	function ImportExcel(filepath){
 		$.ajax({
 			url : "/srvm/ajax/ImportExcel",

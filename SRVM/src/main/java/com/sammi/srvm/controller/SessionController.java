@@ -62,7 +62,7 @@ public class SessionController {
 	public String GetID(HttpSession session, HttpServletResponse response) {
 		
 		
-		String ID = selectdao.GetID(session.getId());
+		String ID = selectdao.GetID(session.getId()).getID();
 		
 		System.out.println("sessionID = "+session.getId());
 		
@@ -89,16 +89,16 @@ public class SessionController {
 		System.out.println(filterJSON);
 		System.out.println(gson.toJson(LQ));
 
-		
-		session.setAttribute("login", sessionservice.Login(LQ.empdto, session.getId()));
+		EmpDTO empdto = sessionservice.Login(LQ.empdto, session.getId());
+		session.setAttribute("login", empdto);
 		
 		if(LQ.empdto != null) {
 			LR.Result = 1;
-			return gson.toJson(LR);
+			return gson.toJson(empdto);
 		}else
 		{
 			LR.Result = 0;
-			return gson.toJson(LR);
+			return gson.toJson(empdto);
 		}
 		
 		

@@ -44,6 +44,8 @@
 <!-- Custom Theme JavaScript -->
 <script src="/srvm/resources/bootstrap/dist/js/sb-admin-2.js"></script>
 
+<!--script src="/srvm/resources/js/cookie.js"></sciprt-->
+
 <script>
 	$(document).ready(function() {
 
@@ -189,8 +191,21 @@
         s = Utf8Encode(s);
         return binb2hex(core_sha256(str2binb(s), s.length * chrsz));
       
+        
+    }
+    function setCookie(cName, cValue, cHour){
+    	var expire = new Date();
+    	expire.setHours(expire.getHours() + cHour);
+    	cookies = cName + '=' +escape(cValue) + '; path=/';
+    	if(typeof cHour != 'undefined') cookies += ';expires=' + expire.toGMTString()+';';
+    	document.cookie = cookies;
     }
 
+    function getCookie(cName){
+    	var value = document.cookie.match('(^|;) ?' + cName + '=([^;]*)(;|$)');
+    	console.log('getCookie function:'+document.cookie);
+    	return value? value[2] : null;
+    }
 	function fn_login(e) {
 		var result;
 		var LoginObject = {
@@ -216,16 +231,26 @@
 					async : false,
 					success : function(responseData) {
 						var data = JSON.parse(responseData);
-						
-						if (!data || data.Result != 1) {
+						alert(responseData);
+						if (!data || data == null || data =='') {
+							
+							
 							alert("ID/PW를 확인하세요");
 							result = '/srvm/login';
 						}
 						else{
+							
+							setCookie('ID',data.ID,3);
+							
+							
 							result = '/srvm';
 						}
 						
-					}
+					},					     error:function(request,status,error){
+				         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+			        },complete : function(){
+			        	alert('complete');
+			        }
 
 
 

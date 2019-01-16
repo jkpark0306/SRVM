@@ -33,11 +33,9 @@
 
 	</select>
 	<select id="GetID" parameterType="String" resultType="com.sammi.srvm.dto.EmpDTO">
-		select ID, CMT.CodeDescription as Permission
+		select ID
 		from EMP_TB
 		where SessionID = #{SessionID}
-		inner join CODE_MASTER_TB as CMT
-		on CMT.CodeID = #{Permission} and CMT.CodeGroupName = 'PermissionCode'
 	</select>
 
 	<select id="GetAllEqu" resultType="com.sammi.srvm.dto.EquDTO">
