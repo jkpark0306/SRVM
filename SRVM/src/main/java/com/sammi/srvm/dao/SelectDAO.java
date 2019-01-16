@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.sammi.srvm.dto.CodeMasterDTO;
 import com.sammi.srvm.dto.CusDTO;
 import com.sammi.srvm.dto.CusEmpDTO;
 import com.sammi.srvm.dto.EmpDTO;
@@ -23,6 +24,9 @@ public class SelectDAO{
 	SqlSession sqlSession;
 	
 	
+	public List<CodeMasterDTO> GetAllDepartCode() {
+		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetAllDepartCode");
+	}
 	
 	public List<EmpDTO> GetAllEmp(){
 		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetAllEmp");

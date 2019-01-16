@@ -42,7 +42,7 @@ public class EquipmentServiceImpl implements EquipmentService{
 	public int InsertEqu(EquDTO equdto, String SessionID) {
 		
 		
-		String id = selectdao.GetID(SessionID);
+		String id = selectdao.GetID(SessionID).getID();
 		
 		equdto.setCREATE_ID(id);
 		
@@ -69,7 +69,7 @@ public class EquipmentServiceImpl implements EquipmentService{
 		Gson gson = new Gson();
 		
 		 
-		uniequdto.setCREATE_ID(selectdao.GetID(SessionID));
+		uniequdto.setCREATE_ID(selectdao.GetID(SessionID).getID());
 		
 		
 		

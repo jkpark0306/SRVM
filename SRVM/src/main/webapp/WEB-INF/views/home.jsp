@@ -10,14 +10,18 @@
 <style>
 </style>
 <script src="/srvm/resources/jquery-3.1.1.min.js"></script>
+<script src="/srvm/resources/js/cookie.js"></script>
 <script>
 
 	$(document).ready(function() {
 		
-		alert(get)
 	
+		var id = getCookie('ID');
+	alert(id);
+	alert(getCookie('Permission'));
+	alert(getCookie('EmpCode'));
 	
-	alert('${test}');
+	alert(document.cookie);
 	
 	function ImportExcel(filepath){
 		$.ajax({
@@ -39,11 +43,6 @@
 		
 	}
 	
-	var testjson = '{"empdtos":[{"EmpCode":"1111111"},{"EmpCode":"1112222","Name":"오범석"},{"EmpCode":"1509011","Name":"박지규"}],"cusdtos":[{"CusCode":"181001","Name":"아이아 1공장"},{"CusCode":"181002","Name":"나이키코리아"},{"CusCode":"181003","Name":"아이아 2공장"},{"CusCode":"181004","Name":"삼기오토모티브"},{"CusCode":"181005","Name":"SK실트론"}],"cusempdtos":[{"CusEmpCode":"18100101","Name":"류지황"},{"CusEmpCode":"18100201","Name":"송정호"},{"CusEmpCode":"18100401","Name":"박우리"},{"CusEmpCode":"18100501","Name":"김동현"}],"equdtos":[{"ProductNumber":"SS15"},{"ProductNumber":"DOTH300"}]}';
-		
-		var testobj = JSON.parse(testjson);
-		
-		alert(testobj.empdtos[0].EmpCode);
 		
 		$("#SrvTable tr").on("click", function() {
 			

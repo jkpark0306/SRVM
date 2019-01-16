@@ -258,7 +258,7 @@
 							
 						</ul>
 						<ul class = "nav nav-second-level">
-							<li><a href="/srvm/InEmployee">사원등록</a></li>
+							<li><a href="/srvm/InEmp">사원등록</a></li>
 						</ul>
 					
 					

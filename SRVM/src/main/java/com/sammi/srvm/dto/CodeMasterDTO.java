@@ -7,6 +7,8 @@ public class CodeMasterDTO {
 	private String CodeDescription;
 	private String BelCodeGroupName;
 	private String BelCodeID;
+	private String Name;
+	private String DepartCode;
 	private String CREATE_ID;
 	private String MODIFY_ID;
 	public int getIDX() {

@@ -32,12 +32,11 @@
 		CMT.CodeGroupName = 'DepartCode'
 
 	</select>
-	<select id="GetID" parameterType="String" resultType="com.sammi.srvm.dto.EmpDTO">
-		select ID, CMT.CodeDescription as Permission
+	<select id="GetID" parameterType="String"
+		resultType="com.sammi.srvm.dto.EmpDTO">
+		select ID
 		from EMP_TB
 		where SessionID = #{SessionID}
-		inner join CODE_MASTER_TB as CMT
-		on CMT.CodeID = #{Permission} and CMT.CodeGroupName = 'PermissionCode'
 	</select>
 
 	<select id="GetAllEqu" resultType="com.sammi.srvm.dto.EquDTO">
@@ -70,12 +69,13 @@
 	</select>
 	<select id="GetNewUniEquCode" resultType="String"
 		parameterType="String">
-select
+		select
 		max(concat(left(UniEquCode,9),date_format(curdate(),'%y%m'),LPAD(cast(right(UniEquCode,2)
 		as unsigned)+1,3,0))) as UniEquCode
 		from UNI_EQU_TB
-		where substring(UniEquCode,1,9)  = substring(#{UniEquCode},1,9)
-		and                                          
+		where
+		substring(UniEquCode,1,9) = substring(#{UniEquCode},1,9)
+		and
 		substring(UniEquCode,10,4) = date_format(curdate(),'%y%m')
 	</select>
 
@@ -185,6 +185,14 @@ select
 		order by CusCode
 
 	</select>
+	<select id="GetAllDepartCode" resultType="com.sammi.srvm.dto.CodeMasterDTO">
+		select
+		CodeID as DepartCode,
+		CodeDescription as Name,
+		BelCodeID
+		from CODE_MASTER_TB
+		where CodeGroupName = 'DepartCode'
+	</select> 
 	<select id="GetAllEmployee" resultMap="EmployeeDataMap">
 		SELECT
 		EmpCode,
@@ -196,13 +204,15 @@ select
 		order by EmpNumber
 	</select>
 
-	<select id="Login" resultType="com.sammi.srvm.dto.EmpDTO"
-		parameterType="com.sammi.srvm.dto.EmpDTO">
-		SELECT
-		*
-		FROM EMP_TB
-		WHERE ID = #{ID} and PASSWORD =
-		#{PASSWORD}
+	<select id="Login" resultType="com.sammi.srvm.dto.EmpDTO">
+		select
+		ET.EmpCode , ET.ID ,
+		CMT.CodeDescription as Permission from EMP_TB as
+		ET inner join
+		CODE_MASTER_TB as CMT on
+		CMT.CodeGroupName='PermissionCode' and
+		ET.Permission=CMT.CodeID WHERE
+		ID=#{ID} and PASSWORD=#{PASSWORD}
 	</select>
 
 

@@ -31,8 +31,6 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}else {
 			
-			
-			
 		}
 		
 		

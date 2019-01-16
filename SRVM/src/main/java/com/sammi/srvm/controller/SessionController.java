@@ -62,7 +62,7 @@ public class SessionController {
 	public String GetID(HttpSession session, HttpServletResponse response) {
 		
 		
-		String ID = selectdao.GetID(session.getId()).getCREATE_ID();
+		String ID = selectdao.GetID(session.getId()).getID();
 		
 		System.out.println("sessionID = "+session.getId());
 		

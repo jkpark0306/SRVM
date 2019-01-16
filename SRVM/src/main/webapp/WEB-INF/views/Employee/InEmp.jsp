@@ -30,54 +30,76 @@
 <link href="/srvm/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css"
 >
+
+<script>
+$(document).ready(function(){
+	alert('${inempparam}');
+	
+	var obj = JSON.parse('${inempparam}');
+	
+	
+});
+
+
+</script>
 </head>
 <body>
 	<div id="wrapper">
 		<p>
-			<jsp:include page="../common/CommonPage.jsp" flsuh="false"/>
+			<jsp:include page="../common/CommonPage.jsp" flsuh="false" />
 		</p>
 	</div>
-	<div  id="page-wrapper">
+	<div id="page-wrapper">
 		<table id="TB">
 			<thead id="thead">
-				
+
 			</thead>
 			<tbody id="tbody">
-						<tr>
-							<th>사번</th>
-							<td><input type="text" id='EmpCode' /></td>
-						</tr>
-						<tr>
-							<th>이름</th>
-							<td><input type="text" id="Name" /></td>
-							<th>부서</th>
-							<td><select id="Department">
-							
-							</select></td>
-						</tr>
+				<tr>
+					<th>사번</th>
+					<td><input type="text" id='EmpCode' /></td>
+				</tr>
+				<tr>
+					<th>이름</th>
+					<td><input type="text" id="Name" /></td>
+					<th>부서</th>
+					<td><select id="Dep1">
+					</select> <select id="Dep2">
+					</select> <select id="Dep3">
+					</select></td>
+
+				</tr>
 
 
-						<tr>
-							<th>성별</th>
-							<td><select id="gender">
-								<option>남</option>
-								<option>녀</option>
-							</select></td>
-							<th>장비종류</th>
-							<td id="tdCat"><select id="EquCat">
-									<option>PPC</option>
-									<option>SCANNER</option>
-									<option>PRINTER</option>
-									<option>PDA</option>
-							</select></td>
-						</tr>
+				<tr>
+					<th>성별</th>
+					<td><select id="gender">
+							<option>남</option>
+							<option>녀</option>
+					</select></td>
+					<th>직급</th>
+					<td><select id="Rank">
+							<option>부장</option>
+							<option>차장</option>
+							<option>과장</option>
+							<option>대리</option>
+							<option>사원</option>
+					</select></td>
+				</tr>
 
-				
+				<tr>
+					<th>ID</th>
+					<td><input type="text" id="ID" /></td>
+					<th>Password</th>
+					<td><input type="text" id="password" /></td>
+				</tr>
+
+
 			</tbody>
-		
+
 		</table>
-	
-	
+
+
 	</div>
 
 </body>

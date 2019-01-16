@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.gson.Gson;
 import com.sammi.srvm.dao.SelectDAO;
+import com.sammi.srvm.dto.CodeMasterDTO;
 import com.sammi.srvm.dto.EmpDTO;
 
 @Controller
@@ -35,6 +36,22 @@ public class EmployeeController {
 		
 		return "Employee/Employee";
 		
+	}
+	
+	@RequestMapping(value="/InEmp", method=RequestMethod.GET)
+	public String InEmp(Locale locale, Model model) {
+		
+		
+		
+		Gson gson = new Gson();
+		
+		List<CodeMasterDTO> dptdto = selectdao.GetAllDepartCode();
+		
+		model.addAttribute("inempparam",dptdto);
+		
+		
+		
+		return "Employee/InEmp";
 	}
 
 }
