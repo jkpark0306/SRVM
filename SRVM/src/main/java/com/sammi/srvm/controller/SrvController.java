@@ -290,9 +290,8 @@ public class SrvController {
 		
 	
 		
-		System.out.println(result);
 		
-		model.addAttribute("test",result);
+		model.addAttribute("insrvparam",result);
 		
 		
 		}catch(Exception e) {

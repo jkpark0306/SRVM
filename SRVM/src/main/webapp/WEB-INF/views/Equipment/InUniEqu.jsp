@@ -118,7 +118,7 @@
 							
 							if($("input:checkbox[id='mdcheck']").is(":checked") == false){
 								
-								UniEquDTO.MakeDate = $("makedate").val().format('yyyy-MM-dd');
+								UniEquDTO.MakeDate = $("#makedate").val().format('yyyy-MM-dd');
 							}
 							
 							UniEquDTO.UniEquCode = UniEquCode;

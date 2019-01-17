@@ -90,8 +90,11 @@ public class SessionController {
 		System.out.println(gson.toJson(LQ));
 
 		EmpDTO empdto = sessionservice.Login(LQ.empdto, session.getId());
-		session.setAttribute("login", empdto);
 		
+		session.setAttribute("login",empdto);
+		
+		
+		System.out.println(gson.toJson(empdto));
 		if(LQ.empdto != null) {
 			LR.Result = 1;
 			return gson.toJson(empdto);

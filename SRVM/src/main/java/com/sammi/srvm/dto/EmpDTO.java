@@ -21,6 +21,8 @@ public class EmpDTO {
 	
 	private String Permission;
 	
+	private String SessionID;
+	
 	private String CREATE_ID;
 	
 	private String CREATE_DT;
@@ -31,6 +33,14 @@ public class EmpDTO {
 	
 	
 	
+	public String getSessionID() {
+		return SessionID;
+	}
+
+	public void setSessionID(String sessionID) {
+		SessionID = sessionID;
+	}
+
 	public String getPermission() {
 		return Permission;
 	}

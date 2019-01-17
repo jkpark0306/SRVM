@@ -30,8 +30,6 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 			response.sendRedirect("login");
 			return false;
 		}else {
-			/*
-			EmpDTO edto = selectdao.GetID(session.getId());*/
 			
 		}
 		
