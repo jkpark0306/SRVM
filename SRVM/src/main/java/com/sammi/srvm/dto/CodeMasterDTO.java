@@ -11,6 +11,20 @@ public class CodeMasterDTO {
 	private String DepartCode;
 	private String CREATE_ID;
 	private String MODIFY_ID;
+	
+	
+	public String getName() {
+		return Name;
+	}
+	public void setName(String name) {
+		Name = name;
+	}
+	public String getDepartCode() {
+		return DepartCode;
+	}
+	public void setDepartCode(String departCode) {
+		DepartCode = departCode;
+	}
 	public int getIDX() {
 		return IDX;
 	}

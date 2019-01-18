@@ -23,6 +23,9 @@ public class SelectDAO{
 	@Autowired
 	SqlSession sqlSession;
 	
+	public String CheckEmpCode(String EmpCode) {
+		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.CheckEmpCode",EmpCode);
+	}
 	
 	public List<CodeMasterDTO> GetAllDepartCode() {
 		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetAllDepartCode");

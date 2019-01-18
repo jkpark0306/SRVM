@@ -114,6 +114,8 @@ public class SrvServiceImpl implements SrvService {
 	public Object GetSrvParam() {
 		SrvParamObj SPO = new SrvParamObj();
 		
+		
+		
 		SPO.empnames = selectdao.GetAllEmpName();
 		SPO.cusnames = selectdao.GetAllCusName();
 		SPO.cusempnames = selectdao.GetAllCusEmpName();

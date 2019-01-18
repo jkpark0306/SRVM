@@ -30,13 +30,119 @@
 <link href="/srvm/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css"
 >
-
+<script src="/srvm/resources/jquery-3.1.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> 
 <script>
 $(document).ready(function(){
 	alert('${inempparam}');
 	
+	function checkdepth(str){
+		var cnt = 0;
+		
+		for(var i=0;i<str.length;i++){
+			if(str.charAt(i) == '0'){
+				cnt += 1;
+				
+			}else{
+			}
+			
+			
+		}
+		
+		return cnt;
+	}
+	
+	$("#Dep2").attr("disabled",true);
+	$("#Dep3").attr("disabled",true);
+	
 	var obj = JSON.parse('${inempparam}');
 	
+	try{
+	var dep1 = [];
+	var dep2 = [];
+	var dep3 = [];
+	
+	for(var i =0;i<obj.length;i++){
+		var cnt = checkdepth(obj[i].DepartCode);
+		alert(cnt);
+		if(cnt==3){
+			dep1.push(obj[i].Name);
+		}else if(cnt==2){
+			dep2.push(obj[i].Name);
+		}else if(cnt == 1){
+			dep3.push(obj[i].Name);
+		}
+		
+	}
+	
+	alert(JSON.stringify(dep1));
+	alert(JSON.stringify(dep2));
+	alert(JSON.stringify(dep3));
+	for(var i=0;i<dep1.length;i++){
+		$("#Dep1").append($('<option>'+dep1[i]+'</option>'));
+	}
+	for(var i=0;i<dep3.length;i++){
+		$("#Dep3").append($('<option>'+dep3[i]+'</option>'));
+	}
+	
+	}catch(Exception){
+		alert(Exception);
+	}
+	
+	$("#Dep1").change(function(){
+
+		$("#Dep2").attr("disabled",false);
+		
+		var depname = $("#Dep1").val();
+		
+		var depcode = "";
+		try{
+		for(var i=0;i<obj.length;i++){
+			if(depname==obj[i].Name){
+				depcode = obj[i].DepartCode;
+			}
+		}
+		
+		if(depcode != null && depcode != ""){
+			
+			for(var i =0;i<obj.length;i++){
+				if(depcode.substr(0,1) == obj[i].departCode silinal
+			}
+		
+		for(var i=0;i<dep2.length;i++){
+			if(dep2[i].substr(0,1) == $("#Dep1").val().substr(0,1)){
+			$("#Dep2").append($('<option>'+dep2[i]+'</option>'));
+			}
+		}
+		}
+		
+	});
+	
+	$("#EmpCode").change(function(){
+		alert('test');
+		
+		var EmpCode = $("#EmpCode").val();
+		
+		alert(EmpCode);
+		
+		$.ajax({
+			url : "/srvm/ajax/CheckEmpCode",
+			type : "POST",
+			dataType : "text",
+			data : EmpCode,
+			success : function(responseData){
+				if(responseData == "B"){
+					alert('사번 중복');
+				}
+			},								error : function(request, status, error) {
+				alert("code = " + request.status
+						+ " message = "
+						+ request.responseText
+						+ " error = " + error); // 실패 시 처리
+			}
+			
+		});
+	});
 	
 });
 
@@ -46,11 +152,11 @@ $(document).ready(function(){
 <body>
 	<div id="wrapper">
 		<p>
-			<jsp:include page="../common/CommonPage.jsp" flsuh="false" />
+			<jsp:include page="../common/CommonPage.jsp" flush="false" />
 		</p>
 	</div>
 	<div id="page-wrapper">
-		<table id="TB">
+		<table id="TB" class="SrvTable table table-striped table-bordered table-hover">
 			<thead id="thead">
 
 			</thead>
@@ -64,8 +170,11 @@ $(document).ready(function(){
 					<td><input type="text" id="Name" /></td>
 					<th>부서</th>
 					<td><select id="Dep1">
+					<option value="" selected disabled hidden>선택</option>
 					</select> <select id="Dep2">
+					<option value="" selected disabled hidden>선택</option>
 					</select> <select id="Dep3">
+					<option value="" selected disabled hidden>선택</option>
 					</select></td>
 
 				</tr>
@@ -74,11 +183,13 @@ $(document).ready(function(){
 				<tr>
 					<th>성별</th>
 					<td><select id="gender">
+							<option value="" selected disabled hidden>선택</option>
 							<option>남</option>
 							<option>녀</option>
 					</select></td>
 					<th>직급</th>
 					<td><select id="Rank">
+							<option value="" selected disabled hidden>선택</option>
 							<option>부장</option>
 							<option>차장</option>
 							<option>과장</option>

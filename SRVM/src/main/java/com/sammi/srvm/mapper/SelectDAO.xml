@@ -18,6 +18,12 @@
 		<result property="MODIFY_ID" column="MODIFY_ID" />
 		<result property="MODIFY_DT" column="MODIFY_DT" />
 	</resultMap>
+	<select id="CheckEmpCode" resultType="String" parameterType="String">
+		select
+		EmpCode
+		from EMP_TB
+		where EmpCode = #{EmpCode}
+	</select>
 	<select id="GetAllEmp" resultType="com.sammi.srvm.dto.EmpDTO">
 		select
 		EmpCode,
@@ -187,6 +193,7 @@
 	</select>
 	<select id="GetAllDepartCode" resultType="com.sammi.srvm.dto.CodeMasterDTO">
 		select
+		IDX,
 		CodeID as DepartCode,
 		CodeDescription as Name,
 		BelCodeID
