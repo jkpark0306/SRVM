@@ -23,6 +23,10 @@ public class SelectDAO{
 	@Autowired
 	SqlSession sqlSession;
 	
+	public List<CodeMasterDTO> GetAllRankCode(){
+		return sqlSession.selectList("com.sammi.srvm.dao.SelectDAO.GetAllRankCode");
+	}
+	
 	public String CheckEmpCode(String EmpCode) {
 		return sqlSession.selectOne("com.sammi.srvm.dao.SelectDAO.CheckEmpCode",EmpCode);
 	}

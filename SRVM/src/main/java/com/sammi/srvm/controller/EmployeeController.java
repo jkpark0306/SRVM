@@ -78,6 +78,8 @@ public class EmployeeController {
 		Gson gson = new Gson();
 		
 		List<CodeMasterDTO> dptdto = selectdao.GetAllDepartCode();
+		List<CodeMasterDTO> rnkdto = selectdao.GetAllRankCode();
+		
 		/*
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -89,8 +91,8 @@ public class EmployeeController {
 		
 		System.out.println(gson.toJson(map));*/
 		
-		model.addAttribute("inempparam",gson.toJson(dptdto));
-		
+		model.addAttribute("dptdto",gson.toJson(dptdto));
+		model.addAttribute("rnkdto",gson.toJson(rnkdto));
 		
 		
 		return "Employee/InEmp";

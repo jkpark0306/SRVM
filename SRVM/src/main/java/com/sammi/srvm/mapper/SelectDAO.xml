@@ -18,7 +18,8 @@
 		<result property="MODIFY_ID" column="MODIFY_ID" />
 		<result property="MODIFY_DT" column="MODIFY_DT" />
 	</resultMap>
-	<select id="CheckEmpCode" resultType="String" parameterType="String">
+	<select id="CheckEmpCode" resultType="String"
+		parameterType="String">
 		select
 		EmpCode
 		from EMP_TB
@@ -191,7 +192,15 @@
 		order by CusCode
 
 	</select>
-	<select id="GetAllDepartCode" resultType="com.sammi.srvm.dto.CodeMasterDTO">
+	<select id="GetAllRankCode"
+		resultType="com.sammi.srvm.dto.CodeMasterDTO">
+		select CodeID as RankCode,
+		CodeDescription as Name
+		from CODE_MASTER_TB
+		where CodeGroupName = 'RankCode'
+	</select>
+	<select id="GetAllDepartCode"
+		resultType="com.sammi.srvm.dto.CodeMasterDTO">
 		select
 		IDX,
 		CodeID as DepartCode,
@@ -199,7 +208,7 @@
 		BelCodeID
 		from CODE_MASTER_TB
 		where CodeGroupName = 'DepartCode'
-	</select> 
+	</select>
 	<select id="GetAllEmployee" resultMap="EmployeeDataMap">
 		SELECT
 		EmpCode,

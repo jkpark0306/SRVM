@@ -32,9 +32,9 @@
 >
 <script src="/srvm/resources/jquery-3.1.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> 
+<script src="/srvm/resources/js/SHA256.js"></script>
 <script>
 $(document).ready(function(){
-	alert('${inempparam}');
 	
 	function checkdepth(str){
 		var cnt = 0;
@@ -55,48 +55,121 @@ $(document).ready(function(){
 	$("#Dep2").attr("disabled",true);
 	$("#Dep3").attr("disabled",true);
 	
-	var obj = JSON.parse('${inempparam}');
+	var dptobj = JSON.parse('${dptdto}');
+	var rnkobj = JSON.parse('${rnkdto}');
 	
 	try{
-	var dep1 = [];
-	var depcode1 = [];
-	var dep2 = [];
-	var depcode2 = [];
-	var dep3 = [];
-	var depcode3 = [];
+	var dep1 = {};
+	var dep2 = {};
+	var dep3 = {};
 	
-	for(var i =0;i<obj.length;i++){
-		var cnt = checkdepth(obj[i].DepartCode);
-		alert(cnt);
+	
+	for(var i =0;i<dptobj.length;i++){
+		var cnt = checkdepth(dptobj[i].DepartCode);
 		if(cnt==3){
-			dep1.push(obj[i].Name);
+			dep1[dptobj[i].DepartCode] = dptobj[i].Name;
 		}else if(cnt==2){
-			dep2.push(obj[i].Name);
+			dep2[dptobj[i].DepartCode] = dptobj[i].Name;
 		}else if(cnt == 1){
-			dep3.push(obj[i].Name);
+			dep3[dptobj[i].DepartCode] = dptobj[i].Name;
 		}
 		
 	}
 	
-	alert(JSON.stringify(dep1));
-	alert(JSON.stringify(dep2));
-	alert(JSON.stringify(dep3));
-	for(var i=0;i<dep1.length;i++){
-		$("#Dep1").append($('<option>'+dep1[i].Name+'</option>'));
+	for(key in dep1){
+		$("#Dep1").append($('<option>'+dep1[key]+'</option>'))
 	}
-	for(var i=0;i<dep3.length;i++){
-		$("#Dep3").append($('<option>'+dep3[i].Name+'</option>'));
-	}
-	
 	}catch(Exception){
 		alert(Exception);
 	}
 	
-	$("#Dep1").change(function(){
-
-		$("#Dep2").attr("disabled",false);
+	$("#confirm").click(function(){
 		
-		var depname = $("#Dep1").val();
+		var dptobj = {};
+		
+		dptobj.EmpCode = $("#EmpCode").val();
+		dptobj.Name = $("#Name").val();
+		dptobj.Gender = $("#gender option:selected").val();
+		dptobj.ID = $("#ID").val();
+		dptobj.Password = SHA256($("#password").val());
+		
+
+		for(var i =0;i<rnkobj.length;i++){
+			if($("#Rank ooption:selected").val() == rnkobj[i].Name){
+				dptobj.Rank = rnkobj[i].RankCode;
+			}
+		}
+		
+		alert(JSON.stringify(dptobj));
+		/*
+		$.ajax({
+			url : "/srvm/ajax/InEmp",
+			data : JSON.stringify(dptobj),
+			dataType : "text",
+			type : "POST",
+			contentType : "application/json; charset=UTF-8",
+			success : function(responseData){
+				alert(responseData);
+			}
+		})*/
+	});
+	
+	$("#Dep2").change(function(){
+		$("#Dep3").attr("disabled",false);
+		$("select#Dep3 option").remove();
+		$("#Dep3").append('<option value="" selected disabled hidden>선택</option>');
+
+		
+		for(key1 in dep2){
+			for(key2 in dep3){
+				alert(key1.substr(0,1) + '/'+key2.substr(0,1));
+				if(key1.substr(0,1) == key2.substr(0,1)){
+					$("#Dep3").append($('<option>'+dep3[key2]+'</option>'));
+				}
+			}
+		}
+	});
+	
+	$("#passwordcheck").change(function(){
+		alert('test');
+		if($("#passwordcheck").val() != $("#password").val()){
+			alert('비밀번호가 일치하지 않습니다.');
+			
+		}else{
+			alert('비밀번호 일치');
+		}
+		
+	});
+	
+	$("#Dep1").change(function(){
+		
+		
+		
+		$("#Dep2").attr("disabled",false);
+		$("select#Dep2 option").remove();
+		$("#Dep2").append('<option value="" selected disabled hidden>선택</option>');
+		
+		$("#Dep3").attr("disabled",true);
+		$("select#Dep3 option").remove();
+		$("#Dep3").append('<option value="" selected disabled hidden>선택</option>');
+
+		
+		for(key1 in dep1){
+			for(key2 in dep2){
+				if(key1.substr(0,1) == key2.substr(0,1)){
+					$("#Dep2").append($('<option>'+dep2[key2]+'</option>'));
+				}
+			}
+		}
+		
+		/*
+		for(var i=0;i<dep1.length;i++){
+			for(var j=0;i<dptobj[i].)
+			if(dep1[i] == dptobj[i].Name){
+				
+				
+			}
+		}
 		
 		for(var i=0;i<dep2.length;i++){
 			alert(dep2[i].substr(0,1));
@@ -104,7 +177,7 @@ $(document).ready(function(){
 			if(dep2[i].substr(0,1) == $("#Dep1").val().substr(0,1)){
 			$("#Dep2").append($('<option>'+dep2[i]+'</option>'));
 			}
-		}
+		}*/
 	});
 	
 	$("#EmpCode").change(function(){
@@ -112,7 +185,10 @@ $(document).ready(function(){
 		
 		var EmpCode = $("#EmpCode").val();
 		
+		
+		
 		alert(EmpCode);
+		
 		
 		$.ajax({
 			url : "/srvm/ajax/CheckEmpCode",
@@ -191,13 +267,20 @@ $(document).ready(function(){
 					<th>ID</th>
 					<td><input type="text" id="ID" /></td>
 					<th>Password</th>
-					<td><input type="text" id="password" /></td>
+					<td><input type="password" id="password" /></td>
+					
+				</tr>
+				
+				<tr>
+					<th>Password확인</th>
+					<td><input type="password" id="passwordcheck"/></td>
 				</tr>
 
 
 			</tbody>
 
 		</table>
+		<input type ="button" id="confirm"/>
 
 
 	</div>
