@@ -90,7 +90,7 @@ $(document).ready(function(){
 		});
 		var JsonParam = JSON.stringify(Param);
 		alert(JsonParam);
-		var Uri = "/srvm/Popup/SrvDetailPopup?SrvCode="+JsonParam;
+		var Uri = "/srvm/Popup/SrvDetailPopup?SrvCode="+td.eq();
 		
 		
 		window.open(encodeURI(Uri), "newWindow","resizable=no,width=1530px, height=800px, scrollbar=no");
