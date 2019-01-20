@@ -176,6 +176,8 @@ public class SrvController {
 
 	}
 	
+	
+	
 	@ResponseBody
 	@RequestMapping(value="/ajax/ImportExcel",method=RequestMethod.POST,produces="application/json; charset=UTF-8")
 	public String ImportExcel(HttpSession session, @RequestBody String param, HttpServletResponse response) throws IOException {
@@ -278,6 +280,19 @@ public class SrvController {
 		return "";
 	}
 	
+	@RequestMapping(value="/SrvIO",method=RequestMethod.GET)
+	public String SrvIO(Locale locale, Model model) {
+		
+		
+		Gson gson = new Gson();
+		
+		model.addAttribute("SrvList",gson.toJson(srvservice.GetAllSrv()));
+		
+		
+		
+		return "/Service/SrvIO";
+		
+	}
 	
 	@RequestMapping(value="/InSrv",method=RequestMethod.GET)
 	public String InSrv(Locale locale, Model model) {

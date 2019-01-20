@@ -15,6 +15,9 @@ public class SrvDTO {
 	private String ProductNumber;
 	private String ProcessCode;
 	private String Process;
+	private String Symptom;
+	private String Note;
+	private String InDate;
 	private String RelDate;
 	private String ObtAmount;
 	private String OrdAmount;
@@ -30,6 +33,25 @@ public class SrvDTO {
 	private String MODIFY_ID;
 	private String MODIFY_DT;
 	
+	
+	public String getSymptom() {
+		return Symptom;
+	}
+	public void setSymptom(String symptom) {
+		Symptom = symptom;
+	}
+	public String getNote() {
+		return Note;
+	}
+	public void setNote(String note) {
+		Note = note;
+	}
+	public String getInDate() {
+		return InDate;
+	}
+	public void setInDate(String inDate) {
+		InDate = inDate;
+	}
 	public String getMatFlag() {
 		return MatFlag;
 	}

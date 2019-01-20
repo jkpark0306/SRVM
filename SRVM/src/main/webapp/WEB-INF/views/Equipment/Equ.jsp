@@ -8,14 +8,18 @@
 </head>
 <body>
 
-	<table id="EquTB">
-		<thead id="th">
+	<table id="TB">
+		<thead id="TBH">
 			<tr>
 				<td>EquCode</td>
 				<td>ProductNumber</td>
-				<
+				<td>
 			</tr>
 		</thead>
+		<tbody>
+		
+		
+		</tbody>
 	</table>
 
 </body>

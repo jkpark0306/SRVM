@@ -9,10 +9,17 @@ public class CodeMasterDTO {
 	private String BelCodeID;
 	private String Name;
 	private String DepartCode;
+	private String RankCode;
 	private String CREATE_ID;
 	private String MODIFY_ID;
 	
 	
+	public String getRankCode() {
+		return RankCode;
+	}
+	public void setRankCode(String rankCode) {
+		RankCode = rankCode;
+	}
 	public String getName() {
 		return Name;
 	}
