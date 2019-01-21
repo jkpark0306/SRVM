@@ -43,10 +43,6 @@ public class SessionController {
 		public EmpDTO empdto;
 	}
 
-	private class LoginRes {
-		public String Message;
-		public int Result;
-	}
 	/*
 	 * @ResponseBody
 	 * 
@@ -84,7 +80,6 @@ public class SessionController {
 			session.removeAttribute("login");
 		}
 		LoginReq LQ = gson.fromJson(filterJSON, LoginReq.class);
-		LoginRes LR = new LoginRes();
 		
 		System.out.println(filterJSON);
 		System.out.println(gson.toJson(LQ));
@@ -96,11 +91,9 @@ public class SessionController {
 		
 		System.out.println(gson.toJson(empdto));
 		if(LQ.empdto != null) {
-			LR.Result = 1;
 			return gson.toJson(empdto);
 		}else
 		{
-			LR.Result = 0;
 			return gson.toJson(empdto);
 		}
 		

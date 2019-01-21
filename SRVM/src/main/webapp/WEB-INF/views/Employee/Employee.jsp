@@ -19,8 +19,7 @@ var obj = {
 			$("#EmpTB > tbody:last").append("<tr><td>"+obj[i].EmpCode+'</td><td>'+
 											obj[i].Department+'</td><td>'+
 											obj[i].Name+'</td><td>'+
-											obj[i].Rank+'</td><td>'+
-											obj[i].Gender+'</td></tr>');
+											obj[i].Rank+'</td></tr>');
 		}
 	});
 
@@ -34,7 +33,6 @@ var obj = {
 				<th>부서</th>
 				<th>이름</th>
 				<th>직급</th>
-				<th>성별</th>
 			</tr>
 		</thead>
 		<tbody id="EmpTBBD">

@@ -100,7 +100,30 @@ public class SrvServiceImpl implements SrvService {
 	public List<SrvDTO> GetAllSrv() {
 		// TODO Auto-generated method stub
 		
-		return selectdao.GetAllSrv();
+		List<SrvDTO> srvdtos = selectdao.GetAllSrv();
+		for(int i=0;i<srvdtos.size();i++) {
+			
+			SrvDTO dto = srvdtos.get(i);
+			
+			String SrvCode = dto.getSrvCode();
+			
+			String y = "20" +SrvCode.substring(0, 2);
+			String m = SrvCode.substring(2,4);
+			String d = SrvCode.substring(4,6);
+			
+			String Indate = y+'-'+m+'-'+d;
+			
+			dto.setInDate(Indate);
+			
+			srvdtos.set(i, dto);
+		}
+		
+		System.out.println(srvdtos.get(0).getInDate());
+		
+		
+		
+		
+		return srvdtos;
 	}
 	
 	private class SrvParamObj{

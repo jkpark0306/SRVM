@@ -10,7 +10,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin 2 - Bootstrap Admin Theme</title>
+<title>SRVM</title>
 
 <!-- Bootstrap Core CSS -->
 <link href="/srvm/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -237,7 +237,7 @@
 					async : false,
 					success : function(responseData) {
 						var data = JSON.parse(responseData);
-						alert(responseData);
+						//alert(responseData);
 
 						if (!data || data == null || data == '') {
 
@@ -250,7 +250,6 @@
 							setCookie('ID', data.ID, 3);
 							setCookie('Permission',data.Permission, 3);
 							setCookie('EmpCode',data.EmpCode, 3);
-							//setCookie('');
 
 							result = '/srvm';
 
@@ -262,7 +261,7 @@
 								+ request.responseText + " error = " + error); // 실패 시 처리
 					},
 					complete : function() {
-						alert('complete');
+						//alert('complete');
 					}
 
 				});

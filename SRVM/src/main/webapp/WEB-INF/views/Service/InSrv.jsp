@@ -14,9 +14,6 @@
 <script src="/srvm/resources/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/srvm/resources/js/DateFormat.js"></script>
 <script>
-	window.onload = function() {
-
-	}
 	var obj = {};
 	$(document)
 			.ready(

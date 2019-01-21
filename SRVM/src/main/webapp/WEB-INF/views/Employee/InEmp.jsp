@@ -58,6 +58,8 @@ $(document).ready(function(){
 	var dptobj = JSON.parse('${dptdto}');
 	var rnkobj = JSON.parse('${rnkdto}');
 	
+	alert(JSON.stringify(rnkobj));
+	
 	try{
 	var dep1 = {};
 	var dep2 = {};
@@ -77,25 +79,27 @@ $(document).ready(function(){
 	}
 	
 	for(key in dep1){
-		$("#Dep1").append($('<option>'+dep1[key]+'</option>'))
+		$("#Dep1").append($('<option>'+dep1[key]+'</option>'));
 	}
 	}catch(Exception){
 		alert(Exception);
 	}
 	
 	$("#confirm").click(function(){
-		
+		try{
 		var dptobj = {};
 		
 		dptobj.EmpCode = $("#EmpCode").val();
 		dptobj.Name = $("#Name").val();
-		dptobj.Gender = $("#gender option:selected").val();
 		dptobj.ID = $("#ID").val();
 		dptobj.Password = SHA256($("#password").val());
 		
-
+		alert($("#Rank option:selected").val());
 		for(var i =0;i<rnkobj.length;i++){
-			if($("#Rank ooption:selected").val() == rnkobj[i].Name){
+			
+			if($("#Rank option:selected").val() == rnkobj[i].Name){
+				
+				
 				dptobj.Rank = rnkobj[i].RankCode;
 			}
 		}
@@ -112,6 +116,9 @@ $(document).ready(function(){
 				alert(responseData);
 			}
 		})*/
+		}catch(Exception){
+			alert(Exception);
+		}
 	});
 	
 	$("#Dep2").change(function(){
@@ -129,9 +136,16 @@ $(document).ready(function(){
 			}
 		}
 	});
-	
+	$("#password").change(function(){
+		if($("#passwordcheck").val() != $("#password").val()){
+			alert('비밀번호가 일치하지 않습니다.');
+			
+		}else{
+			alert('비밀번호 일치');
+		}
+		
+	});
 	$("#passwordcheck").change(function(){
-		alert('test');
 		if($("#passwordcheck").val() != $("#password").val()){
 			alert('비밀번호가 일치하지 않습니다.');
 			
@@ -162,33 +176,23 @@ $(document).ready(function(){
 			}
 		}
 		
-		/*
-		for(var i=0;i<dep1.length;i++){
-			for(var j=0;i<dptobj[i].)
-			if(dep1[i] == dptobj[i].Name){
-				
-				
-			}
-		}
-		
-		for(var i=0;i<dep2.length;i++){
-			alert(dep2[i].substr(0,1));
-			alert($("#Dep1").val().substr(0,1));
-			if(dep2[i].substr(0,1) == $("#Dep1").val().substr(0,1)){
-			$("#Dep2").append($('<option>'+dep2[i]+'</option>'));
-			}
-		}*/
 	});
 	
 	$("#EmpCode").change(function(){
-		alert('test');
 		
 		var EmpCode = $("#EmpCode").val();
 		
 		
-		
-		alert(EmpCode);
-		
+		if(EmpCode.length != 7){
+			alert('사번은 7자리 숫자입니다.');
+			//$("#confirm").addClass("disabled");
+			$("#confirm").attr("disabled",true);
+			return;
+		}else{
+			//$("#confirm").removeClass("disabled");
+
+			$("#confirm").attr("disabled",false);
+		}
 		
 		$.ajax({
 			url : "/srvm/ajax/CheckEmpCode",
@@ -198,6 +202,17 @@ $(document).ready(function(){
 			success : function(responseData){
 				if(responseData == "B"){
 					alert('사번 중복');
+					
+					$("#EmpCodeTD").append('<p>'+'사번이 중복되었습니다.'+'</p>');
+					//$('#confirm').addClass('disabled');
+
+					$("#confirm").attr("disabled",true);
+					
+				}else{
+					
+					//$("#confirm").removeClass("disabled");
+
+					$("#confirm").attr("disabled",false);
 				}
 			},								error : function(request, status, error) {
 				alert("code = " + request.status
@@ -228,7 +243,7 @@ $(document).ready(function(){
 			<tbody id="tbody">
 				<tr>
 					<th>사번</th>
-					<td><input type="text" id='EmpCode' /></td>
+					<td id='EmpCodeTD'><input type="text" id='EmpCode' /></td>
 				</tr>
 				<tr>
 					<th>이름</th>
@@ -246,12 +261,6 @@ $(document).ready(function(){
 
 
 				<tr>
-					<th>성별</th>
-					<td><select id="gender">
-							<option value="" selected disabled hidden>선택</option>
-							<option>남</option>
-							<option>녀</option>
-					</select></td>
 					<th>직급</th>
 					<td><select id="Rank">
 							<option value="" selected disabled hidden>선택</option>
@@ -280,7 +289,8 @@ $(document).ready(function(){
 			</tbody>
 
 		</table>
-		<input type ="button" id="confirm"/>
+		
+		<button id='confirm'type="button" class="btn btn-default" disabled='disabled'>확인</button>
 
 
 	</div>

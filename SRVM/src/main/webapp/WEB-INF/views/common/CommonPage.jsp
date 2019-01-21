@@ -58,7 +58,7 @@
 					class="icon-bar"
 				></span> <span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index.html">SRVM</a>
+			<a class="navbar-brand" href="/srvm/">SRVM</a>
 		</div>
 		<!-- /.navbar-header -->
 
@@ -248,7 +248,7 @@
 
 					<li><a href="#"><i class="fa fa-align-left fa-fw"></i> 서비스관리<span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
-							<li><a href="../service/ServiceIO.jsp">서비스내역</a></li>
+							<li><a href="/srvm/SrvIO">서비스내역</a></li>
 							<li><a href="/srvm/InSrv">입고등록</a></li>
 						</ul></li>
 					<li><a href="/srvm/Employee"><i class="fa fa-user fa-fw"></i> 사원관리

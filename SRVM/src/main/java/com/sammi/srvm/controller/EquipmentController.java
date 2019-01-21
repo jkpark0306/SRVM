@@ -89,6 +89,7 @@ public class EquipmentController {
 		
 	}
 	
+
 	@ResponseBody
 	@RequestMapping(value = "/ajax/InUniEqu", method=RequestMethod.POST)
 	public String InsertUniEqu(HttpSession session, @RequestBody String filterJSON, HttpServletResponse response)

@@ -10,7 +10,6 @@
 		<result property="DepartCode" column="DepartCode" />
 		<result property="Name" column="Name" />
 		<result property="Rank" column="Rank" />
-		<result property="Gender" column="Gender" />
 		<result property="ID" column="ID" />
 		<result property="PASSWORD" column="PW" />
 		<result property="CREATE_ID" column="CREATE_ID" />
@@ -31,7 +30,6 @@
 		CMT.CodeDescription as Department,
 		Name,
 		Rank,
-		Gender,
 		ID
 		from EMP_TB as ET
 		inner join CODE_MASTER_TB as CMT
@@ -215,7 +213,6 @@
 		Departcode,
 		Name,
 		Rank,
-		Gender
 		from EMP_TB
 		order by EmpNumber
 	</select>
@@ -322,7 +319,46 @@
 		ST.SrvCode = ORT.SrvCode
 		where ST.SrvCode = #{SrvCode}
 	</select>
-	<select id="GetAllSrv" resultMap="SrvListMap">
+	<select id="GetAllSrv" resultType="com.sammi.srvm.dto.SrvDTO">
+			select
+		ST.SrvCode,
+		ST.UniEquCode,
+		CMTcus.CodeDescription as CusName,
+		CMTemp.CodeDescription as EmpName,
+		CMTcusemp.CodeDescription as
+		CusEmpName,
+		ST.Symptom,
+		RT.RelDate,
+		ST.RelExtDate,
+		ET.ProductNumber,
+		UET.SerialNumber,
+		CMTpro.CodeDescription as
+		Process,
+		ST.Note
+		from SRV_TB as ST
+		inner join CODE_MASTER_TB as CMTcus
+		on
+		ST.CusCode = CMTcus.CodeID and CMTcus.CodeGroupName = 'CusCode'
+		inner
+		join CODE_MASTER_TB as CMTemp
+		on ST.EmpCode = CMTemp.CodeID and
+		CMTemp.CodeGroupName = 'EmpCode'
+		inner join CODE_MASTER_TB as CMTcusemp
+		on ST.CusEmpCode = CMTcusemp.CodeID and CMTcusemp.CodeGroupName =
+		'CusEmpCode'
+		inner join UNI_EQU_TB as UET
+		on ST.UniEquCode =
+		UET.UniEquCode
+		inner join EQU_TB as ET
+		on UET.EquCode = ET.EquCode
+		inner
+		join CODE_MASTER_TB as CMTpro
+		on ST.ProcessCode = CMTpro.CodeID and
+		CMTpro.CodeGroupName =
+		'ProcessCode'
+		left join REL_TB as RT
+		on RT.SrvCode = ST.SrvCode
+	<!--
 		select
 		ST.SrvCode,
 		ST.UniEquCode,
@@ -354,7 +390,7 @@
 		join CODE_MASTER_TB as CMTpro
 		on ST.ProcessCode = CMTpro.CodeID and
 		CMTpro.CodeGroupName =
-		'ProcessCode'
+		'ProcessCode'-->
 	</select>
 	<select id="SrvSelect" resultMap="SrvListMap">
 		select SrvCode,
@@ -415,7 +451,6 @@
 		DepartCode,
 		Name,
 		Rank,
-		Gender,
 		ID,
 		PASSWORD,
 		CREATE_ID
@@ -424,7 +459,6 @@
 		#{DepartCode},
 		#{Name},
 		#{Rank},
-		#{Gender},
 		#{ID},
 		#{PASSWORD},
 		#{CREATE_ID}

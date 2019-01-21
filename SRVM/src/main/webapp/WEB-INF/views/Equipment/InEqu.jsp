@@ -268,6 +268,7 @@
 						contentType : "application/json; charset=UTF-8",
 						sucess : function(responseData) {
 							if(responseData == "s"){
+								alert(responseData);
 								alert("등록완료");
 							}else{
 								alert("등록실패");

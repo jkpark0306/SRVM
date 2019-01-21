@@ -17,11 +17,10 @@
 		
 	
 		var id = getCookie('ID');
-	alert(id);
-	alert(getCookie('Permission'));
-	alert(getCookie('EmpCode'));
+	//alert(id);
+	//alert(getCookie('Permission'));
+	//alert(getCookie('EmpCode'));
 	
-	alert(document.cookie);
 	
 	function ImportExcel(filepath){
 		$.ajax({

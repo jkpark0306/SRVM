@@ -12,6 +12,8 @@
 </style>
 <script src="/srvm/resources/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/srvm/resources/js/DateFormat.js"></script>
+
+<script src="/srvm/resources/js/cookie.js"></script>
 <script>
 
 	window.onload = function() {
@@ -126,6 +128,7 @@
 							UniEquDTO.SerialNumber = $("#SerialNumber").val();
 							UniEquDTO.CusCode = CusCode;
 							UniEquDTO.MakeDate = $("#makedate").val().format('yyyy-MM-dd');
+							UniEquDTO.CREATE_ID = getCookie('EmpCode');
 							
 							$.ajax({
 								url : "/srvm/ajax/InUniEQu",
