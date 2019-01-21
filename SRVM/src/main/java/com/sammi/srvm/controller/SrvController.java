@@ -1,5 +1,6 @@
 package com.sammi.srvm.controller;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,6 +29,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.sammi.srvm.dao.SelectDAO;
@@ -177,6 +181,27 @@ public class SrvController {
 	}
 	
 	
+	@ResponseBody
+	@RequestMapping(value="/ajax/ImportExcel_",method=RequestMethod.POST)
+	public String ImportExcel_(MultipartHttpServletRequest request) throws Exception{
+		MultipartFile excelfile = request.getFile("excelfile");
+		System.out.println("엑셀파일컨트롤러");
+		if(excelfile==null || excelfile.isEmpty()) {
+			throw new RuntimeException("엑셀파일선택해라");
+		}
+		
+		File destfile = new File("C:\\"+excelfile.getOriginalFilename());
+		try {
+			excelfile.transferTo(destfile);
+		}catch(IllegalStateException | IOException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+		
+		return "";
+		
+	
+
+	}
 	
 	@ResponseBody
 	@RequestMapping(value="/ajax/ImportExcel",method=RequestMethod.POST,produces="application/json; charset=UTF-8")
