@@ -15,4 +15,5 @@ public interface SrvService {
 	public Object GetDetSrv(String SrvCode);
 	public Object GetSrvParam();
 	public int InsertSrv(SrvDTO srvdto,UniEquDTO uniequdto);
+	public int InsertByExcel(String filepath);
 }

@@ -33,12 +33,10 @@
 <link
 	href="/srvm/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
-	<!--
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
-    <script src="http://malsup.github.com/jquery.form.js"></script> 
-	-->
-<script src="http://malsup.github.com/jquery.form.js"></script>
-<script src="/srvm/resources/js/jquery-3.1.1.min.js"></script>--
+	
+
+<script src="/srvm/resources/js/jquery-3.1.1.min.js"></script>
+<script src="/srvm/resources/js/jquery.form.js"></script>
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <script src="/srvm/resources/js/SHA256.js"></script>
 <script src="/srvm/resources/js/DateFormat.js"></script>
@@ -48,11 +46,22 @@
 		
 		function ExcelUpload(file){
 			
-			var formData = new FormData($("#exceluploadForm")[0]);
+			var formData = new FormData($("#excelUploadForm")[0]);
 			
 			$.ajax({
-				url : 
+				url : "/srvm/ajax/ImportExcel_",
+				cache : false,
+				processData : false,
+				contentType : false,
+				
+				type : 'POST',
+				data : formData,
+				success : function(responseData){
+					alert(responseData);
+				}
 			});
+			
+			/*
 			
 			var options = {
 					data : formData,
@@ -62,7 +71,7 @@
 					}
 			};
 			
-			$("#excelUploadForm").ajaxSubmit(options);
+			$("#excelUploadForm").ajaxSubmit(options);*/
 			
 		}
 						//$("#myModal").style.display = "none";
@@ -212,7 +221,7 @@
 
 		</table>
 
-		<button id='exportexcel' type="button" class="btn btn-default">엑셀받기</button>
+		<button id='exportexcel' type="button" class="btn btn-default">엑셀올리기</button>
 
 
 

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.sammi.srvm.ExcelRead;
+import com.sammi.srvm.ExcelReadOption;
 import com.sammi.srvm.dao.InsertDAO;
 import com.sammi.srvm.dao.SelectDAO;
 import com.sammi.srvm.dao.TestDAO;
@@ -40,7 +42,49 @@ public class SrvServiceImpl implements SrvService {
 
 	@Autowired
 	SqlSession sqlSession;
-	
+
+	@Override
+	public int InsertByExcel(String filepath) {
+		
+		
+		
+		ExcelReadOption option = new ExcelReadOption();
+		
+		option.setFilePath(filepath);
+
+		List<String> columnlist = new ArrayList<String>();
+		
+		columnlist.add("SrvCode");
+		
+		columnlist.add("입고일");
+		
+		columnlist.add("수리일");
+		
+		columnlist.add("출고일");
+		
+		columnlist.add("장비명");
+		
+		option.setOutputColumn(columnlist);
+		
+		option.setStartRow(0);
+		
+		
+		
+		
+		
+		
+		List<Map<String,String>> excellist =  ExcelRead.read(option);
+		
+		Gson gson = new Gson();
+		
+		System.out.println(gson.toJson(excellist));
+		
+		
+		
+		
+		
+		return 0;
+	}
 	@Override
 	public int InsertSrv(SrvDTO srvdto, UniEquDTO uniequdto) {
 		

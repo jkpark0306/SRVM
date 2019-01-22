@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sammi.srvm.dao.InsertDAO">
+
+	<!--insert id="InsertSessionID" parameterType = "String" resultType="String">
+		insert into EMP_TB.SessionID
+	</insert-->
+	
+	
+	<insert id="InsertEqu" parameterType="com.sammi.srvm.dto.EquDTO">
+		insert into EQU_TB(
+			EquCode,
+			ProductNumber,
+			ManComp,
+			CREATE_ID)
+		values(
+			#{EquCode},
+			#{ProductNumber},
+			#{ManComp},
+			#{CREATE_ID}
+		)
+		
+	</insert>
+	
+	<insert id="InsertUniEqu" parameterType="com.sammi.srvm.dto.UniEquDTO">
+		insert into UNI_EQU_TB(
+			UniEquCode, 
+			EquCode, 
+			CusCode, 
+			SerialNumber, 
+			MakeDate, 
+			CREATE_ID)
+		values(
+			#{UniEquCode},
+			#{EquCode},
+			#{CusCode},
+			#{SerialNumber},
+			#{MakeDate},
+			#{CREATE_ID}
+		)
+	
+	</insert>
+	
+	<insert id="InsertSrv" parameterType="com.sammi.srvm.dto.SrvDTO">
+		insert into SRV_TB(
+		SrvCode,
+		CusCode,
+		EmpCode,
+		CusEmpCode,
+		UniEquCode,
+		ProcessCode,
+		ObtFlag,
+		OrdFlag,
+		RelFlag,
+		PartSrvFlag,
+		RelExtDate,
+		CREATE_ID
+		)values(
+		#{SrvCode},
+		#{CusCode},
+		#{EmpCode},
+		#{CusEmpCode},
+		#{UniEquCode},
+		#{ProcessCode},
+		#{ObtFlag},
+		#{OrdFlag},
+		#{RelFlag},
+		#{PartSrvFlag},
+		#{RelExtDate},
+		#{CREATE_ID}
+		)
+
+	</insert>
+
+	<insert id="ResisterEmployee"
+		parameterType="com.sammi.srvm.dto.EmpDTO">
+		INSERT INTO EMP_TB(
+		EmpNumber,
+		DepartCode,
+		Name,
+		Rank,
+		Gender,
+		ID,
+		PASSWORD,
+		CREATE_ID
+		)VALUES(
+		#{EmpNumber},
+		#{DepartCode},
+		#{Name},
+		#{Rank},
+		#{Gender},
+		#{ID},
+		#{PASSWORD},
+		#{CREATE_ID}
+		)
+	</insert>
+	<insert id="InsertCustomer"
+		parameterType="com.sammi.srvm.dto.CusDTO">
+		insert into CUS_TB
+		values(
+		concat(date_format(current_timestamp,"%y%d"),(select LPAD(right(max(CusCode),2)+'01',2,'0') from CUS_TB ctb)),
+		'삼기오토모티브',
+		null,
+		null,
+		'Y',
+		'경기도 평택시 포승읍 평택항로268번길 147',
+		'충청남도 서산시 지곡면 무장산업로 263-29',
+		null,
+		null,
+		'jkpark',
+		current_timestamp,
+		null,
+		null)
+
+
+	</insert>
+
+</mapper>

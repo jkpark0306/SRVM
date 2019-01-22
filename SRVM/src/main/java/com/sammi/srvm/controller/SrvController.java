@@ -1,5 +1,7 @@
 package com.sammi.srvm.controller;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -34,6 +36,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.sammi.srvm.ExcelRead;
+import com.sammi.srvm.ExcelReadOption;
 import com.sammi.srvm.dao.SelectDAO;
 import com.sammi.srvm.dto.SrvDTO;
 import com.sammi.srvm.dto.UniEquDTO;
@@ -184,18 +188,41 @@ public class SrvController {
 	@ResponseBody
 	@RequestMapping(value="/ajax/ImportExcel_",method=RequestMethod.POST)
 	public String ImportExcel_(MultipartHttpServletRequest request) throws Exception{
-		MultipartFile excelfile = request.getFile("excelfile");
+		
+		
+		Gson gson = new Gson();
+		//System.out.println(gson.toJson(request));
+		
+		System.out.println('t');
+
+		System.out.println('t');
+
+		System.out.println('t');
+
+		System.out.println('t');
+
+		System.out.println('t');
+
+		System.out.println('t');
+		
+		MultipartFile excelfile = request.getFile("excelFile");
 		System.out.println("엑셀파일컨트롤러");
 		if(excelfile==null || excelfile.isEmpty()) {
+			
 			throw new RuntimeException("엑셀파일선택해라");
 		}
 		
-		File destfile = new File("C:\\"+excelfile.getOriginalFilename());
+		File destfile = new File("C:\\Users\\jkpark\\Desktop\\springmultiparttest\\"+excelfile.getOriginalFilename());
+
 		try {
 			excelfile.transferTo(destfile);
 		}catch(IllegalStateException | IOException e) {
 			throw new RuntimeException(e.getMessage());
 		}
+		
+		srvservice.InsertByExcel("C:\\Users\\jkpark\\Desktop\\springmultiparttest\\"+excelfile.getOriginalFilename());
+		
+		
 		
 		return "";
 		

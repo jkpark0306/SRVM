@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.sammi.srvm.dao.UpdateDAO">
+	<update id="UpdateSessionID" parameterType = "map">
+		update EMP_TB set SessionID = #{SessionID}
+			where EmpCode = #{EmpCode}
+	</update>
+	
+	
+	<update id="keepLogin">
+		update EMP_TB set SessionKey = #{sessionID}, sessionLimit = #{next}
+		 where ID=#{ID}
+	</update>
+	
+		<update id = "TestUpdate">
+		update TEST_TB set
+			TC1=#{TC1},
+			TC2=#{TC2},
+			TC3=#{TC3}
+		where IDX = #{IDX}
+	</update>
+
+</mapper>
