@@ -10,29 +10,29 @@
 
 
 
-<link href="/srvm/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="/srvm/resources/bootstrap/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<link href="/resources/bootstrap/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
 <!-- DataTables CSS -->
-<link href="/srvm/resources/bootstrap/vendor/datatables-plugins/dataTables.bootstrap.css"
+<link href="/resources/bootstrap/vendor/datatables-plugins/dataTables.bootstrap.css"
 	rel="stylesheet"
 >
 
 <!-- DataTables Responsive CSS -->
-<link href="/srvm/resources/bootstrap/vendor/datatables-responsive/dataTables.responsive.css"
+<link href="/resources/bootstrap/vendor/datatables-responsive/dataTables.responsive.css"
 	rel="stylesheet"
 >
 
 <!-- Custom CSS -->
-<link href="/srvm/resources/bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+<link href="/resources/bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="/srvm/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
+<link href="/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css"
 >
-<script src="/srvm/resources/jquery-3.1.1.min.js"></script>
+<script src="/resources/js/jquery-3.1.1.min.js"></script>
 <script>
 var obj = {
 	

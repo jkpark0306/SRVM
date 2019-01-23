@@ -42,9 +42,9 @@ public class EquipmentServiceImpl implements EquipmentService{
 	public int InsertEqu(EquDTO equdto, String SessionID) {
 		
 		
-		String id = selectdao.GetID(SessionID).getID();
+		//String id = selectdao.GetID(SessionID).getID();
 		
-		equdto.setCREATE_ID(id);
+		//equdto.setCREATE_ID(id);
 		
 		//String EquCat = equdto.getEquCat();
 		

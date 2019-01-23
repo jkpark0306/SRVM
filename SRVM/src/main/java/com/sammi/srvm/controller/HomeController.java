@@ -96,7 +96,7 @@ public class HomeController {
 			} catch (Exception e) {
 			System.out.println(e.getMessage()+" from home controller");
 		}
-		return "home";
+		return "/home";
 	}
 	
 

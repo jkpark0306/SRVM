@@ -53,6 +53,7 @@
 				cache : false,
 				processData : false,
 				contentType : false,
+				
 				type : 'POST',
 				data : formData,
 				success : function(responseData){

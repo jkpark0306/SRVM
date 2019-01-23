@@ -13,16 +13,16 @@
 <title>SRVM</title>
 
 <!-- Bootstrap Core CSS -->
-<link href="/srvm/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="/srvm/resources/bootstrap/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<link href="/resources/bootstrap/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
 <!-- Custom CSS -->
-<link href="/srvm/resources/bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+<link href="/resources/bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="/srvm/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
+<link href="/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css"
 >
 
@@ -33,18 +33,18 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 <!-- jQuery -->
-<script src="/srvm/resources/bootstrap/vendor/jquery/jquery.min.js"></script>
+<script src="/resources/bootstrap/vendor/jquery/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="/srvm/resources/bootstrap/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="/resources/bootstrap/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 <!-- Metis Menu Plugin JavaScript -->
-<script src="/srvm/resources/bootstrap/vendor/metisMenu/metisMenu.min.js"></script>
+<script src="/resources/bootstrap/vendor/metisMenu/metisMenu.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/srvm/resources/bootstrap/dist/js/sb-admin-2.js"></script>
+<script src="/resources/bootstrap/dist/js/sb-admin-2.js"></script>
 
-<script src="/srvm/resources/js/cookie.js"></script>
+<script src="/resources/js/cookie.js"></script>
 
 	<script>
 	$(document).ready(function() {
@@ -229,7 +229,7 @@
 				LoginObject.empdto.PASSWORD = SHA256($("#user_pwd").val());
 
 				$.ajax({
-					url : "/srvm/ajax/logintry",
+					url : "/ajax/logintry",
 					data : JSON.stringify(LoginObject),
 					dataType : "text",
 					type : "POST",
@@ -242,7 +242,7 @@
 						if (!data || data == null || data == '') {
 
 							alert("ID/PW를 확인하세요");
-							result = '/srvm/login';
+							result = '/login';
 						} else {
 							
 							
@@ -251,7 +251,7 @@
 							setCookie('Permission',data.Permission, 3);
 							setCookie('EmpCode',data.EmpCode, 3);
 
-							result = '/srvm';
+							result = '/';
 
 						}
 

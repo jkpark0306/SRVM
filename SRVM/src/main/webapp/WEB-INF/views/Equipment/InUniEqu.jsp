@@ -10,10 +10,10 @@
 
 <style>
 </style>
-<script src="/srvm/resources/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="/srvm/resources/js/DateFormat.js"></script>
+<script src="/resources/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="/resources/js/DateFormat.js"></script>
 
-<script src="/srvm/resources/js/cookie.js"></script>
+<script src="/resources/js/cookie.js"></script>
 <script>
 
 	window.onload = function() {
@@ -87,7 +87,7 @@
 							alert("before/"+UniEquCode);
 							
 							$.ajax({
-								url : "/srvm/ajax/GetNewUniEquCode",
+								url : "/ajax/GetNewUniEquCode",
 								data : UniEquCode,
 								dataType : "text",
 								type: "POST",
@@ -131,7 +131,7 @@
 							UniEquDTO.CREATE_ID = getCookie('EmpCode');
 							
 							$.ajax({
-								url : "/srvm/ajax/InUniEQu",
+								url : "/ajax/InUniEQu",
 								data : JSON.stringify(UniEquDTO),
 								dataType : "text",
 								type : "POST",
@@ -161,26 +161,26 @@
 </script>
 
 <!-- Bootstrap Core CSS -->
-<link href="/srvm/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="/srvm/resources/bootstrap/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<link href="/resources/bootstrap/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
 <!-- DataTables CSS -->
-<link href="/srvm/resources/bootstrap/vendor/datatables-plugins/dataTables.bootstrap.css"
+<link href="/resources/bootstrap/vendor/datatables-plugins/dataTables.bootstrap.css"
 	rel="stylesheet"
 >
 
 <!-- DataTables Responsive CSS -->
-<link href="/srvm/resources/bootstrap/vendor/datatables-responsive/dataTables.responsive.css"
+<link href="/resources/bootstrap/vendor/datatables-responsive/dataTables.responsive.css"
 	rel="stylesheet"
 >
 
 <!-- Custom CSS -->
-<link href="/srvm/resources/bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+<link href="/resources/bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="/srvm/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
+<link href="/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css"
 >
 </head>

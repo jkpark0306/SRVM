@@ -11,13 +11,14 @@
 
 <style>
 </style>
-<script src="/srvm/resources/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="/srvm/resources/js/DateFormat.js"></script>
+<script src="/resources/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="/resources/js/DateFormat.js"></script>
 
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
 
 
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
+<script src="/resources/js/cookie.js"></script>
 <script>
 
 	$(document).ready(function() {
@@ -27,12 +28,10 @@
 
 				$("#EquCode").val('001000001');
 				
-
-				
 				function GetNewEquCode(EquCode){
 					
 					$.ajax({
-						url : "/srvm/ajax/GetNewEquCode",
+						url : "/ajax/GetNewEquCode",
 						data : EquCode,
 						dataType : "text",
 						type : "POST",
@@ -70,7 +69,7 @@
 							var EquCode;
 							
 							$.ajax({
-								url : "/srvm/ajax/GetEquDTObyPN",
+								url : "/ajax/GetEquDTObyPN",
 								data : ProductNumber,
 								dataType : "text",
 								type : "POST",
@@ -80,8 +79,7 @@
 										
 										$("#confirm").attr("disabled",false);
 										if(ProductNumber.length >= 4){
-											
-										
+																					
 										EquCode = $("#EquCode").val().substr(0,3)+ProductNumber.substr(0,4) +$("#EquCode").val().substr(7,2);
 										}else{
 											var appstr = "";
@@ -180,7 +178,7 @@
 							
 
 							$.ajax({
-								url : "/srvm/ajax/GetEquCatCode",
+								url : "/ajax/GetEquCatCode",
 								data : EquCat,
 								dataType : "text",
 								type : "POST",
@@ -240,9 +238,9 @@
 					
 					
 					try {
-						
+						/*
 						$.ajax({
-							url : "/srvm/ajax/GetID",
+							url : "/ajax/GetID",
 							type : "POST",
 							success : function(responseData){
 								EquDTO.CREATE_ID = responseData;
@@ -250,7 +248,9 @@
 						     error:function(request,status,error){
 						         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
 						        }
-						});
+						});*/
+						
+						EquDTO.CREATE_ID = getCookie("EmpCode");
 						EquDTO.ProductNumber = $("#ProductNumber").val();
 						EquDTO.ManComp = $("#mancomp").val();
 						EquDTO.EquCode = $("#EquCode").val();
@@ -260,20 +260,19 @@
 					}
 
 					$.ajax({
-						url : "/srvm/ajax/InEqu",
+						url : "/ajax/InEqu",
 						data : JSON.stringify(EquDTO),
 						dataType : "text",
 						type : "POST",
 
 						contentType : "application/json; charset=UTF-8",
-						sucess : function(responseData) {
+						success : function(responseData) {
 							if(responseData == "s"){
-								alert(responseData);
 								alert("등록완료");
+								location.reload();
 							}else{
 								alert("등록실패");
 							}
-							alert(responseData);
 						},
 					     error:function(request,status,error){
 					         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
@@ -295,31 +294,31 @@
 
 <!-- Bootstrap Core CSS -->
 <link
-	href="/srvm/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css"
+	href="/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 
 <!-- MetisMenu CSS -->
 <link
-	href="/srvm/resources/bootstrap/vendor/metisMenu/metisMenu.min.css"
+	href="/resources/bootstrap/vendor/metisMenu/metisMenu.min.css"
 	rel="stylesheet">
 
 <!-- DataTables CSS -->
 <link
-	href="/srvm/resources/bootstrap/vendor/datatables-plugins/dataTables.bootstrap.css"
+	href="/resources/bootstrap/vendor/datatables-plugins/dataTables.bootstrap.css"
 	rel="stylesheet">
 
 <!-- DataTables Responsive CSS -->
 <link
-	href="/srvm/resources/bootstrap/vendor/datatables-responsive/dataTables.responsive.css"
+	href="/resources/bootstrap/vendor/datatables-responsive/dataTables.responsive.css"
 	rel="stylesheet">
 
 <!-- Custom CSS -->
-<link href="/srvm/resources/bootstrap/dist/css/sb-admin-2.css"
+<link href="/resources/bootstrap/dist/css/sb-admin-2.css"
 	rel="stylesheet">
 
 <!-- Custom Fonts -->
 <link
-	href="/srvm/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
+	href="/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 </head>
 <body>

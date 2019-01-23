@@ -11,8 +11,8 @@
 
 <style>
 </style>
-<script src="/srvm/resources/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="/srvm/resources/js/DateFormat.js"></script>
+<script src="/resources/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="/resources/js/DateFormat.js"></script>
 <script>
 	var obj = {};
 	$(document)
@@ -140,7 +140,7 @@
 
 												$
 														.ajax({
-															url : "/srvm/ajax/InSrv",
+															url : "/ajax/InSrv",
 															data : JSON
 																	.stringify(param),
 															dataType : "text",
@@ -165,31 +165,31 @@
 
 <!-- Bootstrap Core CSS -->
 <link
-	href="/srvm/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css"
+	href="/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 
 <!-- MetisMenu CSS -->
 <link
-	href="/srvm/resources/bootstrap/vendor/metisMenu/metisMenu.min.css"
+	href="/resources/bootstrap/vendor/metisMenu/metisMenu.min.css"
 	rel="stylesheet">
 
 <!-- DataTables CSS -->
 <link
-	href="/srvm/resources/bootstrap/vendor/datatables-plugins/dataTables.bootstrap.css"
+	href="/resources/bootstrap/vendor/datatables-plugins/dataTables.bootstrap.css"
 	rel="stylesheet">
 
 <!-- DataTables Responsive CSS -->
 <link
-	href="/srvm/resources/bootstrap/vendor/datatables-responsive/dataTables.responsive.css"
+	href="/resources/bootstrap/vendor/datatables-responsive/dataTables.responsive.css"
 	rel="stylesheet">
 
 <!-- Custom CSS -->
-<link href="/srvm/resources/bootstrap/dist/css/sb-admin-2.css"
+<link href="/resources/bootstrap/dist/css/sb-admin-2.css"
 	rel="stylesheet">
 
 <!-- Custom Fonts -->
 <link
-	href="/srvm/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
+	href="/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 </head>
 <body>

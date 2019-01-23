@@ -11,31 +11,31 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- Bootstrap Core CSS -->
-<link href="/srvm/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="/srvm/resources/bootstrap/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<link href="/resources/bootstrap/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
 <!-- Custom CSS -->
-<link href="/srvm/resources/bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+<link href="/resources/bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="/srvm/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
+<link href="/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css"
 >
 
 
 <!-- jQuery -->
-<script src="/srvm/resources/bootstrap/vendor/jquery/jquery.min.js"></script>
+<script src="/resources/bootstrap/vendor/jquery/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="/srvm/resources/bootstrap/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="/resources/bootstrap/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 <!-- Metis Menu Plugin JavaScript -->
-<script src="/srvm/resources/bootstrap/vendor/metisMenu/metisMenu.min.js"></script>
+<script src="/resources/bootstrap/vendor/metisMenu/metisMenu.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/srvm/resources/bootstrap/dist/js/sb-admin-2.js"></script>
+<script src="/resources/bootstrap/dist/js/sb-admin-2.js"></script>
 
 <script>
 	/*
@@ -58,7 +58,7 @@
 					class="icon-bar"
 				></span> <span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/srvm/">SRVM</a>
+			<a class="navbar-brand" href="/">SRVM</a>
 		</div>
 		<!-- /.navbar-header -->
 
@@ -225,7 +225,7 @@
 					<li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a></li>
 					<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
 					<li class="divider"></li>
-					<li><a href="/srvm/Login/Logout"><i class="fa fa-sign-out fa-fw"></i>로그아웃</a></li>
+					<li><a href="/Login/Logout"><i class="fa fa-sign-out fa-fw"></i>로그아웃</a></li>
 				</ul> <!-- /.dropdown-user --></li>
 			<!-- /.dropdown -->
 		</ul>
@@ -248,40 +248,40 @@
 
 					<li><a href="#"><i class="fa fa-align-left fa-fw"></i> 서비스관리<span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
-							<li><a href="/srvm/SrvIO">서비스내역</a></li>
-							<li><a href="/srvm/InSrv">입고등록</a></li>
+							<li><a href="/SrvIO">서비스내역</a></li>
+							<li><a href="/InSrv">입고등록</a></li>
 						</ul></li>
-					<li><a href="/srvm/Employee"><i class="fa fa-user fa-fw"></i> 사원관리
+					<li><a href="/Employee"><i class="fa fa-user fa-fw"></i> 사원관리
 					<span class="fa arrow"></span></a>
 						<ul class = "nav nav-second-level">
-							<li><a href="/srvm/Employee">사원목록</a></li>
+							<li><a href="/Employee">사원목록</a></li>
 							
 						</ul>
 						<ul class = "nav nav-second-level">
-							<li><a href="/srvm/InEmp">사원등록</a></li>
+							<li><a href="/InEmp">사원등록</a></li>
 						</ul>
 					
 					
 					
 					</li>
-					<li><a href="/srvm/Equ"><i class="fa fa-wrench fa-fw"></i> 장비관리<span
+					<li><a href="/Equ"><i class="fa fa-wrench fa-fw"></i> 장비관리<span
 							class="fa arrow"
 						></span></a>
 						<ul class="nav nav-second-level">
-							<li><a href="/srvm/UniEqu">고유장비목록</a></li>
+							<li><a href="/UniEqu">고유장비목록</a></li>
 						</ul>
 						<ul class="nav nav-second-level">
-							<li><a href="/srvm/Equ">장비목록</a></li>
+							<li><a href="/Equ">장비목록</a></li>
 						</ul>
 						<ul class="nav nav-second-level">
-							<li><a href="/srvm/InEqu">장비등록</a></li>
+							<li><a href="/InEqu">장비등록</a></li>
 						</ul>
 						<ul class="nav nav-second-level">
-							<li><a href="/srvm/InUniEqu">고유장비등록</a></li>
+							<li><a href="/InUniEqu">고유장비등록</a></li>
 						</ul>
 					</li>
 
-					<li><a href="/srvm/customer/CustomerMan"><i class="fa fa-users fa=fw"></i>고객관리</a></li>
+					<li><a href="/customer/CustomerMan"><i class="fa fa-users fa=fw"></i>고객관리</a></li>
 					<!--  
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
