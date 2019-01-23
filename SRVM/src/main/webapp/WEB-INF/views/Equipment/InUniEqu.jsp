@@ -1,6 +1,7 @@
 <!--%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%-->
 <!DOCTYPE=html>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <html>
@@ -24,8 +25,23 @@
 			.ready(
 					function() {
 						
+						var date = new Date();
 						
+						var year = date.format('yyyy');
 						
+						alert(year);
+						
+						for(var i=1980;i<year+1;i++){
+							
+						
+						$("#year").append('<option>'+i.toString()+'</option>');
+						}
+						for(var i=0;i<12;i++){
+							$("#month").append('<option>'+(i+1).toString()+'</option>');
+						}
+						for(var i=0;i<31;i++){
+							$("#date").append('<option>'+(i+1).toString()+'</option>');
+						}
 						obj = JSON.parse('${InUniEquParam}');
 						
 						
@@ -58,16 +74,18 @@
 						});
 						
 						$("#mdcheck").change(function(){
+							
+							/*
 							try{
 							alert( $("#makedate").val().toString().format('yyyyMMdd'));
 							}catch(Excpetion){
 								alert(Exception);
-							}
+							}*/
 							if($("input:checkbox[id='mdcheck']").is(":checked") == true){
 
-								$("#makedate").attr("disabled",true);
+								$(".makedate").attr("disabled",true);
 							}else{
-								$("#makedate").attr("disabled",false);
+								$(".makedate").attr("disabled",false);
 							}
 							
 						});
@@ -120,15 +138,17 @@
 							
 							if($("input:checkbox[id='mdcheck']").is(":checked") == false){
 								
-								UniEquDTO.MakeDate = $("#makedate").val().format('yyyy-MM-dd');
+								UniEquDTO.MakeDate = $("#year").val() + $("#month").val()+$("#date").val();
+								
 							}
 							
 							UniEquDTO.UniEquCode = UniEquCode;
 							UniEquDTO.EquCode = $("#EquCode").val();
 							UniEquDTO.SerialNumber = $("#SerialNumber").val();
 							UniEquDTO.CusCode = CusCode;
-							UniEquDTO.MakeDate = $("#makedate").val().format('yyyy-MM-dd');
 							UniEquDTO.CREATE_ID = getCookie('EmpCode');
+							
+							alert(JSON.stringify(UniEquDTO));
 							
 							$.ajax({
 								url : "/ajax/InUniEQu",
@@ -138,6 +158,11 @@
 								contentType : "application/json; charset=UTF-8",
 								success : function(responseData){
 									alert(responseData);
+								},error : function(request, status, error) {
+									alert("code = " + request.status
+											+ " message = "
+											+ request.responseText
+											+ " error = " + error); // 실패 시 처리
 								}
 							});
 							
@@ -161,76 +186,81 @@
 </script>
 
 <!-- Bootstrap Core CSS -->
-<link href="/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- MetisMenu CSS -->
-<link href="/resources/bootstrap/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<link href="/resources/bootstrap/vendor/metisMenu/metisMenu.min.css"
+	rel="stylesheet">
 
 <!-- DataTables CSS -->
-<link href="/resources/bootstrap/vendor/datatables-plugins/dataTables.bootstrap.css"
-	rel="stylesheet"
->
+<link
+	href="/resources/bootstrap/vendor/datatables-plugins/dataTables.bootstrap.css"
+	rel="stylesheet">
 
 <!-- DataTables Responsive CSS -->
-<link href="/resources/bootstrap/vendor/datatables-responsive/dataTables.responsive.css"
-	rel="stylesheet"
->
+<link
+	href="/resources/bootstrap/vendor/datatables-responsive/dataTables.responsive.css"
+	rel="stylesheet">
 
 <!-- Custom CSS -->
-<link href="/resources/bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+<link href="/resources/bootstrap/dist/css/sb-admin-2.css"
+	rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
-	rel="stylesheet" type="text/css"
->
+<link
+	href="/resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="wrapper">
 		<p>
-			<jsp:include page="../common/CommonPage.jsp" flush="false"/>
+			<jsp:include page="../common/CommonPage.jsp" flush="false" />
 		</p>
 	</div>
-	<div id="page-wrapper" class="col-lg-4">
-	
-		<div class="panel panel-primary" style="width: 1500px;">
-		
+	<div id="page-wrapper">
+
+		<div class="panel panel-primary">
+
 			<div class="panel-heading">장비등록</div>
 			<div class="panel-body">
 
-				<table id="TB1" class="SrvTable table table-striped table-bordered table-hover">
+				<table id="TB1"
+					class="SrvTable table table-striped table-bordered table-hover">
 					<tbody>
 						<tr>
 							<th>제조사</th>
-							<td>
-								<select id="mancomplist">
-								
-								</select>
-							</td>
+							<td><select id="mancomplist">
+
+							<option value="" selected disabled hidden>선택</option>
+							</select></td>
 							<th>고객사</th>
-							<td>
-								<select id="cuslist">
-								
-								</select>
-							</td>
+							<td><select id="cuslist">
+
+							<option value="" selected disabled hidden>선택</option>
+							</select></td>
 						</tr>
 						<tr>
 							<th>ProductNumber</th>
-							<td id='ProductNumber'><select id="PNLIST"></select></td>
+							<td id='ProductNumber'><select id="PNLIST">
+							<option value="" selected disabled hidden>선택</option></select></td>
 							<td>SerialNumber</td>
 							<td><input type="text" id="SerialNumber"></input></td>
 						</tr>
-						
-						
+
+
 						<tr>
 							<th>제조일자</th>
 							<td id='MakeDate'>
-								<input type="date" id = "makedate"/>
-								<input type="checkbox" id="mdcheck" value="제조일자 모름"/>
-							</td>
-														<th>EquCode</th>
-							<td>
-							<input type="text" id='EquCode' />
-							</td>
+							<select id="year" class="makedate">
+							<option value="" selected disabled hidden>선택</option></select>
+							<select id="month" class="makedate">
+							<option value="" selected disabled hidden>선택</option></select>
+							<select id="date" class="makedate">
+							<option value="" selected disabled hidden>선택</option></select>
+							<input type="checkbox" id="mdcheck"/><p>제조일자모름</p></td>
+							<th>EquCode</th>
+							<td><input type="text" id='EquCode' /></td>
 						</tr>
 						<tr>
 						</tr>
@@ -265,10 +295,12 @@
 					</tbody>
 				</table>
 			</div>
-			<input type="button" id="confirm" value="확인">
+			
+		<button id='confirm' type="button" class="btn btn-default">확인</button>
+		<button id='exportexcel' type="button" class="btn btn-default">엑셀올리기</button>
 
-</div>
-</div>
+		</div>
+	</div>
 
 </body>
 </html>
