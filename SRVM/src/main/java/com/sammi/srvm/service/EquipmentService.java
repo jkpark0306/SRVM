@@ -25,5 +25,8 @@ public interface EquipmentService {
 
 	Map<String, Object> GetInUniEquParam();
 	
+	public int InUniEqubyExcel(String filepath);
+	
+	
 	
 }

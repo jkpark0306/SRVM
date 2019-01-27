@@ -1,5 +1,9 @@
 package com.sammi.srvm.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -14,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.gson.Gson;
 import com.sammi.srvm.dao.SelectDAO;
@@ -103,6 +109,80 @@ public class EquipmentController {
 		
 		
 		return "";
+	}
+	
+	@RequestMapping(value = "/ajax/InUniEqubyExcel")
+	@ResponseBody
+	public String InUniEqubyExcel(MultipartHttpServletRequest request) throws Exception{
+		Gson gson = new Gson();
+		
+		SimpleDateFormat filenameformat = new SimpleDateFormat("yyyyMMddHHmm");
+		SimpleDateFormat folderformat = new SimpleDateFormat("yyyyMM");
+		
+		MultipartFile excelfile = request.getFile("excelFile");
+		if(excelfile == null || excelfile.isEmpty()) {
+			throw new RuntimeException("파일을 선택하십시오");
+		}
+		
+		String filename = filenameformat.format(new Date())+".xls";
+		String foldername = folderformat.format(new Date());
+		
+		String os = System.getProperty("os.name");
+		String windowpath = "C:\\Users\\jkpark\\Documents\\SRVM\\Excel\\InUniEqu\\Import\\";
+		String centospath = "/home/jkpark/SRVM/Excel/InUniEqu/Import/";
+		
+		
+		
+		
+			
+		String filepath = "";
+		String folderpath = "";
+		File Dir = null;
+		System.out.println(os);
+		
+		if(os.toUpperCase().startsWith("WINDOW")) {
+			
+			folderpath = windowpath +"\\"+ foldername;
+			Dir = new File(folderpath);
+			
+			if(!Dir.exists()) {
+				Dir.mkdirs();
+			}
+			filepath = folderpath+"\\"+filename;
+		}else {
+			filepath = centospath;
+			folderpath = centospath + '/'+foldername;
+			Dir = new File(folderpath);
+			
+			if(!Dir.exists()) {
+				Dir.mkdirs();
+			}
+			filepath = folderpath + '/'+filename;
+		}
+		
+		System.out.println(os.toUpperCase());
+		
+		System.out.println(filepath);
+		
+		File destfile = new File(filepath);
+		
+		
+		try {
+			excelfile.transferTo(destfile);
+		}catch(IllegalStateException | IOException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+		
+		equipmentservice.InUniEqubyExcel(filepath);
+		
+		
+		
+		
+		
+		
+		return "s";
+		
+		
 	}
 	
 	@RequestMapping(value="/ajax/InEqu")

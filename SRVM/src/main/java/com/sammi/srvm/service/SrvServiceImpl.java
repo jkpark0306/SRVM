@@ -56,13 +56,13 @@ public class SrvServiceImpl implements SrvService {
 		
 		columnlist.add("SrvCode");
 		
-		columnlist.add("입고일");
+		columnlist.add("�엯怨좎씪");
 		
-		columnlist.add("수리일");
+		columnlist.add("�닔由ъ씪");
 		
-		columnlist.add("출고일");
+		columnlist.add("異쒓퀬�씪");
 		
-		columnlist.add("장비명");
+		columnlist.add("�옣鍮꾨챸");
 		
 		option.setOutputColumn(columnlist);
 		
@@ -73,11 +73,11 @@ public class SrvServiceImpl implements SrvService {
 		
 		
 		
-		List<Map<String,String>> excellist =  ExcelRead.read(option);
+		//List<Map<String,String>> excellist =  ExcelRead.read(option);
 		
 		Gson gson = new Gson();
 		
-		System.out.println(gson.toJson(excellist));
+		//System.out.println(gson.toJson(excellist));
 		
 		
 		

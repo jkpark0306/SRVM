@@ -16,7 +16,6 @@
 
 <script src="/resources/js/cookie.js"></script>
 <script>
-
 	window.onload = function() {
 
 	}
@@ -24,165 +23,182 @@
 	$(document)
 			.ready(
 					function() {
-						
-						var date = new Date();
-						
-						var year = date.format('yyyy');
-						
-						alert(year);
-						
-						for(var i=1980;i<year+1;i++){
-							
-						
-						$("#year").append('<option>'+i.toString()+'</option>');
-						}
-						for(var i=0;i<12;i++){
-							$("#month").append('<option>'+(i+1).toString()+'</option>');
-						}
-						for(var i=0;i<31;i++){
-							$("#date").append('<option>'+(i+1).toString()+'</option>');
-						}
-						obj = JSON.parse('${InUniEquParam}');
-						
-						
-						var mancarr = new Array();
-						for(var i=0;i<obj.equdtos.length;i++){
-							$("#PNLIST").append($('<option>'+obj.equdtos[i].ProductNumber+'</option>'));
-							var mancstr = obj.equdtos[i].ManComp;
-							
-							if($.inArray(mancstr,mancarr) == -1){
-								mancarr.push(obj.equdtos[i].ManComp);
-								
-								
-								$("#mancomplist").append($('<option>'+obj.equdtos[i].ManComp+'</option>'));
-							}
-							
-							
-						}
-						
-						for(var i=0;i<obj.cusdtos.length;i++){
-							$("#cuslist").append($('<option>'+obj.cusdtos[i].Name+'</option>'));
-						}
-						
-						
-						$("#PNLIST").change(function(){
-							
-							var index = $("#PNLIST option").index($("#PNLIST option:selected"));
-							
-							$("#EquCode").val(obj.equdtos[index].EquCode);
-							
-						});
-						
-						$("#mdcheck").change(function(){
-							
-							/*
-							try{
-							alert( $("#makedate").val().toString().format('yyyyMMdd'));
-							}catch(Excpetion){
-								alert(Exception);
-							}*/
-							if($("input:checkbox[id='mdcheck']").is(":checked") == true){
 
-								$(".makedate").attr("disabled",true);
-							}else{
-								$(".makedate").attr("disabled",false);
+						obj = JSON.parse('${InUniEquParam}');
+
+						var mancarr = new Array();
+						for (var i = 0; i < obj.equdtos.length; i++) {
+							$("#PNLIST").append(
+									$('<option>' + obj.equdtos[i].ProductNumber
+											+ '</option>'));
+							var mancstr = obj.equdtos[i].ManComp;
+
+							if ($.inArray(mancstr, mancarr) == -1) {
+								mancarr.push(obj.equdtos[i].ManComp);
+
+								$("#mancomplist").append(
+										$('<option>' + obj.equdtos[i].ManComp
+												+ '</option>'));
 							}
-							
-						});
-						
-						$("#confirm").click(function(){
-							
-							var UniEquCode = "";
-							
-							var today = new Date();
-							try{
-							}catch(Exception){
-								alert(Exception);
-							}
-							
-							UniEquCode = $("#EquCode").val() + today.format('yyMM')+'001';
-							
-							alert("before/"+UniEquCode);
-							
-							$.ajax({
-								url : "/ajax/GetNewUniEquCode",
-								data : UniEquCode,
-								dataType : "text",
-								type: "POST",
-								success : function(responseData){
-									try{
-									UniEquCode = responseData.substr(0,responseData.length-2);
-									}catch(Exception){
+
+						}
+
+						for (var i = 0; i < obj.cusdtos.length; i++) {
+							$("#cuslist").append(
+									$('<option>' + obj.cusdtos[i].Name
+											+ '</option>'));
+						}
+
+						$("#PNLIST").change(
+								function() {
+
+									var index = $("#PNLIST option").index(
+											$("#PNLIST option:selected"));
+
+									$("#EquCode").val(
+											obj.equdtos[index].EquCode);
+
+								});
+
+						$("#mdcheck").change(
+								function() {
+									try {
+										alert($("#makedate").val().toString()
+												.format('yyyyMMdd'));
+									} catch (Excpetion) {
 										alert(Exception);
 									}
-									
-								}
-								
-							});
-							
-							
+									if ($("input:checkbox[id='mdcheck']").is(
+											":checked") == true) {
 
-							alert("after/"+UniEquCode);
-							
+										$("#makedate").attr("disabled", true);
+									} else {
+										$("#makedate").attr("disabled", false);
+									}
 
-							var index = $("#cuslist option").index($("#cuslist option:selected"));
-							
-							
-							
-							var EquCode = $("#EquCode").val();
-							var SerialNumber = $("#SerialNumber").val();
-							var CusCode = obj.cusdtos[index].CusCode;
-							
-							
-							var UniEquDTO = {};
-							
-							if($("input:checkbox[id='mdcheck']").is(":checked") == false){
-								
-								UniEquDTO.MakeDate = $("#year").val() + $("#month").val()+$("#date").val();
-								
-							}
-							
-							UniEquDTO.UniEquCode = UniEquCode;
-							UniEquDTO.EquCode = $("#EquCode").val();
-							UniEquDTO.SerialNumber = $("#SerialNumber").val();
-							UniEquDTO.CusCode = CusCode;
-							UniEquDTO.CREATE_ID = getCookie('EmpCode');
-							
-							alert(JSON.stringify(UniEquDTO));
-							
-							$.ajax({
-								url : "/ajax/InUniEQu",
-								data : JSON.stringify(UniEquDTO),
-								dataType : "text",
-								type : "POST",
-								contentType : "application/json; charset=UTF-8",
-								success : function(responseData){
-									alert(responseData);
-								},error : function(request, status, error) {
-									alert("code = " + request.status
-											+ " message = "
-											+ request.responseText
-											+ " error = " + error); // 실패 시 처리
-								}
-							});
-							
-							
-							
-							
-							
-							
-							alert(JSON.stringify(UniEquDTO));
-							
-							
-							
-							
-							alert('test');
+								});
+						
+						$(".close").on("click", function() {
+							$("#fileuploadmodal").hide();
 						});
 						
+						$("#importexcel").click(function(){
+							$("#fileuploadmodal").show();
+						});
+						
+						$("#modalimportexcel").click(function(){
+							
+							var formData = new FormData($("#excelUploadForm")[0]);
+							
+							$.ajax({
+								url : "/ajax/InUniEqubyExcel",
+								cache : false,
+								processData : false,
+								contentType : false,
+								type : 'POST',
+								data : formData,
+								success : function(responseData){
+									alert(responseData);
+								},error:function(request,status,error){
+						         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+						        }
+							})
+							
+						});
+
+						$("#confirm")
+								.click(
+										function() {
+
+											var UniEquCode = "";
+
+											var today = new Date();
+											try {
+											} catch (Exception) {
+												alert(Exception);
+											}
+
+											UniEquCode = $("#EquCode").val()
+													+ today.format('yyMM')
+													+ '001';
+
+											alert("before/" + UniEquCode);
+
+											$
+													.ajax({
+														url : "/ajax/GetNewUniEquCode",
+														data : UniEquCode,
+														dataType : "text",
+														type : "POST",
+														success : function(
+																responseData) {
+															try {
+																UniEquCode = responseData
+																		.substr(
+																				0,
+																				responseData.length - 2);
+															} catch (Exception) {
+																alert(Exception);
+															}
+
+														}
+
+													});
+
+											alert("after/" + UniEquCode);
+
+											var index = $("#cuslist option")
+													.index(
+															$("#cuslist option:selected"));
+
+											var EquCode = $("#EquCode").val();
+											var SerialNumber = $(
+													"#SerialNumber").val();
+											var CusCode = obj.cusdtos[index].CusCode;
+
+											var UniEquDTO = {};
+
+											if ($(
+													"input:checkbox[id='mdcheck']")
+													.is(":checked") == false) {
+
+												UniEquDTO.MakeDate = $(
+														"#makedate").val()
+														.format('yyyy-MM-dd');
+											}
+
+											UniEquDTO.UniEquCode = UniEquCode;
+											UniEquDTO.EquCode = $("#EquCode")
+													.val();
+											UniEquDTO.SerialNumber = $(
+													"#SerialNumber").val();
+											UniEquDTO.CusCode = CusCode;
+											UniEquDTO.MakeDate = $("#makedate")
+													.val().format('yyyy-MM-dd');
+											UniEquDTO.CREATE_ID = getCookie('EmpCode');
+
+											$
+													.ajax({
+														url : "/ajax/InUniEQu",
+														data : JSON
+																.stringify(UniEquDTO),
+														dataType : "text",
+														type : "POST",
+														contentType : "application/json; charset=UTF-8",
+														success : function(
+																responseData) {
+															alert(responseData);
+														}
+													});
+
+											alert(JSON.stringify(UniEquDTO));
+
+											alert('test');
+										});
+
 					}
 
 			);
-	
 </script>
 
 <!-- Bootstrap Core CSS -->
@@ -218,9 +234,36 @@
 			<jsp:include page="../common/CommonPage.jsp" flush="false" />
 		</p>
 	</div>
-	<div id="page-wrapper">
+	<div class="modal" id="fileuploadmodal">
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<form id="excelUploadForm" name="excelUploadForm"
+			enctype="multipart/form-data" method="post"
+			action="/ajax/ImportExcel_">
+			<div class="contents">
+				<div>첨부파일은 한개만 등록 가능합니다.</div>
 
-		<div class="panel panel-primary">
+				<dl class="vm_name">
+					<dt class="down w90">첨부 파일</dt>
+					<dd>
+						<input id="excelFile" type="file" name="excelFile" />
+					</dd>
+				</dl>
+			</div>
+
+			<div class="bottom">
+				<button type="button" id="modalimportexcel" class="btn">
+					<span>추가</span>
+				</button>
+			</div>
+		</form>
+
+	</div>
+
+	</div>
+	<div id="page-wrapper" class="col-lg-4">
+
+		<div class="panel panel-primary" style="width: 1500px;">
 
 			<div class="panel-heading">장비등록</div>
 			<div class="panel-body">
@@ -232,18 +275,15 @@
 							<th>제조사</th>
 							<td><select id="mancomplist">
 
-							<option value="" selected disabled hidden>선택</option>
 							</select></td>
 							<th>고객사</th>
 							<td><select id="cuslist">
 
-							<option value="" selected disabled hidden>선택</option>
 							</select></td>
 						</tr>
 						<tr>
 							<th>ProductNumber</th>
-							<td id='ProductNumber'><select id="PNLIST">
-							<option value="" selected disabled hidden>선택</option></select></td>
+							<td id='ProductNumber'><select id="PNLIST"></select></td>
 							<td>SerialNumber</td>
 							<td><input type="text" id="SerialNumber"></input></td>
 						</tr>
@@ -251,14 +291,8 @@
 
 						<tr>
 							<th>제조일자</th>
-							<td id='MakeDate'>
-							<select id="year" class="makedate">
-							<option value="" selected disabled hidden>선택</option></select>
-							<select id="month" class="makedate">
-							<option value="" selected disabled hidden>선택</option></select>
-							<select id="date" class="makedate">
-							<option value="" selected disabled hidden>선택</option></select>
-							<input type="checkbox" id="mdcheck"/><p>제조일자모름</p></td>
+							<td id='MakeDate'><input type="date" id="makedate" /> <input
+								type="checkbox" id="mdcheck" value="제조일자 모름" /></td>
 							<th>EquCode</th>
 							<td><input type="text" id='EquCode' /></td>
 						</tr>
@@ -295,9 +329,8 @@
 					</tbody>
 				</table>
 			</div>
-			
-		<button id='confirm' type="button" class="btn btn-default">확인</button>
-		<button id='exportexcel' type="button" class="btn btn-default">엑셀올리기</button>
+			<input type="button" id="confirm" value="확인">
+			<button id='importexcel' type="button" class="btn btn-default">엑셀올리기</button>
 
 		</div>
 	</div>

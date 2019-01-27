@@ -1,5 +1,6 @@
 package com.sammi.srvm.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.sammi.srvm.ExcelRead;
+import com.sammi.srvm.ExcelReadOption;
 import com.sammi.srvm.dao.InsertDAO;
 import com.sammi.srvm.dao.SelectDAO;
 import com.sammi.srvm.dto.CusDTO;
@@ -36,6 +39,54 @@ public class EquipmentServiceImpl implements EquipmentService{
 	@Override
 	public String GetEquCatCode(String EquCat) {
 		return selectdao.GetEquCatCode(EquCat);
+	}
+	
+	@Override
+	public int InUniEqubyExcel(String filepath) {
+		ExcelReadOption option = new ExcelReadOption();
+		
+		option.setFilePath(filepath);
+		
+		List<String> columnlist = new ArrayList<String>();
+		
+		columnlist.add("장비명");
+		columnlist.add("S/N");
+		
+		option.setOutputColumn(columnlist);
+		option.setStartRow(0);
+		
+		Map<String,Object> excellist = ExcelRead.read(option);
+		
+		Gson gson = new Gson();
+		
+		System.out.println(gson.toJson(excellist));
+		
+		List<EquDTO> dtos = selectdao.GetAllEqu();
+		
+		List<UniEquDTO> uniequdtos = new ArrayList<UniEquDTO>();
+		/*
+		for(int i=0;i<excellist.size();i++) {
+			String expn = excellist.get("");
+			String dtpn = dtos.get(i).getProductNumber();
+			
+			UniEquDTO uniequdto = new UniEquDTO();
+			
+			
+			if(expn.equals(dtpn)) {
+				String EquCode = dtos.get(i).getEquCode();
+				uniequdto.setProductNumber(expn);
+				uniequdto.setEquCode(EquCode);
+				uniequdto.setSerialNumber(excellist.get(i).get("S/N"));
+			}
+			
+			uniequdtos.add(uniequdto);
+		}
+		
+		System.out.println(gson.toJson(uniequdtos));
+		
+		*/
+		return 0;
+		
 	}
 	
 	@Override
