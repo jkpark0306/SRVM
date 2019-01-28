@@ -26,13 +26,15 @@ public class ExcelFileType {
          * RuntimeException이 발생된다.
          */
 		FileInputStream fis = null;
-		try {
-			fis = new FileInputStream(filePath);
-		}catch(FileNotFoundException e) {
-			throw new RuntimeException(e.getMessage(),e);
-		}
 		
 		Workbook wb = null;
+		
+		try {
+			fis = new FileInputStream(filePath);
+			
+		}catch(FileNotFoundException fe) {
+			fe.printStackTrace();
+		}
 		
 		if(filePath.toUpperCase().endsWith(".XLS")) {
 			try {
@@ -52,6 +54,9 @@ public class ExcelFileType {
 		}
 		
 		return wb;
+
+
+		
 	}
 	
 

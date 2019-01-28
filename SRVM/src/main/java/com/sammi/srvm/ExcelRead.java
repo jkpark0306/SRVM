@@ -3,6 +3,7 @@ package com.sammi.srvm;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class ExcelRead {
 			System.out.println("데이터가 있는 Sheet의 수 :" + wb.getNumberOfSheets());
 
 
-			result = new HashMap<String, Object>();
+			result = new LinkedHashMap<String, Object>();
 			/*
 			 * result -> 최종적으로 리턴받을 객체
 			 * Map<String, String> map -> 한 행의 데이터('헤더 이름(칼럼명)','데이터')
@@ -48,13 +49,13 @@ public class ExcelRead {
 				
 				sheet = wb.getSheetAt(i);
 				
-				sheetname = sheet.getSheetName();
+				sheetname = wb.getSheetName(i);
 				
 				if (sheetname.startsWith("부품") || sheetname.startsWith("인사말") || sheetname.startsWith("업체")) {
 					continue;
 				}
 				
-				System.out.println("Sheet 이름: " + wb.getSheetName(i));
+				System.out.println("Sheet 이름: " + sheetname);
 
 				int numOfRows = sheet.getPhysicalNumberOfRows();
 				int numOfCells = 0;
@@ -71,12 +72,12 @@ public class ExcelRead {
 
 				// List<List<Map<String,String>>> result = new
 				// ArrayList<List<Map<String,String>>>();
-				System.out.println(sheetname + "의 Row 수 : " + numOfRows);
+				//System.out.println(sheetname + "의 Row 수 : " + numOfRows);
 
 				Row headerrow = sheet.getRow(0);
 
 				sheetdata = new ArrayList<Map<String, String>>();
-
+				System.out.println("sheetdata test " + gson.toJson(sheetdata));
 				numOfCells = headerrow.getPhysicalNumberOfCells();
 				
 				//헤더 List 만드는 부분(RowMap에서 Key로 사용)
@@ -119,17 +120,18 @@ public class ExcelRead {
 					}
 					
 					
+					
 					sheetdata.add(rowdata);//한 row 만들어지면 sheet에 추가
 
 				}//로우 반복문 종료 지점
 				
-				System.out.println(gson.toJson(sheetdata));
+				//System.out.println(gson.toJson(sheetdata));
 				
 				
 				result.put(sheetname, sheetdata);//한 sheet 만들어지면 result에 추가
 				
 					
-
+				
 				System.out.println(result.size());
 
 				
@@ -138,6 +140,8 @@ public class ExcelRead {
 			
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
+			System.out.println(ex.getStackTrace());
+			ex.printStackTrace();
 			
 			return null;
 		}
