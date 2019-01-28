@@ -12,11 +12,14 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import com.google.gson.Gson;
+import com.sammi.srvm.dto.ExcelDTO;
 
 public class ExcelRead {
 	public static Map<String, Object> read(ExcelReadOption excelReadOption) {
 
 		Gson gson = new Gson();
+		
+		Map<String, Object> result;
 
 		try {
 			Workbook wb = ExcelFileType.getWorkbook(excelReadOption.getFilePath());
@@ -25,20 +28,32 @@ public class ExcelRead {
 
 			System.out.println("데이터가 있는 Sheet의 수 :" + wb.getNumberOfSheets());
 
-			System.out.println(numOfSheet);
 
-			Map<String, Object> result = new HashMap<String, Object>();
-
+			result = new HashMap<String, Object>();
+			/*
+			 * result -> 최종적으로 리턴받을 객체
+			 * Map<String, String> map -> 한 행의 데이터('헤더 이름(칼럼명)','데이터')
+			 * List<Map<String,String>> -> 한 시트의 데이터(한 행의 데이터의 List)
+			 * 
+			 */
+			
+			
+			
+			//시트 반복문 시작지점
 			for (int i = 0; i < numOfSheet; i++) {
+				
 				Sheet sheet = null;
+				
 				String sheetname = null;
+				
 				sheet = wb.getSheetAt(i);
+				
 				sheetname = sheet.getSheetName();
+				
 				if (sheetname.startsWith("부품") || sheetname.startsWith("인사말") || sheetname.startsWith("업체")) {
-					System.out.println("continue on " + sheetname);
 					continue;
 				}
-
+				
 				System.out.println("Sheet 이름: " + wb.getSheetName(i));
 
 				int numOfRows = sheet.getPhysicalNumberOfRows();
@@ -47,18 +62,12 @@ public class ExcelRead {
 				Row row = null;
 				Cell cell = null;
 
-				String cellName = "";
-				/**
-				 * 각 row마다의 값을 저장할 맵 객체 저장되는 형식은 다음과 같다. put("A", "이름"); put("B", "게임명");
-				 */
-				Map<String, String> map = null;
-				/*
-				 * 각 Row를 리스트에 담는다. 하나의 Row를 하나의 Map으로 표현되며 List에는 모든 Row가 포함될 것이다.
-				 */
+				
+				Map<String, String> rowdata = null;
+				
+				List<Map<String, String>> sheetdata = null;
 
-				List<Map<String, String>> sheets = null;
-
-				List<String> headers = new ArrayList<String>();
+				
 
 				// List<List<Map<String,String>>> result = new
 				// ArrayList<List<Map<String,String>>>();
@@ -66,58 +75,76 @@ public class ExcelRead {
 
 				Row headerrow = sheet.getRow(0);
 
-				sheets = new ArrayList<Map<String, String>>();
+				sheetdata = new ArrayList<Map<String, String>>();
 
 				numOfCells = headerrow.getPhysicalNumberOfCells();
-
+				
+				//헤더 List 만드는 부분(RowMap에서 Key로 사용)
+				List<String> headers = new ArrayList<String>();
 				for (int cellIndex = 0; cellIndex < numOfCells; cellIndex++) {
 					headers.add(ExcelCellRef.getValue(headerrow.getCell(cellIndex)));
 
 				}
-
-				map = new HashMap<String, String>();
-
-				for (int rowIndex = excelReadOption.getStartRow() - 1; rowIndex < numOfRows; rowIndex++) {
+				//헤더 List 만드는 부분
+				
+				for (int rowIndex = excelReadOption.getStartRow() - 1; rowIndex < numOfRows; rowIndex++) {//로우 반복문 시작 지점
+					
+					rowdata = new HashMap<String, String>();
+					
 					row = sheet.getRow(rowIndex);
 
 					if (row != null) {
 						numOfCells = row.getPhysicalNumberOfCells();
-
-						for (int cellIndex = 0; cellIndex < headers.size(); cellIndex++) {
-
+						
+						
+						for (int cellIndex = 0; cellIndex < headers.size(); cellIndex++) {//셀 반복문 시작 지점
+							
 							cell = row.getCell(cellIndex);
 
-							cellName = ExcelCellRef.getName(cell, cellIndex);
+							String cellvalue = ExcelCellRef.getValue(cell);
+							
 
 							if (!excelReadOption.getOutputColumn().contains(headers.get(cellIndex))) {
 								continue;
 							}
-							if (ExcelCellRef.getValue(cell) == null || ExcelCellRef.getValue(cell) == "") {
-
+							if (cellvalue == null || cellvalue == "" || cellvalue == " ") {
 								continue;
 							}
+							
+							rowdata.put(headers.get(cellIndex), ExcelCellRef.getValue(cell));
 
-							map.put(headers.get(cellIndex), ExcelCellRef.getValue(cell));
-
-						}
+						}//셀 반복문 종료 지점
+						
 
 					}
+					
+					
+					sheetdata.add(rowdata);//한 row 만들어지면 sheet에 추가
 
-				}
-				sheets.add(map);
-
-				result.put(sheet.getSheetName(), sheets);
+				}//로우 반복문 종료 지점
+				
+				System.out.println(gson.toJson(sheetdata));
+				
+				
+				result.put(sheetname, sheetdata);//한 sheet 만들어지면 result에 추가
+				
+					
 
 				System.out.println(result.size());
 
-				return result;
+				
 
-			}
+			}//시트 반복문 종료 지점
+			
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			
 			return null;
 		}
+		
+		
+		return result;
+		
 
 	}
 }

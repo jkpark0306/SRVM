@@ -160,10 +160,6 @@ public class EquipmentController {
 			filepath = folderpath + '/'+filename;
 		}
 		
-		System.out.println(os.toUpperCase());
-		
-		System.out.println(filepath);
-		
 		File destfile = new File(filepath);
 		
 		
