@@ -1,6 +1,8 @@
 package com.sammi.srvm.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +43,21 @@ public class EquipmentServiceImpl implements EquipmentService{
 		return selectdao.GetEquCatCode(EquCat);
 	}
 	
+	public String GetNewUniEquCode(String UniEquCode) {
+		
+		System.out.println(UniEquCode + " " +UniEquCode.length());
+		
+		System.out.println("iuniequcode substring "+ UniEquCode.substring(13,16));
+		
+		String uniequindex = String.format("%03d", Integer.parseInt(UniEquCode.substring(13,16)) +1);
+		
+		String NewUniEquCode = UniEquCode.substring(0, 13) +  uniequindex;
+		
+		
+		
+		return NewUniEquCode;
+	}
+	
 	@Override
 	public int InUniEqubyExcel(String filepath) {
 		ExcelReadOption option = new ExcelReadOption();
@@ -63,7 +80,126 @@ public class EquipmentServiceImpl implements EquipmentService{
 		
 		List<EquDTO> dtos = selectdao.GetAllEqu();
 		
+		List<EquDTO> pndtos = new ArrayList<EquDTO>();
+		
 		List<UniEquDTO> uniequdtos = new ArrayList<UniEquDTO>();
+		
+		List<String> UniEquCodeList = new ArrayList<String>();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyMM");
+		
+		for(String key : excellist.keySet()) {
+			List<Map<String, String>> sheetdata = (List<Map<String, String>>) excellist.get(key);
+			
+			
+			
+			
+			for(int sheetindex = 0;sheetindex<sheetdata.size();sheetindex++) {
+				Map<String, String> rowdata = sheetdata.get(sheetindex);
+				
+				
+				
+				for(int dtosindex = 0;dtosindex<dtos.size();dtosindex++) {
+					
+					String excelPN = rowdata.get("장비명");
+					UniEquDTO uniequdto = new UniEquDTO();
+					EquDTO equdto = dtos.get(dtosindex);
+					String dtoPN = equdto.getProductNumber();
+					
+					if(dtoPN.equals(excelPN) && !pndtos.contains(equdto)) {
+
+							pndtos.add(dtos.get(dtosindex));
+						
+					}
+					
+					if(dtoPN.equals(excelPN)) {
+						
+						String EquCode = equdto.getEquCode();
+						
+						
+						
+						String UniEquCode = EquCode + sdf.format(new Date()) + "001";
+						
+						
+						
+						String NewUniEquCode = selectdao.GetNewUniEquCode(UniEquCode);
+						
+						if((NewUniEquCode == null || NewUniEquCode == "")) {
+							UniEquCode = NewUniEquCode;
+						}
+						
+						String substringtest = "123456789";
+						
+						
+						for(int uedindex = 0;uedindex<uniequdtos.size();uedindex++) {
+							if(uniequdtos.get(uedindex).getUniEquCode().equals(UniEquCode)) {
+								String newuniequcode = UniEquCode.substring(0, 10);
+								
+								System.out.println("test"+newuniequcode);
+							}
+						}
+						
+						
+						
+						
+						
+						uniequdto.setProductNumber(excelPN);
+						uniequdto.setEquCode(EquCode);
+						uniequdto.setUniEquCode(UniEquCode);
+						
+						
+					}
+					
+					
+				}
+				
+			}
+			
+		}
+		
+		for(int pnindex = 0;pnindex<pndtos.size();pnindex++) {
+			
+			EquDTO equdto = pndtos.get(pnindex);
+			
+			Date date = new Date();
+			
+			String UniEquCode = equdto.getEquCode() + sdf.format(date) + "001";
+			
+			String ProductNumber = equdto.getProductNumber();
+			
+			
+			
+			UniEquDTO uniequdto = new UniEquDTO();
+			
+			//101MS12011901001
+			
+			
+			
+			
+			String NewUniEquCode = selectdao.GetNewUniEquCode(UniEquCode);
+			
+			
+			
+			if(NewUniEquCode == null || NewUniEquCode == "") {
+				uniequdto.setUniEquCode(UniEquCode);
+			}else {
+				uniequdto.setUniEquCode(NewUniEquCode);
+			}
+			
+			//uniequdto.setProductNumber();
+			
+			
+		}
+		
+		for(int codelistindex = 0;codelistindex<UniEquCodeList.size();codelistindex++) {
+			
+		}
+		
+		
+		
+		System.out.println(gson.toJson(uniequdtos));
+		
+		
 		/*
 		for(int i=0;i<excellist.size();i++) {
 			String expn = excellist.get("");

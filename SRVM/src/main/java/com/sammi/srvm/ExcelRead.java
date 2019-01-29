@@ -98,6 +98,8 @@ public class ExcelRead {
 						numOfCells = row.getPhysicalNumberOfCells();
 						
 						
+						
+						
 						for (int cellIndex = 0; cellIndex < headers.size(); cellIndex++) {//셀 반복문 시작 지점
 							
 							cell = row.getCell(cellIndex);
@@ -116,12 +118,14 @@ public class ExcelRead {
 
 						}//셀 반복문 종료 지점
 						
-
+						if(!rowdata.isEmpty()) {
+							sheetdata.add(rowdata);//한 row 만들어지면 sheet에 추가
+						}
 					}
 					
 					
 					
-					sheetdata.add(rowdata);//한 row 만들어지면 sheet에 추가
+					
 
 				}//로우 반복문 종료 지점
 				

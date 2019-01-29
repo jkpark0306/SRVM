@@ -13,7 +13,6 @@ public class CodeMasterDTO {
 	private String CREATE_ID;
 	private String MODIFY_ID;
 	
-	
 	public String getRankCode() {
 		return RankCode;
 	}
