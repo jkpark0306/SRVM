@@ -131,6 +131,7 @@ public class EquipmentServiceImpl implements EquipmentService{
 						String substringtest = "123456789";
 						
 						
+						
 						for(int uedindex = 0;uedindex<uniequdtos.size();uedindex++) {
 							if(uniequdtos.get(uedindex).getUniEquCode().equals(UniEquCode)) {
 								String newuniequcode = UniEquCode.substring(0, 10);
